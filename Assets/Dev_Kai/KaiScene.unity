@@ -807,6 +807,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerSpeed: 3
+  objectreference: {fileID: 81765291}
 --- !u!136 &2017542076
 CapsuleCollider:
   m_ObjectHideFlags: 0

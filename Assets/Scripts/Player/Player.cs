@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float _playerSpeed;
+    [SerializeField] Objectreference objectreference;
 
     //x軸方向の入力を保存
     private float _input_x;
@@ -22,6 +23,10 @@ public class Player : MonoBehaviour
     {
         PlayerCtrl();
         Object();
+        if(Input.GetMouseButtonDown(0))
+        {
+            objectreference.CreateBlock(transform);
+        }
     }
 
     //プレイヤーの移動
@@ -60,9 +65,9 @@ public class Player : MonoBehaviour
         Debug.DrawRay(transform.position, ray.direction * 30, Color.red, 1.0f); // 長さ３０、赤色で５秒間可視化
             if(Physics.Raycast(ray,out hit))
             {
-                Debug.Log(hit.collider.gameObject.name);   
+                //Debug.Log(hit.collider.gameObject.name);   
                 Objectreference objectreference = hit.collider.GetComponent<Objectreference>();
-                //objectreference.DestroyBlock();
+                objectreference.DestroyBlock();
 
             }
         }
