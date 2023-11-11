@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         PlayerCtrl();
-        Object();
+        ObjectAction();
         if(Input.GetMouseButtonDown(0))
         {
             objectreference.CreateBlock(transform);
@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
     }
 
     //オブジェクト破壊
-    public void Object()
+    public void ObjectAction()
     {
         Vector3 direction = new Vector3(1, 0, 0); // X軸方向を表すベクトル:仮置きの終点
         if(Input.GetMouseButton(0))
@@ -65,9 +65,11 @@ public class Player : MonoBehaviour
         Debug.DrawRay(transform.position, ray.direction * 30, Color.red, 1.0f); // 長さ３０、赤色で５秒間可視化
             if(Physics.Raycast(ray,out hit))
             {
-                //Debug.Log(hit.collider.gameObject.name);   
-                Objectreference objectreference = hit.collider.GetComponent<Objectreference>();
-                objectreference.DestroyBlock();
+                if(hit.collider.gameObject.tag == "Block") 
+                {
+                    Objectreference objectreference = hit.collider.GetComponent<Objectreference>();
+                    objectreference.DestroyBlock();
+                }
 
             }
         }
