@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
         ObjectAction();
         if(Input.GetMouseButtonDown(0))
         {
-            objectreference.CreateBlock(transform);
+            //objectreference.CreateBlock(transform);
         }
     }
 
@@ -69,6 +69,9 @@ public class Player : MonoBehaviour
                 {
                     Objectreference objectreference = hit.collider.GetComponent<Objectreference>();
                     objectreference.DestroyBlock();
+                }
+                else{
+                    
                 }
 
             }

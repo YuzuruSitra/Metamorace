@@ -8,14 +8,17 @@ public class Objectreference : MonoBehaviour
     //0自分のブロック、1敵のブロック
     [SerializeField] private int _objID;
     public int _ObjID => _objID;
-    Sprite PlayerObj;
-
-
-
+    [SerializeField] Sprite _PlayerSprite;
+    [SerializeField] Sprite _EnemySprite;
     [SerializeField] private float _btPlayer,_btEnemy;
+
+  
+
+     UIHandler _uiHandler;
 
     void Start()
     {
+         _uiHandler = GameObject.FindWithTag("UIHandler").GetComponent<UIHandler>();
        // CreateBlock();
     }
     //お邪魔ブロック破壊処理
@@ -26,6 +29,7 @@ public class Objectreference : MonoBehaviour
             _btPlayer -= Time.deltaTime;
             if(_btPlayer <= 0)
             {
+                _uiHandler.SetStackImage(_PlayerSprite);
                 Destroy(gameObject);
             }
         }
@@ -45,4 +49,11 @@ public class Objectreference : MonoBehaviour
     {
         Instantiate(gameObject, playerpos.position, Quaternion.identity);
     }
+
+    //お邪魔ブロックが降ってくる処理（translate)
+    public void FallBlock()
+    {
+
+    }
+  
 }
