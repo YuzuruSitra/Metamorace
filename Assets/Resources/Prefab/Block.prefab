@@ -111,7 +111,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _objID: 0
-  _PlayerSprite: {fileID: 21300000, guid: 06df68312dc0b5f44bbd6e1cc6349e3e, type: 3}
-  _EnemySprite: {fileID: 21300000, guid: 6d9368087a72f0a418692ca4c979ec66, type: 3}
+  _playerSprite: {fileID: 21300000, guid: 06df68312dc0b5f44bbd6e1cc6349e3e, type: 3}
+  _enemySprite: {fileID: 21300000, guid: 6d9368087a72f0a418692ca4c979ec66, type: 3}
+  _redMaterial: {fileID: 2100000, guid: 2b7198140c7b0ff45b3486c9416d04a0, type: 2}
+  _blueMaterial: {fileID: 2100000, guid: a616b1c2145bf6149b69f7b2d3d11f54, type: 2}
+  _greenMaterial: {fileID: 2100000, guid: 22ba50284a592ec41bb65eaf458f1353, type: 2}
+  _yellowMaterial: {fileID: 2100000, guid: 0138933951f84244582990e14f1ded91, type: 2}
   _btPlayer: 2
   _btEnemy: 2

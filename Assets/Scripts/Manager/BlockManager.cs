@@ -7,25 +7,29 @@ public class BlockManager : MonoBehaviour
     [SerializeField] GameObject _Block;
     
      //ステージ上のオブジェクトの総数計算
-    private int _BlockNum;
+    [SerializeField] private int _blockNum;
+    public int _BlockNum => _blockNum;
    
-    void Update()
+    void Start()
     {
-        if(Input.GetMouseButtonDown(0))
-        {
-            SpawnBlock();
-        }
+        InvokeRepeating("SpawnBlock", 0,2);
     }
     public void CalcBlock()
     {
 
     }
 
-    //ランダムに降ってくるお邪魔ブロック
+    //ランダムにお邪魔ブロック生成
     public void SpawnBlock()
     {
         Instantiate(_Block);
-        _BlockNum += 1;
-        Debug.Log(_BlockNum);
+        _blockNum += 1;
+        Debug.Log(_blockNum);
+    }
+
+    //お邪魔ブロックが降ってくる処理（translate)
+    public void FallBlock()
+    {
+        //transform.
     }
 }

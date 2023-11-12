@@ -6,7 +6,7 @@ public class UIHandler : MonoBehaviour
 {
     [SerializeField] private Text _LimitTimeText,_BlockRate;
     [SerializeField] Image[] _StackImage;
-    [SerializeField] Button _RedColorButton,_BlueColorButton,_GreenColorButton,_YellowColorButton;
+    [SerializeField] GameObject _button;
 
     
 
@@ -39,8 +39,8 @@ public class UIHandler : MonoBehaviour
     }
 
     //カラーボタンを押した際の処理
-    public void SelectColor()
+    public void ActiveFalseButton()
    {
-      // _colorManager.SetBrockMaterial(Color.red);
+        _button.SetActive(false);
    }
 }

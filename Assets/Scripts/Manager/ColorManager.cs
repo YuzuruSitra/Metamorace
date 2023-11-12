@@ -21,10 +21,32 @@ public class ColorManager : MonoBehaviour
        // CreateBlock();
     }
 
-   public void SetBrockMaterial()
+   //ブロックに色を割り当てる（ボタンを押したとき）
+   //ここを後でオブジェクトから参照したマテリアルにする処理に変更
+   public void SetRedBrockMaterial()
+   {
+       //インスタンスのRendererから共有マテリアルにアクセス
+         _blockInstance.GetComponent<MeshRenderer>().sharedMaterial.SetColor("_Color",Color.red);
+         _uiHandler.ActiveFalseButton();
+   }
+   public void SetBlueBrockMaterial()
+   {
+       //インスタンスのRendererから共有マテリアルにアクセス
+         _blockInstance.GetComponent<MeshRenderer>().sharedMaterial.SetColor("_Color",Color.blue);
+         _uiHandler.ActiveFalseButton();
+   }
+   public void SetGreenBrockMaterial()
    {
        //インスタンスのRendererから共有マテリアルにアクセス
          _blockInstance.GetComponent<MeshRenderer>().sharedMaterial.SetColor("_Color",Color.green);
-       
+          _uiHandler.ActiveFalseButton();
    }
+   public void SetYellowBrockMaterial()
+   {
+       //インスタンスのRendererから共有マテリアルにアクセス
+         _blockInstance.GetComponent<MeshRenderer>().sharedMaterial.SetColor("_Color",Color.yellow);
+         _uiHandler.ActiveFalseButton();
+   }  
+
+   
 }
