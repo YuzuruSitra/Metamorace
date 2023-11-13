@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Objectreference : MonoBehaviour
+public class BlockBehaviour : MonoBehaviour
 {
     //0自分のブロック、1敵のブロック
     [SerializeField] private int _objID;

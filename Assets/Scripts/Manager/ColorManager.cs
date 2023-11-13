@@ -16,8 +16,6 @@ public class ColorManager : MonoBehaviour
 
          //プレハブからインスタンスを生成
           _blockInstance = Instantiate(_blockPrefab);
-       
-        
        // CreateBlock();
     }
 
