@@ -24,7 +24,7 @@ public class BlockBehaviour : MonoBehaviour
     {
         if(_objID == 0)
         {
-            _btPlayer -= Time.deltaTime;
+            _btPlayer -= Time.deltaTime;//ここにスピードをかける(アイテムAの処理)
             if(_btPlayer <= 0)
             {
                 _uiHandler.SetStackImage(_playerSprite);
@@ -37,6 +37,7 @@ public class BlockBehaviour : MonoBehaviour
              if(_btEnemy <= 0)
             {
                 Destroy(gameObject);
+                //スタン処理
             }
         }
         

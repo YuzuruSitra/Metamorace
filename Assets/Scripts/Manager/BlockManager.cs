@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BlockManager : MonoBehaviour
 {
-    [SerializeField] GameObject _Block;
+    [SerializeField] GameObject _block;
     
      //ステージ上のオブジェクトの総数計算
     [SerializeField] private int _blockNum;
@@ -22,7 +22,7 @@ public class BlockManager : MonoBehaviour
     //ランダムにお邪魔ブロック生成
     public void SpawnBlock()
     {
-        Instantiate(_Block);
+        Instantiate(_block);
         _blockNum += 1;
         Debug.Log(_blockNum);
     }
