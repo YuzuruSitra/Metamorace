@@ -24,11 +24,6 @@ public class BlockManager : MonoBehaviour
         _blockInsPos.z = GameObject.FindWithTag("Player").transform.position.z;
     }
 
-    void Update()
-    {
-        ObjectExistsInRaycast(3);
-    }
-
     //ランダムにお邪魔ブロック生成
     void GenerateBlock(Vector3 insPos)
     {
@@ -54,7 +49,7 @@ public class BlockManager : MonoBehaviour
             } while (insPosX == _blockInsPos.x || ObjectExistsInRaycast(insPosX));
 
             _blockInsPos.x = insPosX;
-            Instantiate(_blockAmbras, _blockInsPos, Quaternion.identity);
+            GenerateBlock(_blockInsPos);
         }
         _insCoroutine = StartCoroutine(GenerateSetParam());
     }
@@ -67,8 +62,8 @@ public class BlockManager : MonoBehaviour
         if (Physics.Raycast(startPos, _rayDirection, out RaycastHit hit, 10.0f))
         {
             Debug.DrawRay(startPos, _rayDirection, Color.red, 1f);
-            // Rayがオブジェクトに当たった場合
-            return true;
+            // Rayが指定オブジェクトに当たった場合
+            if (hit.collider.CompareTag("Ambras") || hit.collider.CompareTag("Heros")) return true;
         }
 
         // Rayが何にも当たらなかった場合
