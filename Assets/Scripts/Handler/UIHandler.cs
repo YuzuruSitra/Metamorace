@@ -28,6 +28,12 @@ public class UIHandler : MonoBehaviour
         }       
     }   
 
+    //アイテムの画像を格納
+    public void SetItemImage(Sprite sprite)
+    {
+        
+    }   
+
     //開いている枠を調べる
     public bool IsEmpty(int _StackNum)
     {

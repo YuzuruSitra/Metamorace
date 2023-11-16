@@ -12,7 +12,7 @@ public class BlockManager : MonoBehaviour
    
     void Start()
     {
-        InvokeRepeating("SpawnBlock", 0,2);
+       // InvokeRepeating("SpawnBlock", 0,2);
     }
     public void CalcBlock()
     {
