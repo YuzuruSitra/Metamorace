@@ -17,7 +17,7 @@ public class tmpPlayer : MonoBehaviour
     [SerializeField] 
     private Transform _insParent;
 
-    tmpBlockBehaviour _currentBlock;
+    BlockBehaviour _currentBlock;
 
     //x.z軸方向の入力を保存
     private float _input_x, _input_z;
@@ -89,7 +89,7 @@ public class tmpPlayer : MonoBehaviour
 
         if (hit.collider.CompareTag("Ambras") || hit.collider.CompareTag("Heros"))
         {
-            if(_currentBlock == null) _currentBlock = hit.collider.GetComponent<tmpBlockBehaviour>();
+            if(_currentBlock == null) _currentBlock = hit.collider.GetComponent<BlockBehaviour>();
             int _objID = _currentBlock.DestroyBlock(_destroyPower);
             // objIDを利用してUI表示
         

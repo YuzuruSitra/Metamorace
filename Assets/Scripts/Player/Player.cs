@@ -140,13 +140,13 @@ public class Player : MonoBehaviour
         if (hit.collider.gameObject.tag == "Block")
         {
             BlockBehaviour _blockBehaviour = hit.collider.GetComponent<BlockBehaviour>();
-            int _objID = _blockBehaviour.DestroyBlock();
-            _itemHandler.StackBlock(_objID);
+            // int _objID = _blockBehaviour.DestroyBlock();
+            // _itemHandler.StackBlock(_objID);
            
-            //0または1でない値を弾く（BlockBehaviourの DestroyBlock()参照）
-            if(_objID == -1) return;
-            if(_objID == 1 || _objID == 2)
-            _hasBlock = true;
+            // //0または1でない値を弾く（BlockBehaviourの DestroyBlock()参照）
+            // if(_objID == -1) return;
+            // if(_objID == 1 || _objID == 2)
+            // _hasBlock = true;
         }
         else
         {

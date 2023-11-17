@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class tmpBlockBehaviour : MonoBehaviour
+public class BlockBehaviour : MonoBehaviour
 {
     [SerializeField] 
     private int _objID;
-
     [SerializeField] 
     private float _objHealth;
     
@@ -18,5 +18,5 @@ public class tmpBlockBehaviour : MonoBehaviour
         Destroy(gameObject);
         return _objID;         
     }
-
+  
 }
