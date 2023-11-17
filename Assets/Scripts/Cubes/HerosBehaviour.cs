@@ -8,7 +8,7 @@ public class HerosBehaviour : MonoBehaviour
     private bool _isBack = true;
     private float _targetPosZ;
     float _calcDirection;
-    private float _speed = 1.0f;
+    private float _speed = 20.0f;
     [SerializeField]
     private Rigidbody _rb;
 
@@ -31,9 +31,8 @@ public class HerosBehaviour : MonoBehaviour
     // 奥へ
     void AddPosZ()
     {
-        Vector3 tmpPos = transform.position;
-        tmpPos.z += _speed * Time.deltaTime;
-        transform.position = tmpPos;
+        Vector3 direction = new Vector3(0.0f, 0.0f, 1.0f);
+        _rb.MovePosition(transform.position + direction * _speed * Time.deltaTime);
         
         if (_targetPosZ > transform.position.z) return;
         Vector3 tmp = transform.position;
@@ -46,9 +45,8 @@ public class HerosBehaviour : MonoBehaviour
     // 手前へ
     void DecreasePosZ()
     {
-        Vector3 tmpPos = transform.position;
-        tmpPos.z -= _speed * Time.deltaTime;
-        transform.position = tmpPos;
+        Vector3 direction = new Vector3(0.0f, 0.0f, -1.0f);
+        _rb.MovePosition(transform.position + direction * _speed * Time.deltaTime);
         
         if (_targetPosZ < transform.position.z) return;
         Vector3 tmp = transform.position;
