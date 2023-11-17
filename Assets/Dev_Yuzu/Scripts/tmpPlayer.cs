@@ -25,9 +25,16 @@ public class tmpPlayer : MonoBehaviour
     private bool _isJump = false;
     private bool _hasBlock = false;
 
+    private float _enemyPos;
+
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
+    }
+
+    public void SetEnemyPosZ(float posZ)
+    {
+        _enemyPos = posZ;
     }
 
     void Update()
@@ -108,7 +115,7 @@ public class tmpPlayer : MonoBehaviour
         Vector3 insPos = new Vector3 ((int)transform.position.x,(int)transform.position.y, -1.0f);
         GameObject insObj = Instantiate(_herosPrefab, insPos, Quaternion.identity, _insParent);
         // 仮置き
-        insObj.GetComponent<HerosBehaviour>().SetTargetPos(1.5f);
+        insObj.GetComponent<HerosBehaviour>().SetTargetPos(_enemyPos);
         _hasBlock = false;
         
     }
