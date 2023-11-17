@@ -13,6 +13,7 @@ public class ItemHandler : MonoBehaviour
  //スタックの中の自ブロックの数を格納
     int _myBrockNum;
     int _objID;
+    float _itemAEffectTime = 6.0f;
     void Start()
     {
         _uiHandler = GameObject.FindWithTag("UIHandler").GetComponent<UIHandler>();
@@ -100,9 +101,15 @@ public class ItemHandler : MonoBehaviour
     // B - 手持ちのオブジェクトを巨大オブジェクト( 3*3 )へ変化。(入手難易度-中)  
     // 巨大オブジェクトの破壊は通常5倍かかる。
     // C - 手持ちオブジェクトを特殊ブロック(ランダム)へ変化。 (入手難易度-低) 
-
-    public void ItemEffect()
+    public int ItemEffectA()
     {
-
+        int _destroyPower;
+        //Aアイテム効果時間
+        _itemAEffectTime -= Time.deltaTime;
+        if(_itemAEffectTime >= 0)
+        {
+          _destroyPower = 2.0f;
+        }
+        return _destroyPower;
     }
 }

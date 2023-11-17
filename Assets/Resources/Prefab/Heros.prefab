@@ -13,9 +13,11 @@ GameObject:
   - component: {fileID: 7828024547459711134}
   - component: {fileID: 7828024547459711135}
   - component: {fileID: 7828024547459711128}
+  - component: {fileID: 8700301099434654295}
+  - component: {fileID: 4845965506342646060}
   m_Layer: 0
-  m_Name: Block
-  m_TagString: Block
+  m_Name: Heros
+  m_TagString: Heros
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -63,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2b7198140c7b0ff45b3486c9416d04a0, type: 2}
+  - {fileID: 2100000, guid: 22ba50284a592ec41bb65eaf458f1353, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -111,12 +113,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _objID: 1
-  _playerSprite: {fileID: 21300000, guid: 06df68312dc0b5f44bbd6e1cc6349e3e, type: 3}
-  _enemySprite: {fileID: 21300000, guid: 6d9368087a72f0a418692ca4c979ec66, type: 3}
-  _redMaterial: {fileID: 2100000, guid: 2b7198140c7b0ff45b3486c9416d04a0, type: 2}
-  _blueMaterial: {fileID: 2100000, guid: a616b1c2145bf6149b69f7b2d3d11f54, type: 2}
-  _greenMaterial: {fileID: 2100000, guid: 22ba50284a592ec41bb65eaf458f1353, type: 2}
-  _yellowMaterial: {fileID: 2100000, guid: 0138933951f84244582990e14f1ded91, type: 2}
-  _btPlayer: 2
-  _btEnemy: 2
-  _speed: 1
+  _objHealth: 0
+--- !u!114 &8700301099434654295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7828024547459711129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de0a0966998c341f1851f15e591dc37a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rb: {fileID: 4845965506342646060}
+--- !u!54 &4845965506342646060
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7828024547459711129}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 122
+  m_CollisionDetection: 0
