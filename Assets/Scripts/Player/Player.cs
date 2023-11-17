@@ -16,18 +16,19 @@ public class Player : MonoBehaviour
     Vector3 _pos, _angle;
     private Rigidbody _rb;
     private bool _isJump = false;
+    private bool _hasBlock = false;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
-         _pos = transform.position;
+        // _pos = transform.position;
         _angle = transform.eulerAngles;
     }
 
     void Update()
     {
-        PlayerCtrl();
-        ObjectAction();
+       
+        BreakBlock();
         CreateBlock();
         if (Input.GetMouseButtonDown(2))
         {
@@ -35,9 +36,37 @@ public class Player : MonoBehaviour
         }
     }
 
+    void FixedUpdate()
+    {
+        PlayerCtrl();
+    }
+
     //プレイヤーの移動
     public void PlayerCtrl()
     {
+        
+        _input_x = Input.GetAxis("Horizontal");
+        _input_z = Input.GetAxis("Vertical");
+
+        Vector3 movement = new Vector3(_input_x, 0.0f, _input_z);
+ 
+
+        _rb.MovePosition(transform.position + movement * _playerSpeed * Time.deltaTime);
+
+        // Handle player rotation based on the input
+        if (movement != Vector3.zero)
+        {
+            Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 720.0f * Time.deltaTime);
+        }
+
+        // Jump handling
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
+            
+        }
+        //下記の移動は壁貫通のため廃棄
         // // 座標を取得
         // _pos = transform.position;
         // _angle = transform.eulerAngles;
@@ -57,32 +86,32 @@ public class Player : MonoBehaviour
         //     transform.position = _pos;  // 入力から座標を再代入
         //     transform.eulerAngles = _angle;  // 入力から座標を再代入
         // }
-         //奥移動
-         if(Input.GetKey(KeyCode.D))
-        {
-            _pos.x += _playerSpeed * Time.deltaTime; 
-            _angle.y = 90.0f;
-            transform.position = _pos;  // 入力から座標を再代入
-            transform.eulerAngles = _angle;  // 入力から座標を再代入
-        }
-        //手前移動
-        else if(Input.GetKey(KeyCode.A))
-        {
-            _pos.x -= _playerSpeed * Time.deltaTime; 
-            _angle.y = 270.0f;
-            transform.position = _pos;  // 入力から座標を再代入
-            transform.eulerAngles = _angle;  // 入力から座標を再代入
-        }
-        //ジャンプ
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-        //     if (_isJump == false)
-        //     {
-                _rb.AddForce(transform.up * _jumpPower, ForceMode.Impulse);
-                Debug.Log("Jump");
-            //     _isJump = true;
-            // }
-        }
+        //  //奥移動
+        //  if(Input.GetKey(KeyCode.D))
+        // {
+        //     _pos.x += _playerSpeed * Time.deltaTime; 
+        //     _angle.y = 90.0f;
+        //     transform.position = _pos;  // 入力から座標を再代入
+        //     transform.eulerAngles = _angle;  // 入力から座標を再代入
+        // }
+        // //手前移動
+        // else if(Input.GetKey(KeyCode.A))
+        // {
+        //     _pos.x -= _playerSpeed * Time.deltaTime; 
+        //     _angle.y = 270.0f;
+        //     transform.position = _pos;  // 入力から座標を再代入
+        //     transform.eulerAngles = _angle;  // 入力から座標を再代入
+        // }
+        // //ジャンプ
+        // if (Input.GetKeyDown(KeyCode.Space))
+        // {
+        // //     if (_isJump == false)
+        // //     {
+        //         _rb.AddForce(transform.up * _jumpPower, ForceMode.Impulse);
+        //         Debug.Log("Jump");
+        //     //     _isJump = true;
+        //     // }
+        // }
     }
 
     // private void OnCollisionEnter(Collision other)
@@ -94,8 +123,10 @@ public class Player : MonoBehaviour
     // }
 
     //オブジェクト破壊
-    public void ObjectAction()
+    public void BreakBlock()
     {
+        //ブロックを持ってなければ処理を行う
+        if(_hasBlock == true) return;
         Vector3 direction = transform.forward; // プレイヤーの向いている方向を取得
         if (!Input.GetMouseButton(0)) return;
 
@@ -109,6 +140,11 @@ public class Player : MonoBehaviour
             BlockBehaviour _blockBehaviour = hit.collider.GetComponent<BlockBehaviour>();
             int _objID = _blockBehaviour.DestroyBlock();
             _itemHandler.StackBlock(_objID);
+           
+            //0または1でない値を弾く（BlockBehaviourの DestroyBlock()参照）
+            if(_objID == -1) return;
+            if(_objID == 1 || _objID == 2)
+            _hasBlock = true;
         }
         else
         {
@@ -117,20 +153,23 @@ public class Player : MonoBehaviour
 
     }
 
-
+    //オブジェクト生成
     public void CreateBlock()
     {
-        if (!Input.GetMouseButtonDown(0)) return;
-        if( _pos.x >= 0 &&  _pos.x <= 1)
+        //ブロックを持ってれば処理を行う
+        if(_hasBlock == false) return;
+        if (!Input.GetMouseButtonDown(1)) return;
+        for (int i = -7 ; i < 8 ; i++)
         {
-            //_pos.x >= 0 &&  _pos.x <= 1のときBLockを０の位置に生成
-            Instantiate(BlockPrefab,_generatePos[0].transform.position,Quaternion.identity);
+            if(transform.position.x >= i &&  transform.position.x <= i + 1)
+            {
+                //_pos.x >= 0 &&  _pos.x <= 1のときBLockを０の位置に生成
+                Instantiate(BlockPrefab,_generatePos[i + 7].transform.position,Quaternion.identity);
+                 _hasBlock = false;
+                break;
+            }
         }
-         if( _pos.x >= 3 &&  _pos.x <= 4)
-        {
-            //_pos.x >= 0 &&  _pos.x <= 1のときBLockを０の位置に生成
-            Instantiate(BlockPrefab,_generatePos[1].transform.position,Quaternion.identity);
-        }
+        
     }
 
     //アイテムを使う
