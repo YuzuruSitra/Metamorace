@@ -81,7 +81,11 @@ public class tmpPlayer : MonoBehaviour
         Ray ray = new Ray(transform.position, direction);
         RaycastHit hit;
         Debug.DrawRay(transform.position, ray.direction * 30, Color.red, 1.0f); // 長さ３０、赤色で５秒間可視化
-        if (!Physics.Raycast(ray, out hit)) return;
+        if (!Physics.Raycast(ray, out hit)) 
+        {
+            _currentBlock = null;
+            return;
+        }
 
         if (hit.collider.CompareTag("Ambras") || hit.collider.CompareTag("Heros"))
         {
@@ -90,8 +94,8 @@ public class tmpPlayer : MonoBehaviour
             // objIDを利用してUI表示
         
             if(_objID > -1) _hasBlock = true;
+            return;
         }
-        else _currentBlock = null;
     }
 
     //オブジェクト生成
@@ -102,7 +106,9 @@ public class tmpPlayer : MonoBehaviour
         if (!Input.GetMouseButtonDown(1)) return;
 
         Vector3 insPos = new Vector3 ((int)transform.position.x,(int)transform.position.y, -1.0f);
-        Instantiate(_herosPrefab, insPos, Quaternion.identity, _insParent);
+        GameObject insObj = Instantiate(_herosPrefab, insPos, Quaternion.identity, _insParent);
+        // 仮置き
+        insObj.GetComponent<HerosBehaviour>().SetTargetPos(1.5f);
         _hasBlock = false;
         
     }
