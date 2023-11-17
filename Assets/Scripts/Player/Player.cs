@@ -30,9 +30,11 @@ public class Player : MonoBehaviour
        
         BreakBlock();
         CreateBlock();
+        
         if (Input.GetMouseButtonDown(2))
         {
-            _itemHandler.SelectItem();
+            _itemHandler.UseItem();
+            
         }
     }
 
@@ -46,9 +48,9 @@ public class Player : MonoBehaviour
     {
         
         _input_x = Input.GetAxis("Horizontal");
-        _input_z = Input.GetAxis("Vertical");
+        //_input_z = Input.GetAxis("Vertical");
 
-        Vector3 movement = new Vector3(_input_x, 0.0f, _input_z);
+        Vector3 movement = new Vector3(_input_x, 0.0f, 0.0f);
  
 
         _rb.MovePosition(transform.position + movement * _playerSpeed * Time.deltaTime);
@@ -153,7 +155,7 @@ public class Player : MonoBehaviour
 
     }
 
-    //オブジェクト生成
+    //オブジェクト
     public void CreateBlock()
     {
         //ブロックを持ってれば処理を行う
@@ -172,9 +174,10 @@ public class Player : MonoBehaviour
         
     }
 
-    //アイテムを使う
-    public void UseItem()
-    {
-
-    }
+    //アイテムを使う、スタックリセット
+    // public void UseItem()
+    // {
+    //      if (!Input.GetMouseButtonDown(2)) return;
+    //      Debug.Log("アイテムを使用");
+    // }
 }

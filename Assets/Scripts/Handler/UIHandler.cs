@@ -6,6 +6,9 @@ public class UIHandler : MonoBehaviour
 {
     [SerializeField] private Text _LimitTimeText,_BlockRate;
     [SerializeField] Image[] _StackImage;
+
+     [SerializeField] Image _itemImage;
+     [SerializeField] Sprite[] _itemSprite;
     [SerializeField] GameObject _button;
 
     
@@ -29,10 +32,19 @@ public class UIHandler : MonoBehaviour
     }   
 
     //アイテムの画像を格納
-    public void SetItemImage(Sprite sprite)
+    public void SetItemImage(int _itemnum)
     {
-        
+        _itemImage.sprite = _itemSprite[_itemnum];
     }   
+
+    public void ResetStackImage()
+    {  
+        for(int i = 0; i < _StackImage.Length; i++)
+        {
+            _StackImage[i].sprite = null;
+        }   
+        
+    }
 
     //開いている枠を調べる
     public bool IsEmpty(int _StackNum)
