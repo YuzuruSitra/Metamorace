@@ -16,12 +16,12 @@ public class BlockManager : MonoBehaviour
     // ステージ上のオブジェクトの総数計算
     private int _blockCount = 0;
     public int BlockCount => _blockCount;
-   
-    void Start()
+
+    public void SetParam(float insPosZ)
     {
         _insCoroutine = StartCoroutine(GenerateSetParam());
         _blockInsPos.y = MAX_POS_Y;
-        _blockInsPos.z = GameObject.FindWithTag("Player").transform.position.z;
+        _blockInsPos.z = insPosZ;
     }
 
     //ランダムにお邪魔ブロック生成
