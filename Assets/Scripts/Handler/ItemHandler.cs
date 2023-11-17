@@ -100,16 +100,16 @@ public class ItemHandler : MonoBehaviour
     // A - 短時間( 6秒 )だけ自身の破壊と生成がめちゃくちゃ早くなる( 2倍 )。(入手難易度-高)
     // B - 手持ちのオブジェクトを巨大オブジェクト( 3*3 )へ変化。(入手難易度-中)  
     // 巨大オブジェクトの破壊は通常5倍かかる。
-    // C - 手持ちオブジェクトを特殊ブロック(ランダム)へ変化。 (入手難易度-低) 
-    public int ItemEffectA()
-    {
-        int _destroyPower;
-        //Aアイテム効果時間
-        _itemAEffectTime -= Time.deltaTime;
-        if(_itemAEffectTime >= 0)
-        {
-          _destroyPower = 2.0f;
-        }
-        return _destroyPower;
-    }
+    // // C - 手持ちオブジェクトを特殊ブロック(ランダム)へ変化。 (入手難易度-低) 
+    // public int ItemEffectA()
+    // {
+    //     int _destroyPower;
+    //     //Aアイテム効果時間
+    //     _itemAEffectTime -= Time.deltaTime;
+    //     if(_itemAEffectTime >= 0)
+    //     {
+    //         _destroyPower = 2;
+    //     }
+    //     return _destroyPower;
+    // }
 }

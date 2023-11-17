@@ -43,6 +43,12 @@ public class tmpPlayer : MonoBehaviour
         BreakBlock();
         CreateBlock();
         // if (Input.GetMouseButtonDown(2)) _itemHandler.SelectItem();
+
+        // Jump handling
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);            
+        }
     }
 
     void FixedUpdate()
@@ -67,12 +73,6 @@ public class tmpPlayer : MonoBehaviour
         {
             Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 720.0f * Time.deltaTime);
-        }
-
-        // Jump handling
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);            
         }
 
     }

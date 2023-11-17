@@ -31,10 +31,10 @@ public class BlockManager : MonoBehaviour
         _blockCount += 1;
     }
 
+    
     IEnumerator GenerateSetParam()
     {
         yield return new WaitForSeconds(_insInterval);
-
         int insCount = Random.Range(1, 3);
 
         int insPosX;
@@ -45,9 +45,8 @@ public class BlockManager : MonoBehaviour
             {
                 // 暫定
                 insPosX = Random.Range(-7, 8);
-                
             } while (insPosX == _blockInsPos.x || ObjectExistsInRaycast(insPosX));
-
+            
             _blockInsPos.x = insPosX;
             GenerateBlock(_blockInsPos);
         }
@@ -59,9 +58,9 @@ public class BlockManager : MonoBehaviour
         Vector3 startPos = _blockInsPos;
         startPos.x = targetPosX;
         // Raycastでオブジェクトが存在するかどうかを判定
-        if (Physics.Raycast(startPos, _rayDirection, out RaycastHit hit, 10.0f))
+        Debug.DrawRay(startPos, _rayDirection * 1.0f, Color.red, 1f);
+        if (Physics.Raycast(startPos, _rayDirection, out RaycastHit hit, 1.0f))
         {
-            Debug.DrawRay(startPos, _rayDirection, Color.red, 1f);
             // Rayが指定オブジェクトに当たった場合
             if (hit.collider.CompareTag("Ambras") || hit.collider.CompareTag("Heros")) return true;
         }

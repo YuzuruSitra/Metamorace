@@ -116,6 +116,6 @@ public class Player : MonoBehaviour
     //アイテムを使う
     public void UseItem()
     {
-        _destroyPower = ItemEffectA();
+        //_destroyPower = ItemEffectA();
     }
 }

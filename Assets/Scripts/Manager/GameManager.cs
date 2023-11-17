@@ -21,9 +21,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        _uiHandler = GameObject.FindWithTag("UIHandler").GetComponent<UIHandler>();
+        //_uiHandler = GameObject.FindWithTag("UIHandler").GetComponent<UIHandler>();
         //制限時間を減らす
-        InvokeRepeating("ReduceTimeLimit", 0,1);
+        //InvokeRepeating("ReduceTimeLimit", 0,1);
         _player = GameObject.FindWithTag("Player").GetComponent<tmpPlayer>();
         if(_player == null) return;
         if(_teamID == 0) 
