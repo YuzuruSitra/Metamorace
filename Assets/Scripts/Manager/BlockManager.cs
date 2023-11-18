@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class BlockManager : MonoBehaviour
 {
-    [SerializeField] 
-    private Transform _insParent;
+    private Transform _cubeParent;
     [SerializeField] 
     private GameObject _blockAmbras;
     private float _insInterval = 3.0f;
@@ -19,6 +18,8 @@ public class BlockManager : MonoBehaviour
 
     public void SetParam(float insPosZ)
     {
+        _cubeParent = GameObject.FindWithTag("CubeParent").transform;
+        
         _insCoroutine = StartCoroutine(GenerateSetParam());
         _blockInsPos.y = MAX_POS_Y;
         _blockInsPos.z = insPosZ;
@@ -27,7 +28,7 @@ public class BlockManager : MonoBehaviour
     //ランダムにお邪魔ブロック生成
     void GenerateBlock(Vector3 insPos)
     {
-        Instantiate(_blockAmbras, insPos, Quaternion.identity, _insParent);
+        Instantiate(_blockAmbras, insPos, Quaternion.identity, _cubeParent);
         _blockCount += 1;
     }
 
