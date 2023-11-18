@@ -14,8 +14,7 @@ public class Player : MonoBehaviour
     // ItemHandler _itemHandler;
     [SerializeField] 
     GameObject _herosPrefab;
-    [SerializeField] 
-    private Transform _insParent;
+    private Transform _cubeParent;
 
     BlockBehaviour _currentBlock;
 
@@ -25,9 +24,17 @@ public class Player : MonoBehaviour
     private bool _isJump = false;
     private bool _hasBlock = false;
 
+    private float _enemyPos;
+
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
+        _cubeParent = GameObject.FindWithTag("CubeParent").transform;
+    }
+
+    public void SetEnemyPosZ(float posZ)
+    {
+        _enemyPos = posZ;
     }
 
     void Update()
@@ -36,6 +43,12 @@ public class Player : MonoBehaviour
         BreakBlock();
         CreateBlock();
         // if (Input.GetMouseButtonDown(2)) _itemHandler.SelectItem();
+
+        // Jump handling
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);            
+        }
     }
 
     void FixedUpdate()
@@ -60,12 +73,6 @@ public class Player : MonoBehaviour
         {
             Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 720.0f * Time.deltaTime);
-        }
-
-        // Jump handling
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);            
         }
 
     }
@@ -106,9 +113,9 @@ public class Player : MonoBehaviour
         if (!Input.GetMouseButtonDown(1)) return;
 
         Vector3 insPos = new Vector3 ((int)transform.position.x,(int)transform.position.y, -1.0f);
-        GameObject insObj = Instantiate(_herosPrefab, insPos, Quaternion.identity, _insParent);
+        GameObject insObj = Instantiate(_herosPrefab, insPos, Quaternion.identity, _cubeParent);
         // 仮置き
-        insObj.GetComponent<HerosBehaviour>().SetTargetPos(1.5f);
+        insObj.GetComponent<HerosBehaviour>().SetTargetPos(_enemyPos);
         _hasBlock = false;
         
     }

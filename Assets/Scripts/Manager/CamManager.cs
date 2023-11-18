@@ -14,9 +14,9 @@ public class CamManager : MonoBehaviour
     private GameObject _targetPlayer;
 
     // Start is called before the first frame update
-    void Start()
+    public void SetPlayer(GameObject player)
     {
-        if (_targetPlayer == null) _targetPlayer = GameObject.FindWithTag("Player");
+        _targetPlayer = player;
     }
 
     // Update is called once per frame
