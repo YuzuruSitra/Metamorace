@@ -11,47 +11,66 @@ public class GameManager : MonoBehaviour
     private CamManager _camManager;
     [SerializeField] 
     private BlockManager _blockManager;
-    //ゲームの制限時間
     [SerializeField] 
     private float _TimeLimit;
     public float _timeLimit => _TimeLimit;
-    UIHandler _uiHandler;
-    [SerializeField]
-    GameObject _playerPrefab; 
+    private UIHandler _uiHandler;
+    [SerializeField] 
+    private GameObject _playerPrefab;
     private int _teamID;
     private const float TEAM1_POS_Z = -2.5f;
     private const float TEAM2_POS_Z = 1.5f;
+    public bool DevelopeMode;
+    public int DevelopeTeamID;
 
     void Start()
     {
         //_uiHandler = GameObject.FindWithTag("UIHandler").GetComponent<UIHandler>();
-        //制限時間を減らす
-        //InvokeRepeating("ReduceTimeLimit", 0,1);
-        if (!PhotonNetwork.connected)   //Phootnに接続されていなければ
+        //InvokeRepeating("ReduceTimeLimit", 0, 1);
+
+        if (DevelopeMode) HandleDevelopmentMode();
+        else HandleProductionMode();
+    }
+
+    private void HandleDevelopmentMode()
+    {
+        _teamID = DevelopeTeamID;
+        if (_teamID == 0)  SetupPlayer(TEAM1_POS_Z, TEAM2_POS_Z);
+        else SetupPlayer(TEAM2_POS_Z, TEAM1_POS_Z);
+    }
+
+    private void HandleProductionMode()
+    {
+        if (!PhotonNetwork.connected)
         {
-            SceneManager.LoadScene("Launcher"); //ログイン画面に戻る
-            return; 
+            SceneManager.LoadScene("Launcher");
+            return;
         }
 
         TeamHandler teamHandler = TeamHandler.InstanceTeamHandler;
         _teamID = teamHandler.TeamID;
+
+        if (_teamID == 0)  SetupPhotonPlayer(TEAM1_POS_Z, TEAM2_POS_Z);
+        else SetupPhotonPlayer(TEAM2_POS_Z, TEAM1_POS_Z);
         
-        //Photonに接続していれば自プレイヤーを生成
-        if(_teamID == 0) 
-        {
-            _blockManager.SetParam(TEAM1_POS_Z);
-            GameObject player = PhotonNetwork.Instantiate(_playerPrefab.name, new Vector3(0f, 1.25f, TEAM1_POS_Z), Quaternion.identity, 0);
-            _camManager.SetPlayer(player);
-            player.GetComponent<Player>().SetEnemyPosZ(TEAM2_POS_Z);
-        }
-        else 
-        {
-            _blockManager.SetParam(TEAM2_POS_Z);
-            GameObject player = PhotonNetwork.Instantiate(_playerPrefab.name, new Vector3(0f, 1.25f, TEAM2_POS_Z), Quaternion.identity, 0);
-            _camManager.SetPlayer(player);
-            player.GetComponent<Player>().SetEnemyPosZ(TEAM1_POS_Z);
-        }
     }
+
+    private void SetupPlayer(float myPosZ, float enemyPosZ)
+    {
+        _blockManager.SetParam(myPosZ);
+        GameObject player = Instantiate(_playerPrefab, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity);
+        _camManager.SetPlayer(player);
+        player.GetComponent<Player>().SetEnemyPosZ(enemyPosZ);
+    }
+
+    private void SetupPhotonPlayer(float myPosZ, float enemyPosZ)
+    {
+        _blockManager.SetParam(myPosZ);
+        GameObject player = PhotonNetwork.Instantiate(_playerPrefab.name, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity, 0);
+        _camManager.SetPlayer(player);
+        player.GetComponent<Player>().SetEnemyPosZ(enemyPosZ);
+    }
+
     void Update()
     {
         //ReduceTimeLimit();
