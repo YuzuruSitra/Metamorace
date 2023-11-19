@@ -1173,7 +1173,8 @@ MonoBehaviour:
   _blockManager: {fileID: 1456876160}
   _TimeLimit: 90
   _playerPrefab: {fileID: 7544606331545972519, guid: 80b228bdc5e493d4a8e3dbe013fe0e18, type: 3}
-  _teamID: 1
+  DevelopeMode: 0
+  DevelopeTeamID: 0
 --- !u!4 &194663889
 Transform:
   m_ObjectHideFlags: 0
@@ -10954,6 +10955,10 @@ PrefabInstance:
     - target: {fileID: 7544606331545972539, guid: 80b228bdc5e493d4a8e3dbe013fe0e18, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366363817830386086, guid: 80b228bdc5e493d4a8e3dbe013fe0e18, type: 3}
+      propertyPath: m_PositionModel.SynchronizeEnabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}

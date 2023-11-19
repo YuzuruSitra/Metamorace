@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     private bool _hasBlock = false;
 
     private float _enemyPos;
+    private bool _developMode = false;
 
     void Start()
     {
@@ -35,9 +36,10 @@ public class Player : MonoBehaviour
         _cubeParent = GameObject.FindWithTag("CubeParent").transform;
     }
 
-    public void SetEnemyPosZ(float posZ)
+    public void SetParameter(float posZ, bool isDevelop)
     {
         _enemyPos = posZ;
+        _developMode = isDevelop;
     }
 
     void Update()
@@ -121,7 +123,9 @@ public class Player : MonoBehaviour
         if (!Input.GetMouseButtonDown(1)) return;
 
         Vector3 insPos = new Vector3 ((int)transform.position.x,(int)transform.position.y, -1.0f);
-        GameObject insObj = Instantiate(_herosPrefab, insPos, Quaternion.identity, _cubeParent);
+        GameObject insObj;
+        if(_developMode) insObj = Instantiate(_herosPrefab, insPos, Quaternion.identity, _cubeParent);
+        else insObj = PhotonNetwork.Instantiate(_herosPrefab.name, insPos, Quaternion.identity, 0);
         // 仮置き
         insObj.GetComponent<HerosBehaviour>().SetTargetPos(_enemyPos);
         _hasBlock = false;
