@@ -7956,6 +7956,14 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7006153795055791629, guid: 37bdfb20b21a0442e8ce4d3b8a0f7f3f, type: 3}
+      propertyPath: viewIdField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7006153795055791629, guid: 37bdfb20b21a0442e8ce4d3b8a0f7f3f, type: 3}
+      propertyPath: instantiationId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7828024547459711129, guid: 37bdfb20b21a0442e8ce4d3b8a0f7f3f, type: 3}
       propertyPath: m_Name
       value: Ambras
@@ -9769,6 +9777,14 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7006153795055791629, guid: 37bdfb20b21a0442e8ce4d3b8a0f7f3f, type: 3}
+      propertyPath: viewIdField
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -7006153795055791629, guid: 37bdfb20b21a0442e8ce4d3b8a0f7f3f, type: 3}
+      propertyPath: instantiationId
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7828024547459711128, guid: 37bdfb20b21a0442e8ce4d3b8a0f7f3f, type: 3}
       propertyPath: _objHealth
       value: 1
@@ -9783,7 +9799,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7828024547459711132, guid: 37bdfb20b21a0442e8ce4d3b8a0f7f3f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.42071962
+      value: 1.28
       objectReference: {fileID: 0}
     - target: {fileID: 7828024547459711132, guid: 37bdfb20b21a0442e8ce4d3b8a0f7f3f, type: 3}
       propertyPath: m_LocalPosition.y

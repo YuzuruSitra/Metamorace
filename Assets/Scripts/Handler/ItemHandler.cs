@@ -55,8 +55,9 @@ public class ItemHandler : MonoBehaviour
             //配列のi番目が空（０）だったら処理実行
            
                 _stackBlocks[i] = 0;
-                Debug.Log(string.Join(", ", _stackBlocks));        
+                //Debug.Log(string.Join(", ", _stackBlocks));        
         }  
+        Debug.Log(string.Join(", ", _stackBlocks));   
     }
 
     //所持しているブロックによって生成されるアイテム変化
@@ -66,6 +67,7 @@ public class ItemHandler : MonoBehaviour
         if(_stackBlocks[2] == 1 || _stackBlocks[2] == 2)
         {
             _myBrockNum = CheckMyBrock();
+            Debug.Log(_myBrockNum);
             if(_myBrockNum == 0)
             {
                 //アイテムA
@@ -93,6 +95,8 @@ public class ItemHandler : MonoBehaviour
                 ResetBlock();
                 _hasItemB = true;
             }    
+            //カウントリセット
+            _myBrockNum = 0;
            
         }   
     }
@@ -164,7 +168,7 @@ public class ItemHandler : MonoBehaviour
         
         if(_hasItemB == true) 
        {
-        Debug.Log(_hasItemB);
+             Debug.Log(_hasItemB);
             _uiHandler.ResetItemImage();   
             Debug.Log("アイテムB効果発動");
             _destroyPower = _destroyPower*2;
@@ -182,18 +186,30 @@ public class ItemHandler : MonoBehaviour
             Debug.Log("アイテムC効果発動");
             _destroyPower = _destroyPower*2;
             _playerSpeed = _playerSpeed*2;
-            Invoke("ResetVar",6.0f);
+            //Invoke("ResetVar",6.0f);
+            //  Debug.Log("Reset");
+            // _destroyPower /= 2;
+            // _playerSpeed /= 2;
        }
        
-       _hasItemC = false;
-         
+       _hasItemC = false;        
          //return _destroyPower;   
      }
 
-    //  public void ResetVar()
-    // {
-    //     _destroyPower = _destroyPower/2;
-    //     _playerSpeed = _playerSpeed/2;
-    // }
+     public void ResetVar()
+     {
+        Debug.Log("reset");
+     }
+
+     
+
+//      private IEnumerator ResetVarCoroutine( float _destroyPower, float _playerSpeed)
+// {
+//     yield return new WaitForSeconds(6.0f);
+
+//     Debug.Log("Reset");
+//     _destroyPower = _destroyPower / 2;
+//     _playerSpeed = _playerSpeed / 2;
+// }
      
 }
