@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (!_myPV.isMine) return;
+        if (!_myPV.isMine && !_developMode) return;
 
         BreakBlock();
         CreateBlock();
@@ -64,7 +64,7 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!_myPV.isMine) return;
+        if (!_myPV.isMine && !_developMode) return;
         PlayerCtrl();
     }
 
