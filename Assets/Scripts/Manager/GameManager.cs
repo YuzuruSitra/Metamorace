@@ -57,18 +57,18 @@ public class GameManager : MonoBehaviour
 
     private void SetupPlayer(float myPosZ, float enemyPosZ)
     {
-        _blockManager.SetParam(myPosZ);
+        _blockManager.SetParam(myPosZ, DevelopeMode);
         GameObject player = Instantiate(_playerPrefab, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity);
         _camManager.SetPlayer(player);
-        player.GetComponent<Player>().SetEnemyPosZ(enemyPosZ);
+        player.GetComponent<Player>().SetParameter(enemyPosZ, DevelopeMode);
     }
 
     private void SetupPhotonPlayer(float myPosZ, float enemyPosZ)
     {
-        _blockManager.SetParam(myPosZ);
+        _blockManager.SetParam(myPosZ, DevelopeMode);
         GameObject player = PhotonNetwork.Instantiate(_playerPrefab.name, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity, 0);
         _camManager.SetPlayer(player);
-        player.GetComponent<Player>().SetEnemyPosZ(enemyPosZ);
+        player.GetComponent<Player>().SetParameter(enemyPosZ, DevelopeMode);
     }
 
     void Update()

@@ -15,20 +15,23 @@ public class BlockManager : MonoBehaviour
     // ステージ上のオブジェクトの総数計算
     private int _blockCount = 0;
     public int BlockCount => _blockCount;
+    private bool _developMode = false;
 
-    public void SetParam(float insPosZ)
+    public void SetParam(float insPosZ, bool isDevelop)
     {
         _cubeParent = GameObject.FindWithTag("CubeParent").transform;
         
         _insCoroutine = StartCoroutine(GenerateSetParam());
         _blockInsPos.y = MAX_POS_Y;
         _blockInsPos.z = insPosZ;
+        _developMode = isDevelop;
     }
 
     //ランダムにお邪魔ブロック生成
     void GenerateBlock(Vector3 insPos)
     {
-        Instantiate(_blockAmbras, insPos, Quaternion.identity, _cubeParent);
+        if(_developMode) Instantiate(_blockAmbras, insPos, Quaternion.identity, _cubeParent);
+        else PhotonNetwork.Instantiate(_blockAmbras.name, insPos, Quaternion.identity, 0);
         _blockCount += 1;
     }
 
