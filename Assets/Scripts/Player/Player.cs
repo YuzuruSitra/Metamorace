@@ -14,6 +14,9 @@ public class Player : MonoBehaviour
     // ItemHandler _itemHandler;
     [SerializeField] 
     GameObject _herosPrefab;
+
+    [SerializeField]
+    ItemHandler _itemHandler;
     private Transform _cubeParent;
 
     BlockBehaviour _currentBlock;
@@ -42,7 +45,9 @@ public class Player : MonoBehaviour
        
         BreakBlock();
         CreateBlock();
-        // if (Input.GetMouseButtonDown(2)) _itemHandler.SelectItem();
+        
+        if (Input.GetMouseButtonDown(2)) _itemHandler.CreateItem();
+        if (Input.GetMouseButtonDown(0)) _itemHandler.UseItem();
 
         // Jump handling
         if (Input.GetKeyDown(KeyCode.Space))
@@ -98,9 +103,12 @@ public class Player : MonoBehaviour
         {
             if(_currentBlock == null) _currentBlock = hit.collider.GetComponent<BlockBehaviour>();
             int _objID = _currentBlock.DestroyBlock(_destroyPower);
-            // objIDを利用してUI表示
-        
-            if(_objID > -1) _hasBlock = true;
+            // objIDを利用してUI表示  
+            if(_objID == 1 ||_objID == 2)
+            {
+                _hasBlock = true;
+                _itemHandler.StackBlock(_objID);
+            } 
             return;
         }
     }

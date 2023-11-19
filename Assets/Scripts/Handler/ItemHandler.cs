@@ -14,24 +14,34 @@ public class ItemHandler : MonoBehaviour
     int _myBrockNum;
     int _objID;
     float _itemAEffectTime = 6.0f;
+
+    bool _hasItemA,_hasItemB,_hasItemC = false;
     void Start()
     {
         _uiHandler = GameObject.FindWithTag("UIHandler").GetComponent<UIHandler>();
     }
 
+    void Update()
+    {
+       
+    }
+
     //破壊したブロックをスタックする関数
     public void StackBlock(int _objID)
     {
-        //0または1でない値を弾く（BlockBehaviourの DestroyBlock()参照）
+        
+        //1または2でない値を弾く（BlockBehaviourの DestroyBlock()参照）
         if(_objID == -1) return;
-
+       
         for(int i = 0; i < _stackBlocks.Length; i++) 
         {
+            
             //配列のi番目が空（０）だったら処理実行
             if(_stackBlocks[i] == 0)
             {
                 _stackBlocks[i] = _objID;
                 Debug.Log(string.Join(", ", _stackBlocks));
+                _uiHandler.SetStackImage(_objID);
                  break;
             }
         }  
@@ -50,7 +60,7 @@ public class ItemHandler : MonoBehaviour
     }
 
     //所持しているブロックによって生成されるアイテム変化
-    public void UseItem()
+    public void CreateItem()
     {       
         if(_stackBlocks[2] == 1 || _stackBlocks[2] == 2)
         {
@@ -62,6 +72,7 @@ public class ItemHandler : MonoBehaviour
                  _uiHandler.SetItemImage(0);
                 _uiHandler.ResetStackImage();
                 ResetBlock();
+                _hasItemA = true;
             }
             else if(_myBrockNum == 3)
             {
@@ -70,6 +81,7 @@ public class ItemHandler : MonoBehaviour
                  _uiHandler.SetItemImage(1);
                  _uiHandler.ResetStackImage();
                 ResetBlock();
+                _hasItemC = true;
             }
             else
             {
@@ -78,6 +90,7 @@ public class ItemHandler : MonoBehaviour
                  _uiHandler.SetItemImage(2);
                  _uiHandler.ResetStackImage();
                 ResetBlock();
+                _hasItemB = true;
             }    
         }   
     }
@@ -101,15 +114,53 @@ public class ItemHandler : MonoBehaviour
     // B - 手持ちのオブジェクトを巨大オブジェクト( 3*3 )へ変化。(入手難易度-中)  
     // 巨大オブジェクトの破壊は通常5倍かかる。
     // // C - 手持ちオブジェクトを特殊ブロック(ランダム)へ変化。 (入手難易度-低) 
-    // public int ItemEffectA()
-    // {
-    //     int _destroyPower;
-    //     //Aアイテム効果時間
-    //     _itemAEffectTime -= Time.deltaTime;
-    //     if(_itemAEffectTime >= 0)
-    //     {
-    //         _destroyPower = 2;
-    //     }
-    //     return _destroyPower;
-    // }
+    public void UseItem()
+    {
+        if(_hasItemA == true)
+        {
+             ItemEffectA();
+             _hasItemA = false;
+        }
+        else if(_hasItemB == true)
+        {
+            ItemEffectB();
+            _hasItemB = false;
+        }
+        else if(_hasItemC == true)
+        {
+            ItemEffectC();
+            _hasItemC = false;
+        }
+       
+       _uiHandler.ResetItemImage();
+       
+    }
+
+    public void ItemEffectA()
+    {
+        Debug.Log("アイテムA効果発動");
+        
+       
+        
+         // int _destroyPower;
+        // //Aアイテム効果時間
+        // _itemAEffectTime -= Time.deltaTime;
+        // if(_itemAEffectTime >= 0)
+        // {
+        //     _destroyPower = 2;
+        // }
+        // return _destroyPower;
+    }
+
+     public void ItemEffectB()
+     {
+        Debug.Log("アイテムB効果発動");
+     }
+     public void ItemEffectC()
+     {
+         Debug.Log("アイテムC効果発動");
+
+         
+     }
+     
 }

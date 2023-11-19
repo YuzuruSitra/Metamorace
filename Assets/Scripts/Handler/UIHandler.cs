@@ -6,6 +6,8 @@ public class UIHandler : MonoBehaviour
 {
     [SerializeField] private Text _LimitTimeText,_BlockRate;
     [SerializeField] Image[] _StackImage;
+    //アンブラスとヘイロスのブロック画像、_objID1がヘイロス2がアンブラス
+    [SerializeField] Sprite _herosSprite,_ambrasSprite;
 
      [SerializeField] Image _itemImage;
      [SerializeField] Sprite[] _itemSprite;
@@ -18,26 +20,30 @@ public class UIHandler : MonoBehaviour
         _LimitTimeText.text = _TimeLimit.ToString("f1") + "秒";
     }
 
-    //スプライトを格納
-    public void SetStackImage(Sprite sprite)
+    //アンブラスとヘイロスのスプライトを格納
+    public void SetStackImage(int _objID)
     {
+        Debug.Log("Called");
         for(int i = 0; i < _StackImage.Length; i++)
         {
             if(IsEmpty(i))
             {
-                _StackImage[i].sprite = sprite;
+                if(_objID == 1)
+                {
+                    _StackImage[i].sprite = _herosSprite;
+                }
+                else if(_objID == 2)
+                {
+                     _StackImage[i].sprite = _ambrasSprite;
+                }
+                else Debug.Log("Null _objID");
+                
                 break;
             }
         }       
     }   
-
-    //アイテムの画像を格納
-    public void SetItemImage(int _itemnum)
-    {
-        _itemImage.sprite = _itemSprite[_itemnum];
-    }   
-
-    public void ResetStackImage()
+    //アンブラスとヘイロスのスプライトをリセット
+     public void ResetStackImage()
     {  
         for(int i = 0; i < _StackImage.Length; i++)
         {
@@ -45,6 +51,20 @@ public class UIHandler : MonoBehaviour
         }   
         
     }
+
+    //アイテムの画像を格納
+    public void SetItemImage(int _itemnum)
+    {
+        _itemImage.sprite = _itemSprite[_itemnum];
+    }   
+    //アイテムの画像をリセット
+    public void ResetItemImage()
+    {
+        _itemImage.sprite = null;
+    }   
+
+
+   
 
     //開いている枠を調べる
     public bool IsEmpty(int _StackNum)
