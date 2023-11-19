@@ -47,7 +47,8 @@ public class Player : MonoBehaviour
         CreateBlock();
         
         if (Input.GetMouseButtonDown(2)) _itemHandler.CreateItem();
-        if (Input.GetMouseButtonDown(0)) _itemHandler.UseItem();
+        Item();
+        
 
         // Jump handling
         if (Input.GetKeyDown(KeyCode.Space))
@@ -129,8 +130,17 @@ public class Player : MonoBehaviour
     }
 
     //アイテムを使う
-    public void UseItem()
+    public void Item()
     {
-        //_destroyPower = ItemEffectA();
+        if (Input.GetMouseButtonDown(0))
+        {
+            // _destroyPower = _itemHandler.ItemEffectA(_destroyPower);
+            // _destroyPower = _itemHandler.ItemEffectB(_destroyPower);
+            _itemHandler.ItemEffectC(ref _destroyPower,ref _playerSpeed);
+           
+        } 
+        
     }
+
+   
 }

@@ -61,7 +61,8 @@ public class ItemHandler : MonoBehaviour
 
     //所持しているブロックによって生成されるアイテム変化
     public void CreateItem()
-    {       
+    {   
+        //スタックイメージが満杯だったら    
         if(_stackBlocks[2] == 1 || _stackBlocks[2] == 2)
         {
             _myBrockNum = CheckMyBrock();
@@ -92,6 +93,7 @@ public class ItemHandler : MonoBehaviour
                 ResetBlock();
                 _hasItemB = true;
             }    
+           
         }   
     }
 
@@ -114,33 +116,38 @@ public class ItemHandler : MonoBehaviour
     // B - 手持ちのオブジェクトを巨大オブジェクト( 3*3 )へ変化。(入手難易度-中)  
     // 巨大オブジェクトの破壊は通常5倍かかる。
     // // C - 手持ちオブジェクトを特殊ブロック(ランダム)へ変化。 (入手難易度-低) 
-    public void UseItem()
-    {
-        if(_hasItemA == true)
-        {
-             ItemEffectA();
-             _hasItemA = false;
-        }
-        else if(_hasItemB == true)
-        {
-            ItemEffectB();
-            _hasItemB = false;
-        }
-        else if(_hasItemC == true)
-        {
-            ItemEffectC();
-            _hasItemC = false;
-        }
+    // public void UseItem()
+    // {
+    //     if(_hasItemA == true)
+    //     {
+    //          ItemEffectA();
+    //          _hasItemA = false;
+    //     }
+    //     else if(_hasItemB == true)
+    //     {
+    //         ItemEffectB();
+    //         _hasItemB = false;
+    //     }
+    //     else if(_hasItemC == true)
+    //     {
+    //         ItemEffectC();
+    //         _hasItemC = false;
+    //     }
        
-       _uiHandler.ResetItemImage();
-       
-    }
+    //    _uiHandler.ResetItemImage();   
+    // }
 
-    public void ItemEffectA()
+    public float ItemEffectA(float _destroyPower)
     {
-        Debug.Log("アイテムA効果発動");
-        
+       if(_hasItemA == true) 
+       {
+            _uiHandler.ResetItemImage();   
+            Debug.Log("アイテムA効果発動");
+            _destroyPower = _destroyPower*2;
+           
+       }
        
+        return _destroyPower;
         
          // int _destroyPower;
         // //Aアイテム効果時間
@@ -152,15 +159,41 @@ public class ItemHandler : MonoBehaviour
         // return _destroyPower;
     }
 
-     public void ItemEffectB()
+     public float ItemEffectB(float _destroyPower)
      {
-        Debug.Log("アイテムB効果発動");
+        
+        if(_hasItemB == true) 
+       {
+        Debug.Log(_hasItemB);
+            _uiHandler.ResetItemImage();   
+            Debug.Log("アイテムB効果発動");
+            _destroyPower = _destroyPower*2;
+           
+       }
+       
+        return _destroyPower;
      }
-     public void ItemEffectC()
+     public void ItemEffectC(ref float _destroyPower, ref float _playerSpeed)
      {
-         Debug.Log("アイテムC効果発動");
-
+        if(_hasItemC == true) 
+       {
+            Debug.Log(_hasItemC);
+            _uiHandler.ResetItemImage();   
+            Debug.Log("アイテムC効果発動");
+            _destroyPower = _destroyPower*2;
+            _playerSpeed = _playerSpeed*2;
+            Invoke("ResetVar",6.0f);
+       }
+       
+       _hasItemC = false;
          
+         //return _destroyPower;   
      }
+
+    //  public void ResetVar()
+    // {
+    //     _destroyPower = _destroyPower/2;
+    //     _playerSpeed = _playerSpeed/2;
+    // }
      
 }
