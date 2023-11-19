@@ -7,10 +7,12 @@ public class Player : MonoBehaviour
     private PhotonView _myPV;
     [SerializeField] 
     private float _playerSpeed;
+    private float _usePlayerSpeed;
     [SerializeField] 
     private float _jumpPower;
     [SerializeField]
     private float _destroyPower = 1.0f;
+    private float _useDestroyPower;
     // [SerializeField] 
     // ItemHandler _itemHandler;
     [SerializeField] 
@@ -36,6 +38,8 @@ public class Player : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _cubeParent = GameObject.FindWithTag("CubeParent").transform;
         _myPV = GetComponent<PhotonView>();
+        _usePlayerSpeed = _playerSpeed;
+        _useDestroyPower = _destroyPower;
     }
 
     public void SetParameter(float posZ, bool isDevelop)
@@ -78,7 +82,7 @@ public class Player : MonoBehaviour
         Vector3 movement = new Vector3(_input_x, 0.0f, _input_z);
  
 
-        _rb.MovePosition(transform.position + movement * _playerSpeed * Time.deltaTime);
+        _rb.MovePosition(transform.position + movement * _usePlayerSpeed * Time.deltaTime);
 
         // Handle player rotation based on the input
         if (movement != Vector3.zero)
@@ -109,7 +113,7 @@ public class Player : MonoBehaviour
         if (hit.collider.CompareTag("Ambras") || hit.collider.CompareTag("Heros"))
         {
             if(_currentBlock == null) _currentBlock = hit.collider.GetComponent<BlockBehaviour>();
-            int _objID = _currentBlock.DestroyBlock(_destroyPower);
+            int _objID = _currentBlock.DestroyBlock(_useDestroyPower);
             // objIDを利用してUI表示  
             if(_objID == 1 ||_objID == 2)
             {
@@ -144,10 +148,16 @@ public class Player : MonoBehaviour
         {
             // _destroyPower = _itemHandler.ItemEffectA(_destroyPower);
             // _destroyPower = _itemHandler.ItemEffectB(_destroyPower);
-            _itemHandler.ItemEffectC(ref _destroyPower,ref _playerSpeed);
-           
+            _itemHandler.ItemEffectC(ref _useDestroyPower,ref _usePlayerSpeed);
+            Invoke("FinishItemC", _itemHandler.ItemCEffectTime);
         } 
         
+    }
+
+    void FinishItemC()
+    {
+        _usePlayerSpeed = _playerSpeed;
+        _useDestroyPower = _destroyPower;
     }
 
    

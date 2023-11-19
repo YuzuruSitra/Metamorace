@@ -16,6 +16,9 @@ public class ItemHandler : MonoBehaviour
     float _itemAEffectTime = 6.0f;
 
     bool _hasItemA,_hasItemB,_hasItemC = false;
+    private float _itemCEffectTime = 6.0f;
+    public float ItemCEffectTime => _itemCEffectTime;
+
     void Start()
     {
         _uiHandler = GameObject.FindWithTag("UIHandler").GetComponent<UIHandler>();
@@ -179,27 +182,22 @@ public class ItemHandler : MonoBehaviour
      }
      public void ItemEffectC(ref float _destroyPower, ref float _playerSpeed)
      {
-        if(_hasItemC == true) 
-       {
-            Debug.Log(_hasItemC);
-            _uiHandler.ResetItemImage();   
-            Debug.Log("アイテムC効果発動");
-            _destroyPower = _destroyPower*2;
-            _playerSpeed = _playerSpeed*2;
-            //Invoke("ResetVar",6.0f);
-            //  Debug.Log("Reset");
-            // _destroyPower /= 2;
-            // _playerSpeed /= 2;
-       }
+        if (!_hasItemC) return; 
+        
+        Debug.Log(_hasItemC);
+        _uiHandler.ResetItemImage();   
+        Debug.Log("アイテムC効果発動");
+        _destroyPower *= 2;
+        _playerSpeed *= 2;
        
-       _hasItemC = false;        
-         //return _destroyPower;   
+        _hasItemC = false;        
+        //return _destroyPower;   
      }
 
-     public void ResetVar()
-     {
+    public void ResetVar()
+    {
         Debug.Log("reset");
-     }
+    }
 
      
 
