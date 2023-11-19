@@ -9,36 +9,40 @@ public class ItemHandler : MonoBehaviour
     //保持ブロックを管理する配列
     private int[] _stackBlocks = new int[3];
     public int[] _StackBlocks => _stackBlocks;
+    //アイテムB用のブロック
+    [SerializeField] GameObject _bigBlock;
+    public GameObject _BigBlock => _bigBlock;
 
  //スタックの中の自ブロックの数を格納
     int _myBrockNum;
     int _objID;
-    float _itemAEffectTime = 6.0f;
+    //float _itemAEffectTime = 6.0f;
 
     bool _hasItemA,_hasItemB,_hasItemC = false;
-    private float _itemCEffectTime = 6.0f;
-    public float ItemCEffectTime => _itemCEffectTime;
+    public bool _HasItemA => _hasItemA;
+    public bool _HasItemB => _hasItemB;
+    public bool _HasItemC => _hasItemC;
+    private float _itemAEffectTime = 6.0f;
+    public float _ItemAEffectTime => _itemAEffectTime;
+
+    private float _itemCEffectTime = 2.0f;
+    public float _ItemCEffectTime => _itemCEffectTime;
 
     void Start()
     {
         _uiHandler = GameObject.FindWithTag("UIHandler").GetComponent<UIHandler>();
-    }
-
-    void Update()
-    {
-       
+        //デバッグ用
+        //_hasItemB = true;
     }
 
     //破壊したブロックをスタックする関数
     public void StackBlock(int _objID)
-    {
-        
+    {        
         //1または2でない値を弾く（BlockBehaviourの DestroyBlock()参照）
         if(_objID == -1) return;
        
         for(int i = 0; i < _stackBlocks.Length; i++) 
-        {
-            
+        {          
             //配列のi番目が空（０）だったら処理実行
             if(_stackBlocks[i] == 0)
             {
@@ -57,8 +61,7 @@ public class ItemHandler : MonoBehaviour
         {
             //配列のi番目が空（０）だったら処理実行
            
-                _stackBlocks[i] = 0;
-                //Debug.Log(string.Join(", ", _stackBlocks));        
+                _stackBlocks[i] = 0;      
         }  
         Debug.Log(string.Join(", ", _stackBlocks));   
     }
@@ -103,7 +106,6 @@ public class ItemHandler : MonoBehaviour
            
         }   
     }
-
     //自ブロックの数をカウント
     public int CheckMyBrock()
     {
@@ -117,97 +119,36 @@ public class ItemHandler : MonoBehaviour
         }  
         return _myBrockNum;
     }
-
-
-    // A - 短時間( 6秒 )だけ自身の破壊と生成がめちゃくちゃ早くなる( 2倍 )。(入手難易度-高)
-    // B - 手持ちのオブジェクトを巨大オブジェクト( 3*3 )へ変化。(入手難易度-中)  
-    // 巨大オブジェクトの破壊は通常5倍かかる。
-    // // C - 手持ちオブジェクトを特殊ブロック(ランダム)へ変化。 (入手難易度-低) 
-    // public void UseItem()
-    // {
-    //     if(_hasItemA == true)
-    //     {
-    //          ItemEffectA();
-    //          _hasItemA = false;
-    //     }
-    //     else if(_hasItemB == true)
-    //     {
-    //         ItemEffectB();
-    //         _hasItemB = false;
-    //     }
-    //     else if(_hasItemC == true)
-    //     {
-    //         ItemEffectC();
-    //         _hasItemC = false;
-    //     }
-       
-    //    _uiHandler.ResetItemImage();   
-    // }
-
-    public float ItemEffectA(float _destroyPower)
-    {
-       if(_hasItemA == true) 
-       {
-            _uiHandler.ResetItemImage();   
-            Debug.Log("アイテムA効果発動");
-            _destroyPower = _destroyPower*2;
-           
-       }
-       
-        return _destroyPower;
-        
-         // int _destroyPower;
-        // //Aアイテム効果時間
-        // _itemAEffectTime -= Time.deltaTime;
-        // if(_itemAEffectTime >= 0)
-        // {
-        //     _destroyPower = 2;
-        // }
-        // return _destroyPower;
-    }
-
-     public float ItemEffectB(float _destroyPower)
+    public void ItemEffectA(ref float _destroyPower, ref float _playerSpeed)
      {
+        //if (!_hasItemC) return; 
         
-        if(_hasItemB == true) 
-       {
-             Debug.Log(_hasItemB);
-            _uiHandler.ResetItemImage();   
-            Debug.Log("アイテムB効果発動");
-            _destroyPower = _destroyPower*2;
-           
-       }
-       
-        return _destroyPower;
-     }
-     public void ItemEffectC(ref float _destroyPower, ref float _playerSpeed)
-     {
-        if (!_hasItemC) return; 
-        
-        Debug.Log(_hasItemC);
+        Debug.Log(_hasItemA);
         _uiHandler.ResetItemImage();   
         Debug.Log("アイテムC効果発動");
-        _destroyPower *= 2;
-        _playerSpeed *= 2;
+        _destroyPower = _destroyPower*2;
+        _playerSpeed = _playerSpeed*2;
        
-        _hasItemC = false;        
+        _hasItemA = false;        
         //return _destroyPower;   
      }
-
-    public void ResetVar()
+     public void ItemEffectB()
+     { 
+             Debug.Log(_hasItemB);
+            _uiHandler.ResetItemImage();   
+            Debug.Log("アイテムB効果発動");         
+            _hasItemB = false;
+     }
+    public void ItemEffectC(ref float _playerSpeed)
     {
-        Debug.Log("reset");
+      
+            _uiHandler.ResetItemImage();   
+            Debug.Log("スタン");
+           _playerSpeed = _playerSpeed*0;       
+          _hasItemC = false;
     }
-
      
 
-//      private IEnumerator ResetVarCoroutine( float _destroyPower, float _playerSpeed)
-// {
-//     yield return new WaitForSeconds(6.0f);
 
-//     Debug.Log("Reset");
-//     _destroyPower = _destroyPower / 2;
-//     _playerSpeed = _playerSpeed / 2;
-// }
      
 }
