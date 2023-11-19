@@ -63,6 +63,7 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!_myPV.isMine) return;
         PlayerCtrl();
     }
 
