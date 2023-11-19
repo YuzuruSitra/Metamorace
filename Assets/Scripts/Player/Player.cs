@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private PhotonView _myPV;
     [SerializeField] 
     private float _playerSpeed;
     [SerializeField] 
@@ -34,6 +35,7 @@ public class Player : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _cubeParent = GameObject.FindWithTag("CubeParent").transform;
+        _myPV = GetComponent<PhotonView>();
     }
 
     public void SetParameter(float posZ, bool isDevelop)
@@ -44,7 +46,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-       
+        if (!_myPV.isMine) return;
+
         BreakBlock();
         CreateBlock();
         
