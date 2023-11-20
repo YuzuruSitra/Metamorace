@@ -128,11 +128,19 @@ public class Player : MonoBehaviour
             if (_objID == 1 || _objID == 2)
             {
                 _hasBlock = true;
+                _myPV.RPC(nameof(DestroyBlock), PhotonTargets.All, _currentBlock);
                 _itemHandler.StackBlock(_objID);
             }
             return;
         }
     }
+
+    [PunRPC]
+    private void DestroyBlock() 
+    {
+        Destroy(_currentBlock);
+    }
+
     //オブジェクト生成
     public void CreateBlock()
     {
