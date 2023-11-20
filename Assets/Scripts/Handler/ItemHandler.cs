@@ -11,7 +11,7 @@ public class ItemHandler : MonoBehaviour
     //アイテムB用のブロック
     [SerializeField] GameObject _bigBlock;
     public GameObject _BigBlock => _bigBlock;
-    [SerializeField] ItemC _itemc;
+    //[SerializeField] ItemC _itemc;
  //スタックの中の自ブロックの数を格納
     int _myBrockNum;
     int _objID;
@@ -139,26 +139,13 @@ public class ItemHandler : MonoBehaviour
      }
 
     //アイテムCの効果抽選
-     public void ChoseEffectC(ref float _usePlayerSpeed)
+     public int ChoseEffectC()
      {
         //Cのエフェクト選定
-        int itemid = Random.Range(1,2);
-        switch(itemid){
-            //条件１
-            case 1:
-                //処理１
-                Debug.Log("処理１");
-                _itemc.EffectStan(ref _usePlayerSpeed);
-                break;
-            //条件２
-            case 2:
-                //処理２
-                Debug.Log("処理２");
-               _itemc.Break4();
-                break;
-        }
+        int _effectid = Random.Range(2,3);
         _uiHandler.ResetItemImage();
         _hasItemC = false;
+         return _effectid; 
      }
     // public void ItemEffectC(ref float _playerSpeed)
     // {

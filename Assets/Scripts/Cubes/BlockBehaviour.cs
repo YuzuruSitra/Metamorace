@@ -10,7 +10,6 @@ public class BlockBehaviour : MonoBehaviour
     private int _objID;
     [SerializeField] 
     private float _objHealth;
-    
     //Playerによるお邪魔ブロック破壊処理
     public int DestroyBlock(float power, bool developMode)
     {

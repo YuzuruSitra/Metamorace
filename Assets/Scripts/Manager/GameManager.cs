@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
     // 0...Team1 1...Team2
     [SerializeField]
     private GameObject[] _herosPrefab;
+    //アイテムCのブロックのプレハブ
+    [SerializeField] 
+    private GameObject _itemCBlock;
     private int _teamID;
     public const float TEAM1_POS_Z = -2.5f;
     public const float TEAM2_POS_Z = 1.5f;

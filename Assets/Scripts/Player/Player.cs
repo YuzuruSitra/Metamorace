@@ -18,13 +18,17 @@ public class Player : MonoBehaviour
     // [SerializeField] 
     // ItemHandler _itemHandler;
     private GameObject _herosPrefab;
+    //アイテムCブロックのプレハブ
+    private GameObject _itemCBlock;
 
     [SerializeField]
     ItemHandler _itemHandler;
+    [SerializeField] 
+    ItemC _itemC;
     private Transform _cubeParent;
 
     BlockBehaviour _currentBlock;
-
+  
     //x.z軸方向の入力を保存
     private float _input_x, _input_z;
     private Rigidbody _rb;
@@ -120,14 +124,33 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (hit.collider.CompareTag("Ambras") || hit.collider.CompareTag("Heros"))
+        if (hit.collider.CompareTag("Ambras") || hit.collider.CompareTag("Heros") || hit.collider.CompareTag("ItemCBlock"))
         {
             if (_currentBlock == null) _currentBlock = hit.collider.GetComponent<BlockBehaviour>();
+            if(hit.collider.CompareTag("ItemCBlock"))_itemC =  hit.collider.GetComponent<ItemC>();
             int _objID = _currentBlock.DestroyBlock(_useDestroyPower, _developMode);
-            
             // objIDを利用してUI表示  
             if (_objID == 1 || _objID == 2)
             {
+                //ItemCBlockを破壊した際に効果発動
+                if(hit.collider.CompareTag("ItemCBlock")) 
+                {           
+                    int _effectid = _itemHandler.ChoseEffectC();
+                    switch(_effectid){
+                        //敵スタン
+                        case 1:
+                        _itemC.EffectStan(ref _usePlayerSpeed);
+                        Invoke("FinishItemC", _itemHandler._ItemCEffectTime);
+                        break;
+                        //周囲4マスのブロックを破壊
+                        case 2:
+                        _itemC.Break4();
+                        break;
+                        default:
+                        break;
+                    }
+                    Debug.Log("Chakai");
+                }
                 _hasBlock = true;
                 _itemHandler.StackBlock(_objID);
             }
@@ -154,6 +177,11 @@ public class Player : MonoBehaviour
                 insObj = Instantiate(_itemHandler._BigBlock, insBigPos, Quaternion.identity, _cubeParent);
                 _itemHandler.ItemEffectB();
             }
+            else if(_itemHandler._HasItemC)
+            {
+                // insObj = Instantiate(_itemCBlock, insPos, Quaternion.identity, _cubeParent);
+                // Debug.Log("せいせい");
+            }
             else
             {
                 insObj = Instantiate(_herosPrefab, insPos, Quaternion.identity, _cubeParent);
@@ -174,13 +202,14 @@ public class Player : MonoBehaviour
              Invoke("FinishItemA", _itemHandler._ItemAEffectTime);
         _itemHandler.ItemEffectA(ref _useDestroyPower, ref _usePlayerSpeed);
         }
-        else if(_itemHandler._HasItemC == true)
-        {
-            _itemHandler.ChoseEffectC(ref _usePlayerSpeed);
-            //_itemHandler.ItemEffectC(ref _usePlayerSpeed);
-             //スタン時間
-            //Invoke("FinishItemC", _itemHandler._ItemCEffectTime);
-        }
+        // else if(_itemHandler._HasItemC == true)
+        // {
+        //     int itemid = _itemHandler.ChoseEffectC();
+        //     _itemC.EffectStan(ref _usePlayerSpeed);
+        //     //_itemHandler.ItemEffectC(ref _usePlayerSpeed);
+        //      //スタン時間
+        //     Invoke("FinishItemC", _itemHandler._ItemCEffectTime);
+        // }
     }
 
     void FinishItemA()
