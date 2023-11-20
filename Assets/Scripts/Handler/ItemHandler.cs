@@ -5,14 +5,13 @@ using UnityEngine;
 public class ItemHandler : MonoBehaviour
 {
     UIHandler _uiHandler;
-
     //保持ブロックを管理する配列
     private int[] _stackBlocks = new int[3];
     public int[] _StackBlocks => _stackBlocks;
     //アイテムB用のブロック
     [SerializeField] GameObject _bigBlock;
     public GameObject _BigBlock => _bigBlock;
-
+    [SerializeField] ItemC _itemc;
  //スタックの中の自ブロックの数を格納
     int _myBrockNum;
     int _objID;
@@ -47,7 +46,7 @@ public class ItemHandler : MonoBehaviour
             if(_stackBlocks[i] == 0)
             {
                 _stackBlocks[i] = _objID;
-                Debug.Log(string.Join(", ", _stackBlocks));
+                //Debug.Log(string.Join(", ", _stackBlocks));
                 _uiHandler.SetStackImage(_objID);
                  break;
             }
@@ -63,7 +62,7 @@ public class ItemHandler : MonoBehaviour
            
                 _stackBlocks[i] = 0;      
         }  
-        Debug.Log(string.Join(", ", _stackBlocks));   
+        //Debug.Log(string.Join(", ", _stackBlocks));   
     }
 
     //所持しているブロックによって生成されるアイテム変化
@@ -121,11 +120,10 @@ public class ItemHandler : MonoBehaviour
     }
     public void ItemEffectA(ref float _destroyPower, ref float _playerSpeed)
      {
-        //if (!_hasItemC) return; 
-        
+        //if (!_hasItemC) return;        
         Debug.Log(_hasItemA);
         _uiHandler.ResetItemImage();   
-        Debug.Log("アイテムC効果発動");
+        Debug.Log("アイテムA効果発動");
         _destroyPower = _destroyPower*2;
         _playerSpeed = _playerSpeed*2;
        
@@ -139,16 +137,35 @@ public class ItemHandler : MonoBehaviour
             Debug.Log("アイテムB効果発動");         
             _hasItemB = false;
      }
-    public void ItemEffectC(ref float _playerSpeed)
-    {
+
+    //アイテムCの効果抽選
+     public void ChoseEffectC(ref float _usePlayerSpeed)
+     {
+        //Cのエフェクト選定
+        int itemid = Random.Range(1,2);
+        switch(itemid){
+            //条件１
+            case 1:
+                //処理１
+                Debug.Log("処理１");
+                _itemc.EffectStan(ref _usePlayerSpeed);
+                break;
+            //条件２
+            case 2:
+                //処理２
+                Debug.Log("処理２");
+               _itemc.Break4();
+                break;
+        }
+        _uiHandler.ResetItemImage();
+        _hasItemC = false;
+     }
+    // public void ItemEffectC(ref float _playerSpeed)
+    // {
       
-            _uiHandler.ResetItemImage();   
-            Debug.Log("スタン");
-           _playerSpeed = _playerSpeed*0;       
-          _hasItemC = false;
-    }
-     
-
-
-     
+            
+    //        _playerSpeed = _playerSpeed*0;       
+          
+    // }
+          
 }

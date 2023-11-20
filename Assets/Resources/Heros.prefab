@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _objID: 2
-  _objHealth: 4
+  _objHealth: 1
 --- !u!114 &8700301099434654295
 MonoBehaviour:
   m_ObjectHideFlags: 0

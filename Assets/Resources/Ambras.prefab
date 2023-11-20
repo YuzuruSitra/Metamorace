@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _objID: 1
-  _objHealth: 2
+  _objHealth: 1
 --- !u!54 &-1556883281178353706
 Rigidbody:
   m_ObjectHideFlags: 0

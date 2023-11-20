@@ -59,11 +59,8 @@ public class Player : MonoBehaviour
         //マウスクリックでアイテム生成
         if (Input.GetMouseButtonDown(2)) _itemHandler.CreateItem();
         Item();
-        Jump();
-
-        
+        Jump();     
     }
-
     void FixedUpdate()
     {
         if (!_myPV.isMine && !_developMode) return;
@@ -128,7 +125,6 @@ public class Player : MonoBehaviour
         if (_hasBlock == true) return;
         Vector3 direction = transform.forward; // プレイヤーの向いている方向を取得
         if (!Input.GetMouseButton(0)) return;
-
         Ray ray = new Ray(transform.position, direction);
         RaycastHit hit;
         Debug.DrawRay(transform.position, ray.direction * 30, Color.red, 1.0f); // 長さ３０、赤色で５秒間可視化
@@ -159,15 +155,15 @@ public class Player : MonoBehaviour
         if (!Input.GetMouseButtonDown(1)) return;
 
         Vector3 insPos = new Vector3((int)transform.position.x, (int)transform.position.y, -1.0f);
+        Vector3 insBigPos = new Vector3((int)transform.position.x, (int)transform.position.y  + 0.75f, -1.0f);
         GameObject insObj;
         if (_developMode)
         {
-
             //アイテムBを持っていたら巨大ブロック一回だけ生成
             if (_itemHandler._HasItemB)
             {
                 //アイテムB微調整
-                insObj = Instantiate(_itemHandler._BigBlock, insPos, Quaternion.identity, _cubeParent);
+                insObj = Instantiate(_itemHandler._BigBlock, insBigPos, Quaternion.identity, _cubeParent);
                 _itemHandler.ItemEffectB();
             }
             else
@@ -193,11 +189,11 @@ public class Player : MonoBehaviour
         }
         else if(_itemHandler._HasItemC == true)
         {
-            _itemHandler.ItemEffectC(ref _usePlayerSpeed);
+            _itemHandler.ChoseEffectC(ref _usePlayerSpeed);
+            //_itemHandler.ItemEffectC(ref _usePlayerSpeed);
              //スタン時間
-            Invoke("FinishItemC", _itemHandler._ItemCEffectTime);
+            //Invoke("FinishItemC", _itemHandler._ItemCEffectTime);
         }
-       
     }
 
     void FinishItemA()
@@ -212,6 +208,4 @@ public class Player : MonoBehaviour
         _usePlayerSpeed = _playerSpeed;
         
     }
-
-
 }

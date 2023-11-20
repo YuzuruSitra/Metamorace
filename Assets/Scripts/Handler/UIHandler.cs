@@ -13,8 +13,6 @@ public class UIHandler : MonoBehaviour
      [SerializeField] Sprite[] _itemSprite;
     [SerializeField] GameObject _button;
 
-    
-
     public void ShowLimitTime(float _TimeLimit)
     {
         _LimitTimeText.text = _TimeLimit.ToString("f1") + "秒";
@@ -23,7 +21,6 @@ public class UIHandler : MonoBehaviour
     //アンブラスとヘイロスのスプライトを格納
     public void SetStackImage(int _objID)
     {
-        Debug.Log("Called");
         for(int i = 0; i < _StackImage.Length; i++)
         {
             if(IsEmpty(i))
@@ -51,7 +48,6 @@ public class UIHandler : MonoBehaviour
         }   
         
     }
-
     //アイテムの画像を格納
     public void SetItemImage(int _itemnum)
     {
@@ -62,10 +58,6 @@ public class UIHandler : MonoBehaviour
     {
         _itemImage.sprite = null;
     }   
-
-
-   
-
     //開いている枠を調べる
     public bool IsEmpty(int _StackNum)
     {
@@ -75,7 +67,6 @@ public class UIHandler : MonoBehaviour
         }
         return false;
     }
-
     //カラーボタンを押した際の処理
     public void ActiveFalseButton()
    {
