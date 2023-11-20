@@ -123,22 +123,16 @@ public class Player : MonoBehaviour
         if (hit.collider.CompareTag("Ambras") || hit.collider.CompareTag("Heros"))
         {
             if (_currentBlock == null) _currentBlock = hit.collider.GetComponent<BlockBehaviour>();
-            int _objID = _currentBlock.DestroyBlock(_useDestroyPower);
+            int _objID = _currentBlock.DestroyBlock(_useDestroyPower, _developMode);
+            
             // objIDを利用してUI表示  
             if (_objID == 1 || _objID == 2)
             {
                 _hasBlock = true;
-                _myPV.RPC(nameof(DestroyBlock), PhotonTargets.All, _currentBlock);
                 _itemHandler.StackBlock(_objID);
             }
             return;
         }
-    }
-
-    [PunRPC]
-    private void DestroyBlock() 
-    {
-        Destroy(_currentBlock);
     }
 
     //オブジェクト生成

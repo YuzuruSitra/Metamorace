@@ -112,6 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f871d516df41e2e43a0ec7a98c67b77a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _myPV: {fileID: -7006153795055791629}
   _objID: 1
   _objHealth: 1
 --- !u!54 &-1556883281178353706
