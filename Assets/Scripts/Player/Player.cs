@@ -73,22 +73,26 @@ public class Player : MonoBehaviour
     //プレイヤーの移動
     void PlayerCtrl()
     {
-
         _input_x = Input.GetAxis("Horizontal");
-        _input_z = Input.GetAxis("Vertical");
 
-        Vector3 movement = new Vector3(_input_x, 0.0f, _input_z);
+        // カメラの方向を考慮して移動ベクトルを作成
+        Vector3 forward = Camera.main.transform.forward;
+        forward.y = 0.0f;
+        forward.Normalize();
+        Vector3 right = Camera.main.transform.right;
+        right.y = 0.0f;
+        right.Normalize();
 
+        Vector3 movement = _input_x * right;
 
         _rb.MovePosition(transform.position + movement * _usePlayerSpeed * Time.deltaTime);
 
-        // Handle player rotation based on the input
+        // プレイヤーの向きを移動ベクトルに向ける
         if (movement != Vector3.zero)
         {
             Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 720.0f * Time.deltaTime);
         }
-
     }
 
     void Jump()

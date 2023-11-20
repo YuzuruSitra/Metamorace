@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
     {
         _blockManager.SetParam(myPosZ, DevelopeMode);
         GameObject player = Instantiate(_playerPrefab, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity);
-        _camManager.SetPlayer(player);
+        _camManager.SetPlayer(player, _teamID);
         player.GetComponent<Player>().SetParameter(heros, DevelopeMode);
     }
 
@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
     {
         _blockManager.SetParam(myPosZ, DevelopeMode);
         GameObject player = PhotonNetwork.Instantiate(_playerPrefab.name, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity, 0);
-        _camManager.SetPlayer(player);
+        _camManager.SetPlayer(player, _teamID);
         player.GetComponent<Player>().SetParameter(heros, DevelopeMode);
     }
 
