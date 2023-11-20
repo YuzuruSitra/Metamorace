@@ -19,34 +19,43 @@ public class ItemC : MonoBehaviour
    //周囲4マスのブロックを破壊( 相手への加担 )　 ID Number2
    public void Break4()
    {
-      Ray rayDown = new Ray(transform.position,new Vector3(0,-1,0));
-      Ray rayUp = new Ray(transform.position,new Vector3(0,1,0));
-      Ray rayLeft = new Ray(transform.position,new Vector3(1,0,0));
-      Ray rayRight = new Ray(transform.position,new Vector3(-1,0,0));
-      RaycastHit hitDown;
-      RaycastHit hitUp;
-      RaycastHit hitleft;
-      RaycastHit hitRight;
-      Debug.Log("break4");
-      if (Physics.Raycast(rayDown, out hitDown,-1) || Physics.Raycast(rayUp, out hitUp,-1) || Physics.Raycast(rayLeft, out hitleft,-1) || Physics.Raycast(rayRight, out hitRight,-1))
-      {
-         Debug.Log("rea");
-         //if (hit.collider.CompareTag("Ambras") || hit.collider.CompareTag("Heros"))
-      }
-//       if (hitDown.collider.CompareTag("Ambras") || 
-//     hitDown.collider.CompareTag("Heros") || 
-//     hitUp.collider.CompareTag("Ambras") || 
-//     hitUp.collider.CompareTag("Heros") || 
-//     hitleft.collider.CompareTag("Ambras") || 
-//     hitleft.collider.CompareTag("Heros") || 
-//     hitRight.collider.CompareTag("Ambras") || 
-//     hitRight.collider.CompareTag("Heros"))
-// {
-//     Debug.Log("rea2");
-// }
-
+      Ray _vertical = new Ray(new Vector3(0, 1, 0), new Vector3(0, -1, 0));
+      Ray _horizon = new Ray(transform.position, new Vector3(0, 1, 0));
+      RaycastHit _verticalhit;
+       Debug.DrawRay(new Vector3(0, 1, 0),new Vector3(0, -1, 0), Color.red, 0.1f);
    }
 
-   
+
+
 
 }
+
+
+ // RaycastHit hitDown;
+   // RaycastHit hitUp;
+   // RaycastHit hitLeft;
+   // RaycastHit hitRight;
+
+   // Ray rayDown = new Ray(transform.position, new Vector3(0, -1, 0));
+   // Ray rayUp = new Ray(transform.position, new Vector3(0, 1, 0));
+   // Ray rayLeft = new Ray(transform.position, new Vector3(1, 0, 0));
+   // Ray rayRight = new Ray(transform.position, new Vector3(-1, 0, 0));
+
+   // Debug.Log("break4");
+
+   // if (Physics.Raycast(rayDown, out hitDown, -1) || Physics.Raycast(rayUp, out hitUp, -1) || Physics.Raycast(rayLeft, out hitLeft, -1) || Physics.Raycast(rayRight, out hitRight, -1))
+   // {
+   //    Debug.Log("rea");
+   // }
+
+   // if (hitDown.collider.CompareTag("Ambras") ||
+   //     hitDown.collider.CompareTag("Heros") ||
+   //     hitUp.collider.CompareTag("Ambras") ||
+   //     hitUp.collider.CompareTag("Heros") ||
+   //     hitLeft.collider.CompareTag("Ambras") ||
+   //     hitLeft.collider.CompareTag("Heros") ||
+   //     hitRight.collider.CompareTag("Ambras") ||
+   //     hitRight.collider.CompareTag("Heros"))
+   // {
+   //    Debug.Log("rea2");
+   // }
