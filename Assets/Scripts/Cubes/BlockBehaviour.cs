@@ -27,5 +27,6 @@ public class BlockBehaviour : MonoBehaviour
     private void SynchroHealth(float currentHealth) 
     {
         _objHealth = currentHealth;
+        if(_objHealth <= 0) Destroy(this.gameObject);
     }
 }
