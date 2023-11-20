@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _jumpPower;
     [SerializeField]
+    private float _jumprayrength;
+    [SerializeField]
     private float _destroyPower = 1.0f;
     private float _useDestroyPower;
     // [SerializeField] 
@@ -54,16 +56,12 @@ public class Player : MonoBehaviour
 
         BreakBlock();
         CreateBlock();
-
+        //マウスクリックでアイテム生成
         if (Input.GetMouseButtonDown(2)) _itemHandler.CreateItem();
         Item();
+        Jump();
 
-
-        // Jump handling
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
-        }
+        
     }
 
     void FixedUpdate()
@@ -91,6 +89,36 @@ public class Player : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 720.0f * Time.deltaTime);
         }
 
+    }
+
+    void Jump()
+    {
+        // Jump handling
+        //後で綺麗にします
+        Ray ray = new Ray(transform.position,new Vector3(0,-_jumprayrength,0));
+        RaycastHit hit;
+        Debug.DrawRay(transform.position,new Vector3(0,-_jumprayrength,0) * 1, Color.red, 0.1f); 
+            if (!Physics.Raycast(ray, out hit,_jumprayrength))
+            {
+                 _isJump = true;
+            }
+            else
+            {            
+               if(hit.collider.CompareTag("Ground")) 
+               {
+                //Debug.Log("hit");
+                    _isJump = false;
+               }
+               else
+               {
+                    _isJump = true;
+               }
+            }
+        if (Input.GetKeyDown(KeyCode.Space) && _isJump == false)
+        {         
+            _rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
+            _isJump = true;
+        }
     }
 
     //オブジェクト破壊
