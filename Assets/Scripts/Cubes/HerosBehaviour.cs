@@ -5,17 +5,23 @@ using UnityEngine;
 public class HerosBehaviour : MonoBehaviour
 {
     private bool _oneTime = true;
-    private bool _isBack = true;
-    private float _targetPosZ;
-    float _calcDirection;
+    private float _targetPosZ = 0.0f;
     private float _speed = 20.0f;
     [SerializeField]
+    private int _teamID;
+    [SerializeField]
     private Rigidbody _rb;
+
+    void Start()
+    {
+        if (_teamID == 1) _targetPosZ = GameManager.TEAM2_POS_Z;
+        else _targetPosZ = GameManager.TEAM1_POS_Z;
+    }
 
     public void SetTargetPos(float posZ)
     {
         _targetPosZ = posZ;
-        _calcDirection = _targetPosZ - transform.position.z;
+        Debug.Log(_targetPosZ);
     }
 
 
@@ -24,7 +30,7 @@ public class HerosBehaviour : MonoBehaviour
     {
         if (!_oneTime) return;
         
-        if(_calcDirection >= 0) AddPosZ();
+        if(_targetPosZ >= 0) AddPosZ();
         else DecreasePosZ();
     }
 

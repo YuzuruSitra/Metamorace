@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 4845965506342646060}
   - component: {fileID: -1871881726777730910}
   m_Layer: 0
-  m_Name: Heros
+  m_Name: Heros_Team1
   m_TagString: Heros
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -127,6 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de0a0966998c341f1851f15e591dc37a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _teamID: 1
   _rb: {fileID: 4845965506342646060}
 --- !u!54 &4845965506342646060
 Rigidbody:
