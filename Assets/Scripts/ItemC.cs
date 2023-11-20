@@ -33,17 +33,17 @@ public class ItemC : MonoBehaviour
          Debug.Log("rea");
          //if (hit.collider.CompareTag("Ambras") || hit.collider.CompareTag("Heros"))
       }
-      if (hitDown.collider.CompareTag("Ambras") || 
-    hitDown.collider.CompareTag("Heros") || 
-    hitUp.collider.CompareTag("Ambras") || 
-    hitUp.collider.CompareTag("Heros") || 
-    hitleft.collider.CompareTag("Ambras") || 
-    hitleft.collider.CompareTag("Heros") || 
-    hitRight.collider.CompareTag("Ambras") || 
-    hitRight.collider.CompareTag("Heros"))
-{
-    Debug.Log("rea2");
-}
+//       if (hitDown.collider.CompareTag("Ambras") || 
+//     hitDown.collider.CompareTag("Heros") || 
+//     hitUp.collider.CompareTag("Ambras") || 
+//     hitUp.collider.CompareTag("Heros") || 
+//     hitleft.collider.CompareTag("Ambras") || 
+//     hitleft.collider.CompareTag("Heros") || 
+//     hitRight.collider.CompareTag("Ambras") || 
+//     hitRight.collider.CompareTag("Heros"))
+// {
+//     Debug.Log("rea2");
+// }
 
    }
 
