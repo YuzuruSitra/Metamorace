@@ -17,8 +17,7 @@ public class Player : MonoBehaviour
     private float _useDestroyPower;
     // [SerializeField] 
     // ItemHandler _itemHandler;
-    [SerializeField]
-    GameObject _herosPrefab;
+    private GameObject _herosPrefab;
 
     [SerializeField]
     ItemHandler _itemHandler;
@@ -44,9 +43,9 @@ public class Player : MonoBehaviour
         _useDestroyPower = _destroyPower;
     }
 
-    public void SetParameter(float posZ, bool isDevelop)
+    public void SetParameter(GameObject heros, bool isDevelop)
     {
-        _enemyPos = posZ;
+        _herosPrefab = heros;
         _developMode = isDevelop;
     }
 
@@ -97,23 +96,10 @@ public class Player : MonoBehaviour
         //後で綺麗にします
         Ray ray = new Ray(transform.position,new Vector3(0,-_jumprayrength,0));
         RaycastHit hit;
-        Debug.DrawRay(transform.position,new Vector3(0,-_jumprayrength,0) * 1, Color.red, 0.1f); 
-            if (!Physics.Raycast(ray, out hit,_jumprayrength))
-            {
-                 _isJump = true;
-            }
-            else
-            {            
-               if(hit.collider.CompareTag("Ground")) 
-               {
-                //Debug.Log("hit");
-                    _isJump = false;
-               }
-               else
-               {
-                    _isJump = true;
-               }
-            }
+        Debug.DrawRay(transform.position,Vector3.down * _jumprayrength, Color.red, 0.1f); 
+        if (Physics.Raycast(ray, out hit,_jumprayrength))  _isJump = false;
+        else _isJump = true;
+
         if (Input.GetKeyDown(KeyCode.Space) && _isJump == false)
         {         
             _rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
@@ -177,7 +163,6 @@ public class Player : MonoBehaviour
         }
         else insObj = PhotonNetwork.Instantiate(_herosPrefab.name, insPos, Quaternion.identity, 0);
         // 仮置き
-        insObj.GetComponent<HerosBehaviour>().SetTargetPos(_enemyPos);
         _hasBlock = false;
     }
 

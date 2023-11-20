@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 4845965506342646060}
   - component: {fileID: -1871881726777730910}
   m_Layer: 0
-  m_Name: Heros
+  m_Name: Heros_Team2
   m_TagString: Heros
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 762d2f57e4378f445b9c5a7147cdaee7, type: 2}
+  - {fileID: 2100000, guid: 69e1597e09f734fc5b73518cd9b2fab2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -127,6 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de0a0966998c341f1851f15e591dc37a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _teamID: 2
   _rb: {fileID: 4845965506342646060}
 --- !u!54 &4845965506342646060
 Rigidbody:

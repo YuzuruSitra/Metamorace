@@ -17,9 +17,12 @@ public class GameManager : MonoBehaviour
     private UIHandler _uiHandler;
     [SerializeField] 
     private GameObject _playerPrefab;
+    // 0...Team1 1...Team2
+    [SerializeField]
+    private GameObject[] _herosPrefab;
     private int _teamID;
-    private const float TEAM1_POS_Z = -2.5f;
-    private const float TEAM2_POS_Z = 1.5f;
+    public const float TEAM1_POS_Z = -2.5f;
+    public const float TEAM2_POS_Z = 1.5f;
     public bool DevelopeMode;
     public int DevelopeTeamID;
 
@@ -35,8 +38,8 @@ public class GameManager : MonoBehaviour
     private void HandleDevelopmentMode()
     {
         _teamID = DevelopeTeamID;
-        if (_teamID == 0)  SetupPlayer(TEAM1_POS_Z, TEAM2_POS_Z);
-        else SetupPlayer(TEAM2_POS_Z, TEAM1_POS_Z);
+        if (_teamID == 0)  SetupPlayer(TEAM1_POS_Z, _herosPrefab[0]);
+        else SetupPlayer(TEAM2_POS_Z, _herosPrefab[1]);
     }
 
     private void HandleProductionMode()
@@ -50,25 +53,25 @@ public class GameManager : MonoBehaviour
         TeamHandler teamHandler = TeamHandler.InstanceTeamHandler;
         _teamID = teamHandler.TeamID;
 
-        if (_teamID == 0)  SetupPhotonPlayer(TEAM1_POS_Z, TEAM2_POS_Z);
-        else SetupPhotonPlayer(TEAM2_POS_Z, TEAM1_POS_Z);
+        if (_teamID == 0)  SetupPhotonPlayer(TEAM1_POS_Z, _herosPrefab[0]);
+        else SetupPhotonPlayer(TEAM2_POS_Z, _herosPrefab[1]);
         
     }
 
-    private void SetupPlayer(float myPosZ, float enemyPosZ)
+    private void SetupPlayer(float myPosZ, GameObject heros)
     {
         _blockManager.SetParam(myPosZ, DevelopeMode);
         GameObject player = Instantiate(_playerPrefab, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity);
         _camManager.SetPlayer(player);
-        player.GetComponent<Player>().SetParameter(enemyPosZ, DevelopeMode);
+        player.GetComponent<Player>().SetParameter(heros, DevelopeMode);
     }
 
-    private void SetupPhotonPlayer(float myPosZ, float enemyPosZ)
+    private void SetupPhotonPlayer(float myPosZ, GameObject heros)
     {
         _blockManager.SetParam(myPosZ, DevelopeMode);
         GameObject player = PhotonNetwork.Instantiate(_playerPrefab.name, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity, 0);
         _camManager.SetPlayer(player);
-        player.GetComponent<Player>().SetParameter(enemyPosZ, DevelopeMode);
+        player.GetComponent<Player>().SetParameter(heros, DevelopeMode);
     }
 
     void Update()
