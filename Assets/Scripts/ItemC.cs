@@ -21,6 +21,7 @@ public class ItemC : MonoBehaviour
    //周囲4マスのブロックを破壊( 相手への加担 )　 ID Number2
    public void Break4()
    {
+      //後でオフセット変更必要
       Debug.Log("a");
       Ray _up = new Ray(transform.position, new Vector3(0, 1, 0));
       Ray _down = new Ray(transform.position, new Vector3(0, -1, 0));

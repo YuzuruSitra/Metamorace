@@ -141,16 +141,20 @@ public class ItemHandler : MonoBehaviour
             Debug.Log("アイテムB効果発動");         
             _hasItemB = false;
      }
+     public void ItemEffectC()
+     {
+         _uiHandler.ResetItemImage();
+        _hasItemC = false;
+     }
 
-    //アイテムCの効果抽選
+    //アイテムCの効果抽選　Playerクラスで呼び出す
      public int ChoseEffectC()
      {
         //Cのエフェクト選定
         int _effectid = Random.Range(1,3);
         Debug.Log("Reset");
         //ここ修正
-       // _uiHandler.ResetItemImage();
-        _hasItemC = false;
+       
          return _effectid; 
      }
     // public void ItemEffectC(ref float _playerSpeed)

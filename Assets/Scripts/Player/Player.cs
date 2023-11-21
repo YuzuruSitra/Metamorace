@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
 
     BlockBehaviour _currentBlock;
     private Rigidbody _rb;
-    private bool _isJump = false;
+    private bool _isJump,_isHead = false;
     private bool _hasBlock = false;
 
     private float _enemyPos;
@@ -61,7 +61,8 @@ public class Player : MonoBehaviour
         //アイテム生成
         _itemHandler.CreateItem();
         Item();
-        Jump();     
+        Jump();
+        JudgeDeath();     
     }
     void FixedUpdate()
     {
@@ -93,6 +94,19 @@ public class Player : MonoBehaviour
         transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 1080.0f * Time.deltaTime);
         
 
+    }
+
+    void JudgeDeath()
+    {
+        Ray ray = new Ray(transform.position ,new Vector3(0,_jumprayrength,0));
+        RaycastHit _hitHead;
+        if (Physics.Raycast(ray, out _hitHead,_jumprayrength)) _isHead =true;
+        else _isHead = false;
+        //頭のRayと足のRayが両方ぶつかっていたら死亡
+        if(!_isJump && _isHead)
+        {
+             Debug.Log("死亡");
+        }
     }
 
     void Jump()
@@ -180,8 +194,10 @@ public class Player : MonoBehaviour
                 insObj = Instantiate(_itemHandler._BigBlock, insBigPos, Quaternion.identity, _cubeParent);
                 _itemHandler.ItemEffectB();
             }
+            //ItemCBlock生成
             else if(_itemHandler._HasItemC)
             {
+                _itemHandler.ItemEffectC();
                 insObj = Instantiate(_itemHandler._ItemCBlock, insPos, Quaternion.identity, _cubeParent);
                 // Debug.Log("せいせい");
             }
