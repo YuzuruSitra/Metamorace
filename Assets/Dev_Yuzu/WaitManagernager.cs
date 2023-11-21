@@ -54,8 +54,7 @@ public class WaitManagernager : MonoBehaviour
         }
 
         // プレイヤーが2人以上で、Team1とTeam2に均等に割り振られ、全員が準備完了ならシーン遷移
-        _myPV.RPC(nameof(SendScene), PhotonTargets.All);
-        //if (_playerCount >= 2 && team1 == team2 && team1 + team2 == _playerCount) _myPV.RPC(nameof(SendScene), PhotonTargets.All);
+        if (_playerCount >= 2 && team1 == team2 && team1 + team2 == _playerCount) _myPV.RPC(nameof(SendScene), PhotonTargets.All);
     }
 
     [PunRPC]
