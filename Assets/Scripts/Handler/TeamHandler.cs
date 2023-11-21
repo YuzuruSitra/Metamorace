@@ -5,7 +5,7 @@ using UnityEngine;
 public class TeamHandler : MonoBehaviour
 {
     public static TeamHandler InstanceTeamHandler;
-    
+    [SerializeField]
     private int _teamID = 0;
     public int TeamID => _teamID;
 

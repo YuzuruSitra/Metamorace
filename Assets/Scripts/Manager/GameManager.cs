@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
     {
         //_uiHandler = GameObject.FindWithTag("UIHandler").GetComponent<UIHandler>();
         //InvokeRepeating("ReduceTimeLimit", 0, 1);
-
+        Debug.Log("Start");
         if (DevelopeMode) HandleDevelopmentMode();
         else HandleProductionMode();
     }
@@ -45,6 +45,12 @@ public class GameManager : MonoBehaviour
         else SetupPlayer(TEAM2_POS_Z, _herosPrefab[1]);
     }
 
+    public void SetTeam(int team)
+    {
+        _teamID = team;
+        Debug.Log("SetTeam");
+    }
+
     private void HandleProductionMode()
     {
         if (!PhotonNetwork.connected)
@@ -53,8 +59,8 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        TeamHandler teamHandler = TeamHandler.InstanceTeamHandler;
-        _teamID = teamHandler.TeamID;
+        //TeamHandler teamHandler = TeamHandler.InstanceTeamHandler;
+        //_teamID = teamHandler.TeamID;
 
         if (_teamID == 0)  SetupPhotonPlayer(TEAM1_POS_Z, _herosPrefab[0]);
         else SetupPhotonPlayer(TEAM2_POS_Z, _herosPrefab[1]);

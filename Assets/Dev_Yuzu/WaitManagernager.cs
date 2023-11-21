@@ -42,13 +42,12 @@ public class WaitManagernager : MonoBehaviour
         _playerCount = players.Length;
         int team1 = 0;
         int team2 = 0;
-        Debug.Log(_playerCount);
         for (int i = 0; i < _playerCount; i++)
         {
-            _playerWait = players[i].GetComponent<Player_Wait>();
-            if (_playerWait.SelectTeam == 0) team1 ++;
+            Player_Wait playerWait = players[i].GetComponent<Player_Wait>();
+            if (playerWait.SelectTeam == 0) team1 ++;
             else team2 ++;
-            if (!_playerWait.IsReady) return;
+            if (!playerWait.IsReady) return;
         }
         if (_playerCount <= 2 && team1 == 1 && team2 == 1) _myPV.RPC(nameof(SendScene), PhotonTargets.All);
         else if (team1 == 2 && team2 == 2) _myPV.RPC(nameof(SendScene), PhotonTargets.All);
@@ -67,5 +66,6 @@ public class WaitManagernager : MonoBehaviour
     private void OnLoadedScene( Scene i_scene, LoadSceneMode i_mode )
     {
         PhotonNetwork.isMessageQueueRunning = true;
+        GameObject.Find("GameManager").GetComponent<GameManager>().SetTeam(_playerWait.SelectTeam);
     }
 }
