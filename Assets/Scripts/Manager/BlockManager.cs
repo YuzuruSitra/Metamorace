@@ -23,7 +23,11 @@ public class BlockManager : MonoBehaviour
     {
         GameObject existingBlockManager = GameObject.FindWithTag("BlockManager");
         // 既にBlockManager が存在する場合破棄する
-        if (existingBlockManager != null) Destroy(gameObject);
+        if (existingBlockManager != null && existingBlockManager != gameObject) 
+        {
+            Debug.Log("Dest");
+            Destroy(gameObject);
+        }
     }
 
     void Start()
