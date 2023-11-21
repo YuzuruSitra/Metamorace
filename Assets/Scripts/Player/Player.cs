@@ -58,8 +58,8 @@ public class Player : MonoBehaviour
 
         BreakBlock();
         CreateBlock();
-        //マウスクリックでアイテム生成
-        if (Input.GetMouseButtonDown(2)) _itemHandler.CreateItem();
+        //アイテム生成
+        _itemHandler.CreateItem();
         Item();
         Jump();     
     }
@@ -182,7 +182,7 @@ public class Player : MonoBehaviour
             }
             else if(_itemHandler._HasItemC)
             {
-                // insObj = Instantiate(_itemCBlock, insPos, Quaternion.identity, _cubeParent);
+                insObj = Instantiate(_itemHandler._ItemCBlock, insPos, Quaternion.identity, _cubeParent);
                 // Debug.Log("せいせい");
             }
             else

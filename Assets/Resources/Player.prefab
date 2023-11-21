@@ -353,6 +353,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ItemHandler
       objectReference: {fileID: 0}
+    - target: {fileID: 5763928569451619167, guid: 970ac29dca102d9469a5cd9f453ef702, type: 3}
+      propertyPath: _itemCBlock
+      value: 
+      objectReference: {fileID: 2345590185025987352, guid: 9e0ed0407d10a9247bddc076d1e153b3, type: 3}
     - target: {fileID: 7609348144168978388, guid: 970ac29dca102d9469a5cd9f453ef702, type: 3}
       propertyPath: m_RootOrder
       value: 19

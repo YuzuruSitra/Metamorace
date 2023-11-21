@@ -10,7 +10,11 @@ public class ItemHandler : MonoBehaviour
     public int[] _StackBlocks => _stackBlocks;
     //アイテムB用のブロック
     [SerializeField] GameObject _bigBlock;
-    public GameObject _BigBlock => _bigBlock;
+     public GameObject _BigBlock => _bigBlock;
+    [SerializeField] GameObject _itemCBlock;
+    public GameObject _ItemCBlock => _itemCBlock;
+   
+    
     //[SerializeField] ItemC _itemc;
  //スタックの中の自ブロックの数を格納
     int _myBrockNum;
@@ -143,7 +147,9 @@ public class ItemHandler : MonoBehaviour
      {
         //Cのエフェクト選定
         int _effectid = Random.Range(1,3);
-        _uiHandler.ResetItemImage();
+        Debug.Log("Reset");
+        //ここ修正
+       // _uiHandler.ResetItemImage();
         _hasItemC = false;
          return _effectid; 
      }
