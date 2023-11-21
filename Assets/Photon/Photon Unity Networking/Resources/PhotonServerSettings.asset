@@ -45,4 +45,6 @@ MonoBehaviour:
   - TaggedPlayer
   - DestroyBlock
   - SynchroHealth
+  - SyncHealth
+  - SyncPlayerCount
   DisableAutoOpenWizard: 1

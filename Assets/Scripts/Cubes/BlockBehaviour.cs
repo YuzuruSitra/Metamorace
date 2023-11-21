@@ -15,7 +15,7 @@ public class BlockBehaviour : MonoBehaviour
     {
         _objHealth -= power * Time.deltaTime;
         // 同期処理
-        if (!developMode) _myPV.RPC(nameof(SynchroHealth), PhotonTargets.All, _objHealth);
+        if (!developMode) _myPV.RPC(nameof(SyncHealth), PhotonTargets.All, _objHealth);
         
         if(_objHealth >= 0) return -1;
         Destroy(this.gameObject);
@@ -23,7 +23,7 @@ public class BlockBehaviour : MonoBehaviour
     }
 
     [PunRPC]
-    private void SynchroHealth(float currentHealth) 
+    private void SyncHealth(float currentHealth) 
     {
         _objHealth = currentHealth;
         if(_objHealth <= 0) Destroy(this.gameObject);
