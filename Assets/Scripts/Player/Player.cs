@@ -162,10 +162,11 @@ public class Player : MonoBehaviour
                             break;
                             //周囲4マスのブロックを破壊
                             case 2:
-                            _itemC.Break4();
+                            Debug.Log("2");
+                            _itemC.Break4();        
                             break;
                         }
-                        Debug.Log("Chakai");
+                       
                     }
                     _hasBlock = true;
                     _itemHandler.StackBlock(_objID);
