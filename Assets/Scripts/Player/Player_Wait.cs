@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Player_Wait : MonoBehaviour
 {
@@ -14,11 +15,17 @@ public class Player_Wait : MonoBehaviour
 
     private Rigidbody _rb;
     private bool _isJump,_isHead = false;
-
+    private bool _isReady = false;
+    public bool IsReady => _isReady;
+    private int _selectTeam;
+    public int SelectTeam => _selectTeam;
+    public event Action<bool> OnReadyChanged;
+    private TeamHandler _teamHandler;
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _myPV = GetComponent<PhotonView>();
+        _teamHandler = TeamHandler.InstanceTeamHandler;
     }
 
     void Update()
@@ -30,6 +37,13 @@ public class Player_Wait : MonoBehaviour
     {
         if (!_myPV.isMine) return;
         PlayerCtrl();
+    }
+
+    // 準備完了
+    private void ChangeState(bool newState)
+    {
+        _isReady = newState;
+        OnReadyChanged?.Invoke(newState);
     }
 
     //プレイヤーの移動
@@ -47,7 +61,6 @@ public class Player_Wait : MonoBehaviour
         right.Normalize();
 
         Vector3 movement = inputX * right;
-        Debug.Log(movement);
         _rb.MovePosition(transform.position + movement * _playerSpeed * Time.deltaTime);
 
         // プレイヤーの向きを移動ベクトルに向ける
@@ -71,6 +84,34 @@ public class Player_Wait : MonoBehaviour
         {         
             _rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
             _isJump = true;
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Team1Area"))
+        {
+            _selectTeam = 0;
+            _teamHandler.SetTeamID(0);
+            ChangeState(true);
+        }
+        if(other.CompareTag("Team2Area"))
+        {
+            _selectTeam = 1;
+            _teamHandler.SetTeamID(1);
+            ChangeState(true);
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if(other.CompareTag("Team1Area"))
+        {
+            ChangeState(false);
+        }
+        if(other.CompareTag("Team2Area"))
+        {
+            ChangeState(false);
         }
     }
 }
