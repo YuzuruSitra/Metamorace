@@ -22,54 +22,55 @@ public class ItemC : MonoBehaviour
    public void Break4()
    {
       //後でオフセット変更必要
-      Debug.Log("a");
       Ray _up = new Ray(transform.position, new Vector3(0, 1, 0));
       Ray _down = new Ray(transform.position, new Vector3(0, -1, 0));
       Ray _right = new Ray(transform.position, new Vector3(1, 0, 0));
       Ray _left = new Ray(transform.position, new Vector3(-1, 0, 0));
-
+      float _raylength = 1.0f;
       RaycastHit _hitup, _hitdown, _hitright, _hitleft;
       //ItemCブロックは破壊できない
       //Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), new Vector3(0, 1, 0), Color.red, 3.0f);
       //上側のブロック破壊
-      if (Physics.Raycast(_up, out _hitup))
-      {
-
+      if (Physics.Raycast(_up, out _hitup,_raylength))
+      { 
          if (_hitup.collider.CompareTag("Ambras") ||
-            _hitup.collider.CompareTag("Heros"))
+            _hitup.collider.CompareTag("Heros") 
+            )
+         //_hitup.collider.CompareTag("ItemCBlock")
          {
-            _currentBlock = _hitup.collider.GetComponent<BlockBehaviour>();
-            _currentBlock.DestroyThis();
-            Debug.Log("hit");
+             Destroy(_hitup.collider.gameObject);
          }
       }
       //下側のブロック破壊
-      if (Physics.Raycast(_down, out _hitdown))
+      if (Physics.Raycast(_down, out _hitdown,_raylength))
+      {
          if (_hitdown.collider.CompareTag("Ambras") ||
             _hitdown.collider.CompareTag("Heros"))
          {
-            _currentBlock = _hitdown.collider.GetComponent<BlockBehaviour>();
-            _currentBlock.DestroyThis();
-            Debug.Log("hit");
+            Destroy(_hitdown.collider.gameObject);
          }
+      }
+         
       //右側のブロック破壊
-      if (Physics.Raycast(_right, out _hitright))
+      if (Physics.Raycast(_right, out _hitright,_raylength))
+      {
          if (_hitright.collider.CompareTag("Ambras") ||
             _hitright.collider.CompareTag("Heros"))
          {
-            _currentBlock = _hitright.collider.GetComponent<BlockBehaviour>();
-            _currentBlock.DestroyThis();
-            Debug.Log("hit");
+            Destroy(_hitright.collider.gameObject);
          }
+      }
+         
       //左側のブロック破壊
-      if (Physics.Raycast(_left, out _hitleft))
+      if (Physics.Raycast(_left, out _hitleft,_raylength))
+      {
          if (_hitleft.collider.CompareTag("Ambras") ||
             _hitleft.collider.CompareTag("Heros"))
          {
-            _currentBlock = _hitleft.collider.GetComponent<BlockBehaviour>();
-            _currentBlock.DestroyThis();
-            Debug.Log("hit");
+            Destroy(_hitleft.collider.gameObject);
          }
+      }
+
    }
 
    void Update()
