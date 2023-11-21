@@ -35,6 +35,7 @@ public class WaitManagernager : MonoBehaviour
     // Update is called once per frame
     void CheckIn(bool state)
     {
+        if(!state) return;
         // タグが"Player"のオブジェクトを検索して配列に格納
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         // 配列の長さ（要素の数）を取得
@@ -58,8 +59,8 @@ public class WaitManagernager : MonoBehaviour
     [PunRPC]
     private IEnumerator SendScene()
     {
-        PhotonNetwork.isMessageQueueRunning = false;
         yield return _waitTime;
+        PhotonNetwork.isMessageQueueRunning = false;
         PhotonNetwork.LoadLevel("Master_Battle");
     }
 

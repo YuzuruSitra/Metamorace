@@ -17,6 +17,7 @@ public class Player_Wait : MonoBehaviour
     private bool _isJump,_isHead = false;
     private bool _isReady = false;
     public bool IsReady => _isReady;
+    [SerializeField]
     private int _selectTeam;
     public int SelectTeam => _selectTeam;
     public event Action<bool> OnReadyChanged;
@@ -92,13 +93,13 @@ public class Player_Wait : MonoBehaviour
         if(other.CompareTag("Team1Area"))
         {
             _selectTeam = 0;
-            _teamHandler.SetTeamID(0);
+            _teamHandler.SetTeamID(_selectTeam);
             ChangeState(true);
         }
         if(other.CompareTag("Team2Area"))
         {
             _selectTeam = 1;
-            _teamHandler.SetTeamID(1);
+            _teamHandler.SetTeamID(_selectTeam);
             ChangeState(true);
         }
     }
@@ -114,4 +115,5 @@ public class Player_Wait : MonoBehaviour
             ChangeState(false);
         }
     }
+
 }
