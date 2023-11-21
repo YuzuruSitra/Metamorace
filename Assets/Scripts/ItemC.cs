@@ -12,8 +12,6 @@ public class ItemC : MonoBehaviour
    private bool _used = false;
    public bool _Used => _used;
    BlockBehaviour _currentBlock;
-    //この変数をBreak4が連鎖的に起きる抽選で仕様
-   private int _effectNum = 5;
    //スタン　ID Number1
    public void EffectStan(ref float _usePlayerSpeed)
    {
@@ -28,6 +26,8 @@ public class ItemC : MonoBehaviour
    //CBlockにレイが当たってかつそのブロックがID Number2のとき連鎖的にブロックが壊れる処理(GetComponent)使ってるよ！
    public void Break4()
    {
+      //この変数をBreak4が連鎖的に起きる抽選で仕様
+      int ItemCEffectNum = 2;
       //後でオフセット変更必要
       Ray _up = new Ray(transform.position, new Vector3(0, 1, 0));
       Ray _down = new Ray(transform.position, new Vector3(0, -1, 0));
@@ -35,6 +35,8 @@ public class ItemC : MonoBehaviour
       Ray _left = new Ray(transform.position, new Vector3(-1, 0, 0));
       float _raylength = 1.0f;
       RaycastHit _hitup, _hitdown, _hitright, _hitleft;
+      //ItemCブロックは破壊できない
+      //Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), new Vector3(0, 1, 0), Color.red, 3.0f);
       //上側のブロック破壊
       if (Physics.Raycast(_up, out _hitup, _raylength))
       {
@@ -47,12 +49,15 @@ public class ItemC : MonoBehaviour
             {
                if(!_useCombo ) return;
                _itemC = _hitup.collider.GetComponent<ItemC>();
-               if(!_itemC._Used && Random.Range(0, _effectNum) == 0)
+               Debug.Log("1");
+               if(!_itemC._Used)
                {
+                   Debug.Log("2");
                   _used = true;
-                  _itemC.Break4();              
+                  _itemC.Break4();
                } 
-            } 
+            }
+           
          }
       }
       //下側のブロック破壊
@@ -61,16 +66,19 @@ public class ItemC : MonoBehaviour
          if (_hitdown.collider.CompareTag("Ambras") ||
             _hitdown.collider.CompareTag("Heros") || _hitdown.collider.CompareTag("ItemCBlock"))
          {
+             Debug.Log("3");
             Destroy(_hitdown.collider.gameObject);
             if (_hitdown.collider.CompareTag("ItemCBlock"))
             {
                if(!_useCombo ) return;
                _itemC = _hitdown.collider.GetComponent<ItemC>();
-               if(!_itemC._Used && Random.Range(0, _effectNum) == 0)
+               Debug.Log("1");
+               if(!_itemC._Used)
                {
+                   Debug.Log("2");
                   _used = true;
-                  _itemC.Break4();              
-               } 
+                  _itemC.Break4();
+               }
             }
          }
       }
@@ -86,10 +94,12 @@ public class ItemC : MonoBehaviour
             {
                if(!_useCombo ) return;
                _itemC = _hitright.collider.GetComponent<ItemC>();
-               if(!_itemC._Used && Random.Range(0, _effectNum) == 0)
+               Debug.Log("1");
+               if(!_itemC._Used)
                {
+                   Debug.Log("2");
                   _used = true;
-                  _itemC.Break4();              
+                  _itemC.Break4();
                } 
             }
          }
@@ -106,10 +116,12 @@ public class ItemC : MonoBehaviour
             {
                if(!_useCombo ) return;
                _itemC = _hitleft.collider.GetComponent<ItemC>();
-               if(!_itemC._Used && Random.Range(0, _effectNum) == 0)
+               Debug.Log("1");
+               if(!_itemC._Used)
                {
+                   Debug.Log("2");
                   _used = true;
-                  _itemC.Break4();              
+                  _itemC.Break4();
                } 
             }
          }
