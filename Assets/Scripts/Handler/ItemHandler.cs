@@ -147,7 +147,7 @@ public class ItemHandler : MonoBehaviour
         _hasItemC = false;
      }
 
-    //アイテムCの効果抽選　Playerクラスで呼び出す
+    //アイテムCの効果抽選 Playerクラスで呼び出す
      public int ChoseEffectC()
      {
         //Cのエフェクト選定

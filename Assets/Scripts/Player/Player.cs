@@ -105,7 +105,7 @@ public class Player : MonoBehaviour
         //頭のRayと足のRayが両方ぶつかっていたら死亡
         if(!_isJump && _isHead)
         {
-             Debug.Log("死亡");
+            // Debug.Log("死亡");
         }
     }
 

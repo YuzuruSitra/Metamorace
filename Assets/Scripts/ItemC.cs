@@ -6,7 +6,7 @@ public class ItemC : MonoBehaviour
 {
    [SerializeField] int _itemCId;
    public int _ItemCId => _itemCId;
-
+   ItemC  _itemC;
    BlockBehaviour _currentBlock;
    //スタン　ID Number1
    public void EffectStan(ref float _usePlayerSpeed)
@@ -19,8 +19,11 @@ public class ItemC : MonoBehaviour
       // _hasItemC = false;
    }
    //周囲4マスのブロックを破壊( 相手への加担 )　 ID Number2
+   //CBlockにレイが当たってかつそのブロックがID Number2のとき連鎖的にブロックが壊れる処理(GetComponent)使ってるよ！
    public void Break4()
    {
+      //この変数をBreak4が連鎖的に起きる抽選で仕様
+      int ItemCEffectNum = 2;
       //後でオフセット変更必要
       Ray _up = new Ray(transform.position, new Vector3(0, 1, 0));
       Ray _down = new Ray(transform.position, new Vector3(0, -1, 0));
@@ -31,46 +34,56 @@ public class ItemC : MonoBehaviour
       //ItemCブロックは破壊できない
       //Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), new Vector3(0, 1, 0), Color.red, 3.0f);
       //上側のブロック破壊
-      if (Physics.Raycast(_up, out _hitup,_raylength))
-      { 
+      if (Physics.Raycast(_up, out _hitup, _raylength))
+      {
          if (_hitup.collider.CompareTag("Ambras") ||
-            _hitup.collider.CompareTag("Heros") 
+            _hitup.collider.CompareTag("Heros") || _hitup.collider.CompareTag("ItemCBlock")
             )
-         //_hitup.collider.CompareTag("ItemCBlock")
          {
-             Destroy(_hitup.collider.gameObject);
+
+
+            if (_hitup.collider.CompareTag("ItemCBlock"))
+            {
+               Debug.Log("11");
+            }
+            Destroy(_hitup.collider.gameObject);
          }
       }
       //下側のブロック破壊
-      if (Physics.Raycast(_down, out _hitdown,_raylength))
+      if (Physics.Raycast(_down, out _hitdown, _raylength))
       {
          if (_hitdown.collider.CompareTag("Ambras") ||
-            _hitdown.collider.CompareTag("Heros"))
+            _hitdown.collider.CompareTag("Heros") || _hitdown.collider.CompareTag("ItemCBlock"))
          {
             Destroy(_hitdown.collider.gameObject);
+            if (_hitdown.collider.CompareTag("ItemCBlock"))
+            {
+               Debug.Log("11");
+               _itemC = _hitdown.collider.GetComponent<ItemC>();
+               _itemC.Break4();
+            }
          }
       }
-         
+
       //右側のブロック破壊
-      if (Physics.Raycast(_right, out _hitright,_raylength))
+      if (Physics.Raycast(_right, out _hitright, _raylength))
       {
          if (_hitright.collider.CompareTag("Ambras") ||
-            _hitright.collider.CompareTag("Heros"))
+            _hitright.collider.CompareTag("Heros") || _hitright.collider.CompareTag("ItemCBlock"))
          {
             Destroy(_hitright.collider.gameObject);
          }
       }
-         
+
       //左側のブロック破壊
-      if (Physics.Raycast(_left, out _hitleft,_raylength))
+      if (Physics.Raycast(_left, out _hitleft, _raylength))
       {
          if (_hitleft.collider.CompareTag("Ambras") ||
-            _hitleft.collider.CompareTag("Heros"))
+            _hitleft.collider.CompareTag("Heros") || _hitleft.collider.CompareTag("ItemCBlock"))
          {
             Destroy(_hitleft.collider.gameObject);
          }
       }
-
    }
 
    void Update()
