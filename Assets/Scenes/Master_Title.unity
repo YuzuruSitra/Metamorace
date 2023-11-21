@@ -624,7 +624,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c79d29f569dedab44b14232304ade93e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneName: SimurateScene
+  _sceneName: Master_Wait
 --- !u!4 &452305292
 Transform:
   m_ObjectHideFlags: 0
