@@ -13,6 +13,8 @@ public class LauncherScript : Photon.PunBehaviour
     #region Private変数
     //Private変数の定義はココで
     string _gameVersion = "test";   //ゲームのバージョン。仕様が異なるバージョンとなったときはバージョンを変更しないとエラーが発生する。
+    [SerializeField]
+    private string _sceneName;
     #endregion
  
     #region Public Methods
@@ -49,7 +51,7 @@ public class LauncherScript : Photon.PunBehaviour
     {
         Debug.Log("ルームに入りました。");
         //battleシーンをロード
-        PhotonNetwork.LoadLevel("SimurateScene");
+        PhotonNetwork.LoadLevel(_sceneName);
     }
  
     #endregion

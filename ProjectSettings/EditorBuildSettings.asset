@@ -11,4 +11,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Dev_Yuzu/SimurateScene.unity
     guid: 839f445b2103a3142a35644f247e8987
+  - enabled: 1
+    path: Assets/Scenes/Master_Battle.unity
+    guid: e96bc5613a87c4f579f793b860f380ef
+  - enabled: 1
+    path: Assets/Scenes/Master_Title.unity
+    guid: c87b2fd08c5f646cfa8cd4804916dfaa
+  - enabled: 1
+    path: Assets/Scenes/Master_Wait.unity
+    guid: cb6526fdf212b48b09530a516f7f23b5
   m_configObjects: {}
