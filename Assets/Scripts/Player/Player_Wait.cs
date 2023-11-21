@@ -21,11 +21,18 @@ public class Player_Wait : MonoBehaviour
     private int _selectTeam;
     public int SelectTeam => _selectTeam;
     public event Action<bool> OnReadyChanged;
+    private int _playerID;
+    public int PlayerID => _playerID;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _myPV = GetComponent<PhotonView>();
+    }
+
+    public void SetID(int id)
+    {
+        _playerID = id;
     }
 
     void Update()

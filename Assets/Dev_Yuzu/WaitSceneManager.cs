@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class WaitManagernager : MonoBehaviour
+public class WaitSceneManager : MonoBehaviour
 {
     [SerializeField]
     private PhotonView _myPV;
@@ -28,8 +28,12 @@ public class WaitManagernager : MonoBehaviour
 
         //Photonに接続していれば自プレイヤーを生成
         GameObject Player = PhotonNetwork.Instantiate(this._playerPrefab.name, new Vector3(0f, 1.5f, 0f), Quaternion.identity, 0);
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        _playerCount = players.Length;
+
         _playerWait = Player.GetComponent<Player_Wait>();
         _playerWait.OnReadyChanged += CheckIn;
+        _playerWait.SetID(_playerCount);
     }
 
     // Update is called once per frame
@@ -68,7 +72,7 @@ public class WaitManagernager : MonoBehaviour
     private void OnLoadedScene( Scene i_scene, LoadSceneMode i_mode )
     {
         PhotonNetwork.isMessageQueueRunning = true;
-        GameObject.FindWithTag("GameManager").GetComponent<GameManager>().SetTeam(_playerWait.SelectTeam);
+        GameObject.FindWithTag("GameManager").GetComponent<GameManager>().SetInfo(_playerWait.SelectTeam, _playerWait.PlayerID);
     }
 
 }

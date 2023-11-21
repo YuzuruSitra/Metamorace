@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject _blockManager;
     private int _teamID;
+    // 名前の順番に使用
+    private int _playerID;
     public const float TEAM1_POS_Z = -2.5f;
     public const float TEAM2_POS_Z = 1.5f;
     public bool DevelopeMode;
@@ -46,10 +48,10 @@ public class GameManager : MonoBehaviour
         else SetupPlayer(TEAM2_POS_Z, _herosPrefab[1]);
     }
 
-    public void SetTeam(int team)
+    public void SetInfo(int team, int id)
     {
         _teamID = team;
-        Debug.Log("SetTeam");
+        _playerID = id;
     }
 
     private void HandleProductionMode()
@@ -68,7 +70,7 @@ public class GameManager : MonoBehaviour
     private void SetupPlayer(float myPosZ, GameObject heros)
     {
         GameObject blockManager = Instantiate(_blockManager, Vector3.zero, Quaternion.identity);
-        blockManager.GetComponent<BlockManager>().SetParam(DevelopeMode);
+        if(DevelopeMode) blockManager.GetComponent<BlockManager>().SetParam(DevelopeMode);
         GameObject player = Instantiate(_playerPrefab, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity);
         _camManager.SetPlayer(player, _teamID);
         player.GetComponent<Player>().SetParameter(heros, DevelopeMode);
@@ -80,7 +82,7 @@ public class GameManager : MonoBehaviour
         {
             // BlockManagerの生成
             GameObject blockManager = Instantiate(_blockManager, Vector3.zero, Quaternion.identity);
-            blockManager.GetComponent<BlockManager>().SetParam(DevelopeMode);
+            if(DevelopeMode) blockManager.GetComponent<BlockManager>().SetParam(DevelopeMode);
         }
         GameObject player = PhotonNetwork.Instantiate(_playerPrefab.name, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity, 0);
         _camManager.SetPlayer(player, _teamID);
