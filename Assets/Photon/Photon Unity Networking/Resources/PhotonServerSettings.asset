@@ -47,4 +47,5 @@ MonoBehaviour:
   - SynchroHealth
   - SyncHealth
   - SyncPlayerCount
+  - SendScene
   DisableAutoOpenWizard: 1
