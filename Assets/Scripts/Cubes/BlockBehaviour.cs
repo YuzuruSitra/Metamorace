@@ -22,6 +22,11 @@ public class BlockBehaviour : MonoBehaviour
         return _objID;         
     }
 
+    public void DestroyThis()
+    {
+        Destroy(gameObject);
+    }
+
     [PunRPC]
     private void SynchroHealth(float currentHealth) 
     {

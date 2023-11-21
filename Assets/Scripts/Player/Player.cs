@@ -126,7 +126,9 @@ public class Player : MonoBehaviour
         {
             _currentBlock = null;
 
-            if (hit.collider.CompareTag("Ambras") || hit.collider.CompareTag("Heros") || hit.collider.CompareTag("ItemCBlock"))
+            if (hit.collider.CompareTag("Ambras") || 
+                hit.collider.CompareTag("Heros") || 
+                hit.collider.CompareTag("ItemCBlock"))
             {
                 if (_currentBlock == null) _currentBlock = hit.collider.GetComponent<BlockBehaviour>();
                 if(hit.collider.CompareTag("ItemCBlock"))_itemC =  hit.collider.GetComponent<ItemC>();
