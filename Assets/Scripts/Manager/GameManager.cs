@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour
         if (PhotonNetwork.isMasterClient)
         {
             // BlockManagerの生成
-            GameObject blockManager = PhotonNetwork.Instantiate(_blockManager.name, Vector3.zero, Quaternion.identity, 0);
+            GameObject blockManager = Instantiate(_blockManager, Vector3.zero, Quaternion.identity);
             blockManager.GetComponent<BlockManager>().SetParam(DevelopeMode);
         }
         GameObject player = PhotonNetwork.Instantiate(_playerPrefab.name, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity, 0);
