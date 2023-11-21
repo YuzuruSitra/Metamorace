@@ -28,15 +28,13 @@ public class Player : MonoBehaviour
     private Transform _cubeParent;
 
     BlockBehaviour _currentBlock;
-  
-    //x.z軸方向の入力を保存
-    private float _input_x, _input_z;
     private Rigidbody _rb;
     private bool _isJump = false;
     private bool _hasBlock = false;
 
     private float _enemyPos;
     private bool _developMode = false;
+    private WaitForSeconds _waitTime;
 
     void Start()
     {
@@ -45,6 +43,7 @@ public class Player : MonoBehaviour
         _myPV = GetComponent<PhotonView>();
         _usePlayerSpeed = _playerSpeed;
         _useDestroyPower = _destroyPower;
+        _waitTime = new WaitForSeconds(_itemHandler._ItemAEffectTime);
     }
 
     public void SetParameter(GameObject heros, bool isDevelop)
@@ -73,7 +72,9 @@ public class Player : MonoBehaviour
     //プレイヤーの移動
     void PlayerCtrl()
     {
-        _input_x = Input.GetAxis("Horizontal");
+        float inputX = Input.GetAxis("Horizontal");
+        
+        if(inputX == 0) return;
 
         // カメラの方向を考慮して移動ベクトルを作成
         Vector3 forward = Camera.main.transform.forward;
@@ -83,16 +84,15 @@ public class Player : MonoBehaviour
         right.y = 0.0f;
         right.Normalize();
 
-        Vector3 movement = _input_x * right;
+        Vector3 movement = inputX * right;
 
         _rb.MovePosition(transform.position + movement * _usePlayerSpeed * Time.deltaTime);
 
         // プレイヤーの向きを移動ベクトルに向ける
-        if (movement != Vector3.zero)
-        {
-            Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 720.0f * Time.deltaTime);
-        }
+        Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 1080.0f * Time.deltaTime);
+        
+
     }
 
     void Jump()
@@ -116,49 +116,46 @@ public class Player : MonoBehaviour
     public void BreakBlock()
     {
         //ブロックを持ってなければ処理を行う
-        if (_hasBlock == true) return;
+        if (_hasBlock || !Input.GetMouseButton(0)) return;
         Vector3 direction = transform.forward; // プレイヤーの向いている方向を取得
-        if (!Input.GetMouseButton(0)) return;
+        direction.Normalize();
         Ray ray = new Ray(transform.position, direction);
         RaycastHit hit;
-        Debug.DrawRay(transform.position, ray.direction * 30, Color.red, 1.0f); // 長さ３０、赤色で５秒間可視化
-        if (!Physics.Raycast(ray, out hit))
+        Debug.DrawRay(transform.position, ray.direction * 1, Color.red, 1.0f); // 長さ３０、赤色で５秒間可視化
+        if (Physics.Raycast(ray, out hit))
         {
             _currentBlock = null;
-            return;
-        }
 
-        if (hit.collider.CompareTag("Ambras") || hit.collider.CompareTag("Heros") || hit.collider.CompareTag("ItemCBlock"))
-        {
-            if (_currentBlock == null) _currentBlock = hit.collider.GetComponent<BlockBehaviour>();
-            if(hit.collider.CompareTag("ItemCBlock"))_itemC =  hit.collider.GetComponent<ItemC>();
-            int _objID = _currentBlock.DestroyBlock(_useDestroyPower, _developMode);
-            // objIDを利用してUI表示  
-            if (_objID == 1 || _objID == 2)
+            if (hit.collider.CompareTag("Ambras") || hit.collider.CompareTag("Heros") || hit.collider.CompareTag("ItemCBlock"))
             {
-                //ItemCBlockを破壊した際に効果発動
-                if(hit.collider.CompareTag("ItemCBlock")) 
-                {           
-                    int _effectid = _itemHandler.ChoseEffectC();
-                    switch(_effectid){
-                        //敵スタン
-                        case 1:
-                        _itemC.EffectStan(ref _usePlayerSpeed);
-                        Invoke("FinishItemC", _itemHandler._ItemCEffectTime);
-                        break;
-                        //周囲4マスのブロックを破壊
-                        case 2:
-                        _itemC.Break4();
-                        break;
-                        default:
-                        break;
+                if (_currentBlock == null) _currentBlock = hit.collider.GetComponent<BlockBehaviour>();
+                if(hit.collider.CompareTag("ItemCBlock"))_itemC =  hit.collider.GetComponent<ItemC>();
+                int _objID = _currentBlock.DestroyBlock(_useDestroyPower, _developMode);
+                // objIDを利用してUI表示  
+                if (_objID == 1 || _objID == 2)
+                {
+                    //ItemCBlockを破壊した際に効果発動
+                    if(hit.collider.CompareTag("ItemCBlock")) 
+                    {           
+                        int _effectid = _itemHandler.ChoseEffectC();
+                        switch(_effectid){
+                            //敵スタン
+                            case 1:
+                            _itemC.EffectStan(ref _usePlayerSpeed);
+                            Invoke("FinishItemC", _itemHandler._ItemCEffectTime);
+                            break;
+                            //周囲4マスのブロックを破壊
+                            case 2:
+                            _itemC.Break4();
+                            break;
+                        }
+                        Debug.Log("Chakai");
                     }
-                    Debug.Log("Chakai");
+                    _hasBlock = true;
+                    _itemHandler.StackBlock(_objID);
                 }
-                _hasBlock = true;
-                _itemHandler.StackBlock(_objID);
+                return;
             }
-            return;
         }
     }
 
@@ -203,21 +200,14 @@ public class Player : MonoBehaviour
 
         if (_itemHandler._HasItemA == true)
         {
-             Invoke("FinishItemA", _itemHandler._ItemAEffectTime);
-        _itemHandler.ItemEffectA(ref _useDestroyPower, ref _usePlayerSpeed);
+            StartCoroutine(FinishItemA());
+            _itemHandler.ItemEffectA(ref _useDestroyPower, ref _usePlayerSpeed);
         }
-        // else if(_itemHandler._HasItemC == true)
-        // {
-        //     int itemid = _itemHandler.ChoseEffectC();
-        //     _itemC.EffectStan(ref _usePlayerSpeed);
-        //     //_itemHandler.ItemEffectC(ref _usePlayerSpeed);
-        //      //スタン時間
-        //     Invoke("FinishItemC", _itemHandler._ItemCEffectTime);
-        // }
     }
 
-    void FinishItemA()
+    IEnumerator FinishItemA()
     {
+        yield return _waitTime;
         _usePlayerSpeed = _playerSpeed;
         _useDestroyPower = _destroyPower;
     }
