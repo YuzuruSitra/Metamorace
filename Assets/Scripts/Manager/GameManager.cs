@@ -76,8 +76,12 @@ public class GameManager : MonoBehaviour
 
     private void SetupPhotonPlayer(float myPosZ, GameObject heros)
     {
-        GameObject blockManager = PhotonNetwork.Instantiate(_blockManager.name, Vector3.zero, Quaternion.identity, 0);
-        blockManager.GetComponent<BlockManager>().SetParam(DevelopeMode);
+        if (PhotonNetwork.isMasterClient)
+        {
+            // BlockManagerの生成
+            GameObject blockManager = PhotonNetwork.Instantiate(_blockManager.name, Vector3.zero, Quaternion.identity, 0);
+            blockManager.GetComponent<BlockManager>().SetParam(DevelopeMode);
+        }
         GameObject player = PhotonNetwork.Instantiate(_playerPrefab.name, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity, 0);
         _camManager.SetPlayer(player, _teamID);
         player.GetComponent<Player>().SetParameter(heros, DevelopeMode);
