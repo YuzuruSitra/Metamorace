@@ -58,8 +58,8 @@ public class WaitManagernager : MonoBehaviour
     [PunRPC]
     private IEnumerator SendScene()
     {
-        yield return _waitTime;
         PhotonNetwork.isMessageQueueRunning = false;
+        yield return _waitTime;
         PhotonNetwork.LoadLevel("Master_Battle");
     }
 
