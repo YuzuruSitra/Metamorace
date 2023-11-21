@@ -764,6 +764,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1991286139}
   - component: {fileID: 1991286140}
+  - component: {fileID: 1991286141}
   m_Layer: 0
   m_Name: WaitManagernager
   m_TagString: Untagged
@@ -800,3 +801,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _myPV: {fileID: 0}
   _playerPrefab: {fileID: 7544606331545972519, guid: 437ab15f6aad74c6b8138f109933c67e, type: 3}
+--- !u!114 &1991286141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1991286138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 1
+  instantiationId: 1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
