@@ -27,7 +27,7 @@ public class WaitManagernager : MonoBehaviour
         _waitTime = new WaitForSeconds(_transitionTime);
 
         //Photonに接続していれば自プレイヤーを生成
-        GameObject Player = PhotonNetwork.Instantiate(this._playerPrefab.name, new Vector3(0f, 0f, 0f), Quaternion.identity, 0);
+        GameObject Player = PhotonNetwork.Instantiate(this._playerPrefab.name, new Vector3(0f, 1.5f, 0f), Quaternion.identity, 0);
         _playerWait = Player.GetComponent<Player_Wait>();
         _playerWait.OnReadyChanged += CheckIn;
     }
@@ -49,12 +49,13 @@ public class WaitManagernager : MonoBehaviour
             else team2 ++;
             if (!_playerWait.IsReady) return;
         }
-        if (_playerCount <= 2 && team1 == 1 && team2 == 1) StartCoroutine("SendScene");
-        else if (team1 == 2 && team2 == 2) StartCoroutine("SendScene");
+        if (_playerCount <= 2 && team1 == 1 && team2 == 1) _myPV.RPC(nameof(SendScene), PhotonTargets.All);
+        else if (team1 == 2 && team2 == 2) _myPV.RPC(nameof(SendScene), PhotonTargets.All);
         
 
     }
 
+    [PunRPC]
     private IEnumerator SendScene()
     {
         PhotonNetwork.isMessageQueueRunning = false;
