@@ -8,8 +8,10 @@ public class BlockManager : MonoBehaviour
     [SerializeField] 
     private GameObject _blockAmbras;
     private float _insInterval = 3.0f;
-    private Coroutine _insCoroutine;
-    private Vector3 _blockInsPos;
+    private Coroutine _coroutineTeam1;
+    private Coroutine _coroutineTeam2;
+    private Vector3 _insPosTeam1;
+    private Vector3 _insPosTeam2;
     private Vector3 _rayDirection = Vector3.down;
     const float MAX_POS_Y = 8.0f;
     // ステージ上のオブジェクトの総数計算
@@ -17,13 +19,26 @@ public class BlockManager : MonoBehaviour
     public int BlockCount => _blockCount;
     private bool _developMode = false;
 
-    public void SetParam(float insPosZ, bool isDevelop)
+    void Awake()
+    {
+        GameObject existingBlockManager = GameObject.FindWithTag("BlockManager");
+        // 既にBlockManager が存在する場合破棄する
+        if (existingBlockManager != null) Destroy(gameObject);
+    }
+
+    void Start()
     {
         _cubeParent = GameObject.FindWithTag("CubeParent").transform;
-        
-        _insCoroutine = StartCoroutine(GenerateSetParam());
-        _blockInsPos.y = MAX_POS_Y;
-        _blockInsPos.z = insPosZ;
+        _coroutineTeam1 = StartCoroutine(SetParamTeam1());
+         _coroutineTeam2 = StartCoroutine(SetParamTeam2());
+        _insPosTeam1.y = MAX_POS_Y;
+        _insPosTeam2.y = MAX_POS_Y;
+        _insPosTeam1.z = GameManager.TEAM1_POS_Z;
+        _insPosTeam2.z = GameManager.TEAM2_POS_Z;
+    }
+
+    public void SetParam(bool isDevelop)
+    {
         _developMode = isDevelop;
     }
 
@@ -36,7 +51,7 @@ public class BlockManager : MonoBehaviour
     }
 
     
-    IEnumerator GenerateSetParam()
+    IEnumerator SetParamTeam1()
     {
         yield return new WaitForSeconds(_insInterval);
         int insCount = Random.Range(1, 3);
@@ -49,17 +64,37 @@ public class BlockManager : MonoBehaviour
             {
                 // 暫定
                 insPosX = Random.Range(-7, 8);
-            } while (insPosX == _blockInsPos.x || ObjectExistsInRaycast(insPosX));
+            } while (insPosX == _insPosTeam1.x || ObjectExistsInRaycast(_insPosTeam1, insPosX));
             
-            _blockInsPos.x = insPosX;
-            GenerateBlock(_blockInsPos);
+            _insPosTeam1.x = insPosX;
+            GenerateBlock(_insPosTeam1);
         }
-        _insCoroutine = StartCoroutine(GenerateSetParam());
+        _coroutineTeam1 = StartCoroutine(SetParamTeam1());
     }
 
-    bool ObjectExistsInRaycast(int targetPosX)
+    IEnumerator SetParamTeam2()
     {
-        Vector3 startPos = _blockInsPos;
+        yield return new WaitForSeconds(_insInterval);
+        int insCount = Random.Range(1, 3);
+
+        int insPosX;
+        for (int i = 0; i < insCount; i++)
+        {
+            // insPosXの被りケア
+            do
+            {
+                // 暫定
+                insPosX = Random.Range(-7, 8);
+            } while (insPosX == _insPosTeam2.x || ObjectExistsInRaycast(_insPosTeam2, insPosX));
+            
+            _insPosTeam2.x = insPosX;
+            GenerateBlock(_insPosTeam2);
+        }
+        _coroutineTeam2 = StartCoroutine(SetParamTeam2());
+    }
+
+    bool ObjectExistsInRaycast(Vector3 startPos , int targetPosX)
+    {
         startPos.x = targetPosX;
         // Raycastでオブジェクトが存在するかどうかを判定
         Debug.DrawRay(startPos, _rayDirection * 1.0f, Color.red, 1f);

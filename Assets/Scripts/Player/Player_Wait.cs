@@ -21,12 +21,11 @@ public class Player_Wait : MonoBehaviour
     private int _selectTeam;
     public int SelectTeam => _selectTeam;
     public event Action<bool> OnReadyChanged;
-    private TeamHandler _teamHandler;
+
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _myPV = GetComponent<PhotonView>();
-        _teamHandler = TeamHandler.InstanceTeamHandler;
     }
 
     void Update()
@@ -93,13 +92,11 @@ public class Player_Wait : MonoBehaviour
         if(other.CompareTag("Team1Area"))
         {
             _selectTeam = 0;
-            _teamHandler.SetTeamID(_selectTeam);
             ChangeState(true);
         }
         if(other.CompareTag("Team2Area"))
         {
             _selectTeam = 1;
-            _teamHandler.SetTeamID(_selectTeam);
             ChangeState(true);
         }
     }

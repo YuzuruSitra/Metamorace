@@ -11,16 +11,16 @@ public class WaitManagernager : MonoBehaviour
     [SerializeField]
     private GameObject _playerPrefab;
     private Player_Wait _playerWait;
-    private int _playerCount;
+    private int _playerCount = 0;
     private float _transitionTime = 2.0f;
     private WaitForSeconds _waitTime;
     
     // Start is called before the first frame update
     void Start()
     {
-        if (!PhotonNetwork.connected)   //Phootnに接続されていなければ
+        if (!PhotonNetwork.inRoom)
         {
-            SceneManager.LoadScene("Launcher"); //ログイン画面に戻る
+            SceneManager.LoadScene("Launcher");
             return; 
         }
         SceneManager.sceneLoaded += OnLoadedScene;
@@ -35,24 +35,26 @@ public class WaitManagernager : MonoBehaviour
     // Update is called once per frame
     void CheckIn(bool state)
     {
-        if(!state) return;
-        // タグが"Player"のオブジェクトを検索して配列に格納
+        if (!state) return;
+
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        // 配列の長さ（要素の数）を取得
         _playerCount = players.Length;
+
         int team1 = 0;
         int team2 = 0;
+
         for (int i = 0; i < _playerCount; i++)
         {
             Player_Wait playerWait = players[i].GetComponent<Player_Wait>();
-            if (playerWait.SelectTeam == 0) team1 ++;
-            else team2 ++;
+            // エリア外の人がいたら処理を返す
             if (!playerWait.IsReady) return;
-        }
-        if (_playerCount <= 2 && team1 == 1 && team2 == 1) _myPV.RPC(nameof(SendScene), PhotonTargets.All);
-        else if (team1 == 2 && team2 == 2) _myPV.RPC(nameof(SendScene), PhotonTargets.All);
-        
 
+            if (playerWait.SelectTeam == 0) team1++;
+            else if (playerWait.SelectTeam == 1) team2++;
+        }
+
+        // プレイヤーが2人以上で、Team1とTeam2に均等に割り振られ、全員が準備完了ならシーン遷移
+        if (_playerCount >= 2 && team1 == team2 && team1 + team2 == _playerCount) _myPV.RPC(nameof(SendScene), PhotonTargets.All);
     }
 
     [PunRPC]
@@ -66,6 +68,7 @@ public class WaitManagernager : MonoBehaviour
     private void OnLoadedScene( Scene i_scene, LoadSceneMode i_mode )
     {
         PhotonNetwork.isMessageQueueRunning = true;
-        GameObject.Find("GameManager").GetComponent<GameManager>().SetTeam(_playerWait.SelectTeam);
+        GameObject.FindWithTag("GameManager").GetComponent<GameManager>().SetTeam(_playerWait.SelectTeam);
     }
+
 }

@@ -10,8 +10,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] 
     private CamManager _camManager;
     [SerializeField] 
-    private BlockManager _blockManager;
-    [SerializeField] 
     private float _TimeLimit;
     public float _timeLimit => _TimeLimit;
     private UIHandler _uiHandler;
@@ -23,6 +21,8 @@ public class GameManager : MonoBehaviour
     //アイテムCのブロックのプレハブ
     [SerializeField] 
     private GameObject _itemCBlock;
+    [SerializeField]
+    private GameObject _blockManager;
     private int _teamID;
     public const float TEAM1_POS_Z = -2.5f;
     public const float TEAM2_POS_Z = 1.5f;
@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
         //_uiHandler = GameObject.FindWithTag("UIHandler").GetComponent<UIHandler>();
         //InvokeRepeating("ReduceTimeLimit", 0, 1);
         Debug.Log("Start");
+        
         if (DevelopeMode) HandleDevelopmentMode();
         else HandleProductionMode();
     }
@@ -59,9 +60,6 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        //TeamHandler teamHandler = TeamHandler.InstanceTeamHandler;
-        //_teamID = teamHandler.TeamID;
-
         if (_teamID == 0)  SetupPhotonPlayer(TEAM1_POS_Z, _herosPrefab[0]);
         else SetupPhotonPlayer(TEAM2_POS_Z, _herosPrefab[1]);
         
@@ -69,7 +67,8 @@ public class GameManager : MonoBehaviour
 
     private void SetupPlayer(float myPosZ, GameObject heros)
     {
-        _blockManager.SetParam(myPosZ, DevelopeMode);
+        GameObject blockManager = Instantiate(_blockManager, Vector3.zero, Quaternion.identity);
+        blockManager.GetComponent<BlockManager>().SetParam(DevelopeMode);
         GameObject player = Instantiate(_playerPrefab, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity);
         _camManager.SetPlayer(player, _teamID);
         player.GetComponent<Player>().SetParameter(heros, DevelopeMode);
@@ -77,7 +76,8 @@ public class GameManager : MonoBehaviour
 
     private void SetupPhotonPlayer(float myPosZ, GameObject heros)
     {
-        _blockManager.SetParam(myPosZ, DevelopeMode);
+        GameObject blockManager = PhotonNetwork.Instantiate(_blockManager.name, Vector3.zero, Quaternion.identity, 0);
+        blockManager.GetComponent<BlockManager>().SetParam(DevelopeMode);
         GameObject player = PhotonNetwork.Instantiate(_playerPrefab.name, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity, 0);
         _camManager.SetPlayer(player, _teamID);
         player.GetComponent<Player>().SetParameter(heros, DevelopeMode);
