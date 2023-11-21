@@ -23,6 +23,7 @@ public class WaitManagernager : MonoBehaviour
             SceneManager.LoadScene("Launcher"); //ログイン画面に戻る
             return; 
         }
+        SceneManager.sceneLoaded += OnLoadedScene;
         _waitTime = new WaitForSeconds(_transitionTime);
 
         //Photonに接続していれば自プレイヤーを生成
@@ -56,7 +57,13 @@ public class WaitManagernager : MonoBehaviour
 
     private IEnumerator SendScene()
     {
+        PhotonNetwork.isMessageQueueRunning = false;
         yield return _waitTime;
         PhotonNetwork.LoadLevel("Master_Battle");
+    }
+
+    private void OnLoadedScene( Scene i_scene, LoadSceneMode i_mode )
+    {
+        PhotonNetwork.isMessageQueueRunning = true;
     }
 }
