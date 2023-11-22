@@ -88,21 +88,22 @@ public class ItemHandler : MonoBehaviour
             }
             else if(_myBrockNum == 3)
             {
-                //アイテムC
-                Debug.Log("アイテムC生成");
-                 _uiHandler.SetItemImage(1);
-                 _uiHandler.ResetStackImage();
-                ResetBlock();
-                _hasItemC = true;
-            }
-            else
-            {
                 //アイテムB
                 Debug.Log("アイテムB生成");
                  _uiHandler.SetItemImage(2);
                  _uiHandler.ResetStackImage();
                 ResetBlock();
                 _hasItemB = true;
+            }
+            else
+            {
+                 //アイテムC
+                Debug.Log("アイテムC生成");
+                 _uiHandler.SetItemImage(1);
+                 _uiHandler.ResetStackImage();
+                ResetBlock();
+                _hasItemC = true;
+                
             }    
             //カウントリセット
             _myBrockNum = 0;
