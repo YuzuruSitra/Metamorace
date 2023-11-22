@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField]
     private PhotonView _myPV;
     [SerializeField]
     private float _playerSpeed;
@@ -25,30 +26,31 @@ public class Player : MonoBehaviour
     ItemHandler _itemHandler;
     [SerializeField] 
     ItemC _itemC;
-    private Transform _cubeParent;
+    //private Transform _cubeParent;
 
     BlockBehaviour _currentBlock;
     private Rigidbody _rb;
     private bool _isJump,_isHead = false;
     private bool _hasBlock = false;
-
-    private float _enemyPos;
+    int _enemyTeam;
     private bool _developMode = false;
     private WaitForSeconds _waitTime;
+    private Transform[] _cubeParentTeam = new Transform[2];
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
-        _cubeParent = GameObject.FindWithTag("CubeParent").transform;
-        _myPV = GetComponent<PhotonView>();
         _usePlayerSpeed = _playerSpeed;
         _useDestroyPower = _destroyPower;
         _waitTime = new WaitForSeconds(_itemHandler._ItemAEffectTime);
     }
 
-    public void SetParameter(GameObject heros, bool isDevelop)
+    public void SetParameter(GameObject heros, Transform parent1, Transform parent2, int enemyTeam, bool isDevelop)
     {
         _herosPrefab = heros;
+        _cubeParentTeam[0] = parent1;
+        _cubeParentTeam[1] = parent2;
+        _enemyTeam = enemyTeam;
         _developMode = isDevelop;
     }
 
@@ -135,7 +137,7 @@ public class Player : MonoBehaviour
         direction.Normalize();
         Ray ray = new Ray(transform.position, direction);
         RaycastHit hit;
-        Debug.DrawRay(transform.position, ray.direction * 1, Color.red, 1.0f); // 長さ３０、赤色で５秒間可視化
+        Debug.DrawRay(transform.position, ray.direction * 0.5f, Color.red, 1.0f); // 長さ３０、赤色で５秒間可視化
         if (Physics.Raycast(ray, out hit))
         {
             _currentBlock = null;
@@ -192,22 +194,48 @@ public class Player : MonoBehaviour
             if (_itemHandler._HasItemB)
             {
                 //アイテムB微調整
-                insObj = Instantiate(_itemHandler._BigBlock, insBigPos, Quaternion.identity, _cubeParent);
+                insObj = Instantiate(_itemHandler._BigBlock, insBigPos, Quaternion.identity);
+                insObj.transform.parent = _cubeParentTeam[_enemyTeam];
                 _itemHandler.ItemEffectB();
             }
             //ItemCBlock生成
             else if(_itemHandler._HasItemC)
             {
                 _itemHandler.ItemEffectC();
-                insObj = Instantiate(_itemHandler._ItemCBlock, insPos, Quaternion.identity, _cubeParent);
+                insObj = Instantiate(_itemHandler._ItemCBlock, insPos, Quaternion.identity);
+                insObj.transform.parent = _cubeParentTeam[_enemyTeam];
                 // Debug.Log("せいせい");
             }
             else
             {
-                insObj = Instantiate(_herosPrefab, insPos, Quaternion.identity, _cubeParent);
+                insObj = Instantiate(_herosPrefab, insPos, Quaternion.identity);
+                insObj.transform.parent = _cubeParentTeam[_enemyTeam];
             }
         }
-        else insObj = PhotonNetwork.Instantiate(_herosPrefab.name, insPos, Quaternion.identity, 0);
+        else 
+        {
+            //アイテムBを持っていたら巨大ブロック一回だけ生成
+            if (_itemHandler._HasItemB)
+            {
+                //アイテムB微調整
+                insObj = PhotonNetwork.Instantiate(_itemHandler._BigBlock.name, insBigPos, Quaternion.identity, 0);
+                insObj.transform.parent = _cubeParentTeam[_enemyTeam];
+                _itemHandler.ItemEffectB();
+            }
+            //ItemCBlock生成
+            else if(_itemHandler._HasItemC)
+            {
+                _itemHandler.ItemEffectC();
+                insObj = PhotonNetwork.Instantiate(_itemHandler._ItemCBlock.name, insPos, Quaternion.identity, 0);
+                insObj.transform.parent = _cubeParentTeam[_enemyTeam];
+            }
+            else
+            {
+                insObj = PhotonNetwork.Instantiate(_herosPrefab.name, insPos, Quaternion.identity, 0);
+                insObj.transform.parent = _cubeParentTeam[_enemyTeam];
+            }
+
+        }
         // 仮置き
         _hasBlock = false;
     }

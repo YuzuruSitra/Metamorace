@@ -3,7 +3,18 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - SoundHandler
+  - GameManager
+  - UIHandler
+  - BlockManager
+  - Heros
+  - Ambras
+  - ItemCBlock
+  - Team1Area
+  - Team2Area
+  - CubeParent1
+  - CubeParent2
   layers:
   - Default
   - TransparentFX
