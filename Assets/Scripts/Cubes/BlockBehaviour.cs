@@ -22,6 +22,11 @@ public class BlockBehaviour : MonoBehaviour
         return _objID;         
     }
 
+    public void MoveBlock()
+    {
+        
+    }
+
     [PunRPC]
     private void SyncHealth(float currentHealth) 
     {

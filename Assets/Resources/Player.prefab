@@ -217,8 +217,9 @@ MonoBehaviour:
   _jumpPower: 9
   _jumprayrength: 0.78
   _destroyPower: 1
+  _poolHandler: {fileID: 7454566972977520030, guid: c9c56267c0abf6843979b993354cb2d6, type: 3}
   _itemHandler: {fileID: 2509115473004689796}
-  _itemC: {fileID: 0}
+  _itemC: {fileID: 7040862465255695909, guid: 9e0ed0407d10a9247bddc076d1e153b3, type: 3}
 --- !u!54 &7544606331545972537
 Rigidbody:
   m_ObjectHideFlags: 0

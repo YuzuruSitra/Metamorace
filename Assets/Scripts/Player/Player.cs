@@ -21,6 +21,8 @@ public class Player : MonoBehaviour
     private GameObject _herosPrefab;
     //アイテムCブロックのプレハブ
     private GameObject _itemCBlock;
+    [SerializeField]
+    PoolHandler _poolHandler;
 
     [SerializeField]
     ItemHandler _itemHandler;

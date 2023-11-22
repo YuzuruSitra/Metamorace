@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de0a0966998c341f1851f15e591dc37a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _teamID: 0
+  _teamID: 1
   _rb: {fileID: -5472741560256314941}
 --- !u!54 &-5472741560256314941
 Rigidbody:
@@ -129,7 +129,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 114
   m_CollisionDetection: 0
 --- !u!114 &-3428695590159878066
 MonoBehaviour:
