@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private AmbrasPoolHandler _ambrasPoolHandler;
     [SerializeField]
     private PhotonView _myPV;
     [SerializeField]
@@ -144,13 +145,11 @@ public class Player : MonoBehaviour
         {
             _currentBlock = null;
 
-            if (hit.collider.CompareTag("Ambras") || 
-                hit.collider.CompareTag("Heros") || 
-                hit.collider.CompareTag("ItemCBlock"))
+            if (hit.collider.CompareTag("Ambras"))
             {
                 if (_currentBlock == null) _currentBlock = hit.collider.GetComponent<BlockBehaviour>();
                 if(hit.collider.CompareTag("ItemCBlock"))_itemC =  hit.collider.GetComponent<ItemC>();
-                int _objID = _currentBlock.DestroyBlock(_useDestroyPower, _developMode);
+                int _objID = _currentBlock.DestroyBlock(_useDestroyPower, _developMode, _ambrasPoolHandler);
                 // objIDを利用してUI表示  
                 if (_objID == 1 || _objID == 2)
                 {
@@ -175,7 +174,37 @@ public class Player : MonoBehaviour
                     _hasBlock = true;
                     _itemHandler.StackBlock(_objID);
                 }
-                return;
+            }
+            else if ( hit.collider.CompareTag("Heros") || 
+                hit.collider.CompareTag("ItemCBlock"))
+            {
+                if (_currentBlock == null) _currentBlock = hit.collider.GetComponent<BlockBehaviour>();
+                if(hit.collider.CompareTag("ItemCBlock"))_itemC =  hit.collider.GetComponent<ItemC>();
+                int _objID = _currentBlock.DestroyBlock(_useDestroyPower, _developMode, _ambrasPoolHandler);
+                // objIDを利用してUI表示  
+                if (_objID == 1 || _objID == 2)
+                {
+                    //ItemCBlockを破壊した際に効果発動
+                    if(hit.collider.CompareTag("ItemCBlock")) 
+                    {           
+                        int _effectid = _itemHandler.ChoseEffectC();
+                        switch(_effectid){
+                            //敵スタン
+                            case 1:
+                            _itemC.EffectStan(ref _usePlayerSpeed);
+                            Invoke("FinishItemC", _itemHandler._ItemCEffectTime);
+                            break;
+                            //周囲4マスのブロックを破壊
+                            case 2:
+                            Debug.Log("2");
+                            _itemC.Break4();        
+                            break;
+                        }
+                       
+                    }
+                    _hasBlock = true;
+                    _itemHandler.StackBlock(_objID);
+                }
             }
         }
     }

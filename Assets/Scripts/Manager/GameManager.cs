@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] 
     private GameObject _blockManagerPrefab;
     private BlockManager _blockManager;
+    [SerializeField]
+    private AmbrasPoolHandler _ambrasPoolHandler;
     [SerializeField] 
     private CamManager _camManager;
     [SerializeField] 
@@ -34,7 +36,8 @@ public class GameManager : MonoBehaviour
     public bool DevelopeMode;
     public int DevelopeTeamID;
     private Coroutine _coroutineCalc;
-    [SerializeField] private float _calcInterval = 2.5f;
+    [SerializeField] 
+    private float _calcInterval = 2.5f;
     private WaitForSeconds _calcWaitTime;
     [SerializeField]
     private Transform _cubeParentTeam1, _cubeParentTeam2;

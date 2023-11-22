@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BlockManager : MonoBehaviour
 {
+    private AmbrasPoolHandler _ambrasPoolHandler;
     // キューブの親
     private Transform _cubeParentTeam1, _cubeParentTeam2;
     [SerializeField] 

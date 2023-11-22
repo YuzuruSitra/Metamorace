@@ -1,14 +1,10 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class PoolHandler : MonoBehaviour
+public class AmbrasPoolHandler : MonoBehaviour
 {
-    // ヒーロス
-    private ObjectPool<GameObject> _herosPool;
-    public ObjectPool<GameObject> HerosPool => _herosPool;
-
-    [SerializeField]
-    private GameObject _heros;
     // アンブラス
     private ObjectPool<GameObject> _ambrasPool;
     public ObjectPool<GameObject> AmbrasPool => _ambrasPool;
@@ -19,12 +15,12 @@ public class PoolHandler : MonoBehaviour
 
     void Awake()
     {
-        _herosPool = new ObjectPool<GameObject>(OnCreatePooledObject, OnGetFromPool, OnReleaseToPool, OnDestroyPooledObject);
+        _ambrasPool = new ObjectPool<GameObject>(OnCreatePooledObject, OnGetFromPool, OnReleaseToPool, OnDestroyPooledObject);
     }
 
     GameObject OnCreatePooledObject()
     {
-        return Instantiate(_heros);
+        return Instantiate(_ambras);
     }
 
     void OnGetFromPool(GameObject obj)
@@ -44,7 +40,7 @@ public class PoolHandler : MonoBehaviour
 
     public GameObject GetGameObject(Vector3 position, Quaternion rotation)
     {
-        GameObject obj = _herosPool.Get();
+        GameObject obj = _ambrasPool.Get();
         if (obj == null) obj = OnCreatePooledObject();
         Transform tf = obj.transform;
         tf.position = position;
@@ -55,6 +51,6 @@ public class PoolHandler : MonoBehaviour
 
     public void ReleaseGameObject(GameObject obj)
     {
-        _herosPool.Release(obj);
+        _ambrasPool.Release(obj);
     }
 }
