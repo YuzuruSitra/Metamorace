@@ -110,13 +110,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 7828024547459711129}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f871d516df41e2e43a0ec7a98c67b77a, type: 3}
+  m_Script: {fileID: 11500000, guid: 96a0f744358e5b94097f9f9099ef48d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _myPV: {fileID: -7006153795055791629}
   _objID: 1
-  _objHealth: 1
+  _objHealth: 3
   _blocklength: 0.51
+  _isBigBlock: 0
+  _rb: {fileID: -1556883281178353706}
 --- !u!54 &-1556883281178353706
 Rigidbody:
   m_ObjectHideFlags: 0

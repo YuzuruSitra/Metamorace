@@ -35,10 +35,11 @@ public class Player : MonoBehaviour
     private Rigidbody _rb;
     private bool _isJump,_isHead = false;
     private bool _hasBlock = false;
-    int _enemyTeam;
+    private int _mineTeam,_enemyTeam;
     private bool _developMode = false;
     private WaitForSeconds _waitTime;
     private Transform[] _cubeParentTeam = new Transform[2];
+    private Quaternion[] _insQuaternion = {Quaternion.Euler(0, 0, 0), Quaternion.Euler(0, 180, 0)};
 
     void Start()
     {
@@ -48,12 +49,13 @@ public class Player : MonoBehaviour
         _waitTime = new WaitForSeconds(_itemHandler._ItemAEffectTime);
     }
 
-    public void SetParameter(GameObject heros, Transform parent1, Transform parent2, int enemyTeam, bool isDevelop)
+    public void SetParameter(GameObject heros, Transform parent1, Transform parent2, int thisTeam, bool isDevelop)
     {
         _herosPrefab = heros;
         _cubeParentTeam[0] = parent1;
         _cubeParentTeam[1] = parent2;
-        _enemyTeam = enemyTeam;
+        _mineTeam = thisTeam;
+        _enemyTeam = 1 - _mineTeam;
         _developMode = isDevelop;
     }
 
@@ -97,7 +99,6 @@ public class Player : MonoBehaviour
         // プレイヤーの向きを移動ベクトルに向ける
         Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 1080.0f * Time.deltaTime);
-        
 
     }
 
@@ -134,80 +135,54 @@ public class Player : MonoBehaviour
     //オブジェクト破壊
     public void BreakBlock()
     {
-        //ブロックを持ってなければ処理を行う
         if (_hasBlock || !Input.GetMouseButton(0)) return;
-        Vector3 direction = transform.forward; // プレイヤーの向いている方向を取得
+
+        Vector3 direction = transform.forward;
         direction.Normalize();
         Ray ray = new Ray(transform.position, direction);
-        RaycastHit hit;
-        Debug.DrawRay(transform.position, ray.direction * 0.5f, Color.red, 1.0f); // 長さ３０、赤色で５秒間可視化
-        if (Physics.Raycast(ray, out hit))
-        {
-            _currentBlock = null;
 
-            if (hit.collider.CompareTag("Ambras"))
-            {
-                if (_currentBlock == null) _currentBlock = hit.collider.GetComponent<BlockBehaviour>();
-                if(hit.collider.CompareTag("ItemCBlock"))_itemC =  hit.collider.GetComponent<ItemC>();
-                int _objID = _currentBlock.DestroyBlock(_useDestroyPower, _developMode, _ambrasPoolHandler);
-                // objIDを利用してUI表示  
-                if (_objID == 1 || _objID == 2)
-                {
-                    //ItemCBlockを破壊した際に効果発動
-                    if(hit.collider.CompareTag("ItemCBlock")) 
-                    {           
-                        int _effectid = _itemHandler.ChoseEffectC();
-                        switch(_effectid){
-                            //敵スタン
-                            case 1:
-                            _itemC.EffectStan(ref _usePlayerSpeed);
-                            Invoke("FinishItemC", _itemHandler._ItemCEffectTime);
-                            break;
-                            //周囲4マスのブロックを破壊
-                            case 2:
-                            Debug.Log("2");
-                            _itemC.Break4();        
-                            break;
-                        }
-                       
-                    }
-                    _hasBlock = true;
-                    _itemHandler.StackBlock(_objID);
-                }
-            }
-            else if ( hit.collider.CompareTag("Heros") || 
-                hit.collider.CompareTag("ItemCBlock"))
-            {
-                if (_currentBlock == null) _currentBlock = hit.collider.GetComponent<BlockBehaviour>();
-                if(hit.collider.CompareTag("ItemCBlock"))_itemC =  hit.collider.GetComponent<ItemC>();
-                int _objID = _currentBlock.DestroyBlock(_useDestroyPower, _developMode, _ambrasPoolHandler);
-                // objIDを利用してUI表示  
-                if (_objID == 1 || _objID == 2)
-                {
-                    //ItemCBlockを破壊した際に効果発動
-                    if(hit.collider.CompareTag("ItemCBlock")) 
-                    {           
-                        int _effectid = _itemHandler.ChoseEffectC();
-                        switch(_effectid){
-                            //敵スタン
-                            case 1:
-                            _itemC.EffectStan(ref _usePlayerSpeed);
-                            Invoke("FinishItemC", _itemHandler._ItemCEffectTime);
-                            break;
-                            //周囲4マスのブロックを破壊
-                            case 2:
-                            Debug.Log("2");
-                            _itemC.Break4();        
-                            break;
-                        }
-                       
-                    }
-                    _hasBlock = true;
-                    _itemHandler.StackBlock(_objID);
-                }
-            }
+        Debug.DrawRay(transform.position, ray.direction * 0.5f, Color.red, 1.0f);
+
+        if (!Physics.Raycast(ray, out RaycastHit hit) || !IsBlock(hit.collider)) return;
+
+        _currentBlock = hit.collider.GetComponent<BlockBehaviour>();
+
+        if (hit.collider.CompareTag("ItemCBlock"))
+        {
+            _itemC = hit.collider.GetComponent<ItemC>();
+            ProcessItemCBlockEffect();
+        }
+
+        int objID = _currentBlock.DestroyBlock(_useDestroyPower, _developMode);
+
+        if (objID == 1 || objID == 2)
+        {
+            _hasBlock = true;
+            _itemHandler.StackBlock(objID);
         }
     }
+
+    private bool IsBlock(Collider collider)
+    {
+        return collider.CompareTag("Ambras") || collider.CompareTag("Heros") || collider.CompareTag("ItemCBlock");
+    }
+
+    private void ProcessItemCBlockEffect()
+    {
+        int effectID = _itemHandler.ChoseEffectC();
+
+        switch (effectID)
+        {
+            case 1:
+                _itemC.EffectStan(ref _usePlayerSpeed);
+                Invoke("FinishItemC", _itemHandler._ItemCEffectTime);
+                break;
+            case 2:
+                _itemC.Break4();
+                break;
+        }
+    }
+
 
     //オブジェクト生成
     public void CreateBlock()
@@ -225,7 +200,7 @@ public class Player : MonoBehaviour
             if (_itemHandler._HasItemB)
             {
                 //アイテムB微調整
-                insObj = Instantiate(_itemHandler._BigBlock, insBigPos, Quaternion.identity);
+                insObj = Instantiate(_itemHandler._BigBlock, insBigPos, _insQuaternion[_mineTeam]);
                 insObj.transform.parent = _cubeParentTeam[_enemyTeam];
                 _itemHandler.ItemEffectB();
             }
@@ -233,13 +208,13 @@ public class Player : MonoBehaviour
             else if(_itemHandler._HasItemC)
             {
                 _itemHandler.ItemEffectC();
-                insObj = Instantiate(_itemHandler._ItemCBlock, insPos, Quaternion.identity);
+                insObj = Instantiate(_itemHandler._ItemCBlock, insPos, _insQuaternion[_mineTeam]);
                 insObj.transform.parent = _cubeParentTeam[_enemyTeam];
                 // Debug.Log("せいせい");
             }
             else
             {
-                insObj = Instantiate(_herosPrefab, insPos, Quaternion.identity);
+                insObj = Instantiate(_herosPrefab, insPos, _insQuaternion[_mineTeam]);
                 insObj.transform.parent = _cubeParentTeam[_enemyTeam];
             }
         }
@@ -249,7 +224,7 @@ public class Player : MonoBehaviour
             if (_itemHandler._HasItemB)
             {
                 //アイテムB微調整
-                insObj = PhotonNetwork.Instantiate(_itemHandler._BigBlock.name, insBigPos, Quaternion.identity, 0);
+                insObj = PhotonNetwork.Instantiate(_itemHandler._BigBlock.name, insBigPos, _insQuaternion[_mineTeam], 0);
                 insObj.transform.parent = _cubeParentTeam[_enemyTeam];
                 _itemHandler.ItemEffectB();
             }
@@ -257,12 +232,12 @@ public class Player : MonoBehaviour
             else if(_itemHandler._HasItemC)
             {
                 _itemHandler.ItemEffectC();
-                insObj = PhotonNetwork.Instantiate(_itemHandler._ItemCBlock.name, insPos, Quaternion.identity, 0);
+                insObj = PhotonNetwork.Instantiate(_itemHandler._ItemCBlock.name, insPos, _insQuaternion[_mineTeam], 0);
                 insObj.transform.parent = _cubeParentTeam[_enemyTeam];
             }
             else
             {
-                insObj = PhotonNetwork.Instantiate(_herosPrefab.name, insPos, Quaternion.identity, 0);
+                insObj = PhotonNetwork.Instantiate(_herosPrefab.name, insPos, _insQuaternion[_mineTeam], 0);
                 insObj.transform.parent = _cubeParentTeam[_enemyTeam];
             }
 

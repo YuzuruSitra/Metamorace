@@ -17,6 +17,7 @@ public class BlockManager : MonoBehaviour
     private Vector3 _insPosTeam1, _insPosTeam2;
     private bool _developMode = false;
     private const float RAY_DISTANCE = 1.0f;
+    
 
     void Awake()
     {
@@ -41,11 +42,11 @@ public class BlockManager : MonoBehaviour
         _insPosTeam2.z = GameManager.TEAM2_POS_Z;
         _waitTime = new WaitForSeconds(_insInterval);
 
-        _coroutineTeam1 = StartCoroutine(SetParamForTeam(_cubeParentTeam1, _insPosTeam1));
-        _coroutineTeam2 = StartCoroutine(SetParamForTeam(_cubeParentTeam2, _insPosTeam2));
+        _coroutineTeam1 = StartCoroutine(SetParamForTeam(_cubeParentTeam1, _insPosTeam1, Quaternion.Euler(0, 180, 0)));
+        _coroutineTeam2 = StartCoroutine(SetParamForTeam(_cubeParentTeam2, _insPosTeam2, Quaternion.Euler(0, 0, 0)));
     }
 
-    IEnumerator SetParamForTeam(Transform cubeParent, Vector3 insPos)
+    IEnumerator SetParamForTeam(Transform cubeParent, Vector3 insPos, Quaternion rot)
     {
         while (true)
         {
@@ -61,19 +62,18 @@ public class BlockManager : MonoBehaviour
                 } while (insPosX == insPos.x || ObjectExistsInRaycast(insPos, insPosX));
 
                 insPos.x = insPosX;
-                GenerateBlock(insPos, cubeParent);
+                GenerateBlock(insPos, cubeParent, rot);
             }
         }
     }
 
-    private void GenerateBlock(Vector3 insPos, Transform parent)
+    private void GenerateBlock(Vector3 insPos, Transform parent, Quaternion rot)
     {
         GameObject insObj;
         if (_developMode) 
-            insObj = Instantiate(_blockAmbras, insPos, Quaternion.identity);
+            insObj = Instantiate(_blockAmbras, insPos, rot);
         else 
-            insObj = PhotonNetwork.Instantiate(_blockAmbras.name, insPos, Quaternion.identity, 0);
-
+            insObj = PhotonNetwork.Instantiate(_blockAmbras.name, insPos, rot, 0);
         insObj.transform.parent = parent;
     }
 
