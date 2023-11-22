@@ -14,6 +14,7 @@ public class WaitSceneManager : MonoBehaviour
     private int _playerCount = 0;
     private float _transitionTime = 2.0f;
     private WaitForSeconds _waitTime;
+    public bool DebugMode;
     
     // Start is called before the first frame update
     void Start()
@@ -57,9 +58,11 @@ public class WaitSceneManager : MonoBehaviour
             else if (playerWait.SelectTeam == 1) team2++;
         }
 
-        _myPV.RPC(nameof(SendScene), PhotonTargets.All);
-        // プレイヤーが2人以上で、Team1とTeam2に均等に割り振られ、全員が準備完了ならシーン遷移
-        // if (_playerCount >= 2 && team1 == team2 && team1 + team2 == _playerCount) _myPV.RPC(nameof(SendScene), PhotonTargets.All);
+        if(DebugMode)
+            _myPV.RPC(nameof(SendScene), PhotonTargets.All);
+        else
+            // プレイヤーが2人以上で、Team1とTeam2に均等に割り振られ、全員が準備完了ならシーン遷移
+            if (_playerCount >= 2 && team1 == team2 && team1 + team2 == _playerCount) _myPV.RPC(nameof(SendScene), PhotonTargets.All);
     }
 
     [PunRPC]
