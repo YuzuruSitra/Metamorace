@@ -116,10 +116,9 @@ MonoBehaviour:
   _myPV: {fileID: -1871881726777730910}
   _objID: 2
   _objHealth: 5
-  _blocklength: 0.53
+  _blocklength: 0.6
   _isBigBlock: 0
   _rb: {fileID: 4845965506342646060}
-  _developMode: 0
 --- !u!114 &8700301099434654295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,7 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isBigBlock: 0
-  _teamID: 1
+  _teamID: 0
   _rb: {fileID: 4845965506342646060}
 --- !u!54 &4845965506342646060
 Rigidbody:

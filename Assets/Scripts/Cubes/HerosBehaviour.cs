@@ -50,7 +50,7 @@ public class HerosBehaviour : MonoBehaviour
         transform.position = tmp;
         _rb.useGravity = true;
         _oneTime = false;
-        _rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+        _rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
     }
 
     // 手前へ
@@ -65,7 +65,7 @@ public class HerosBehaviour : MonoBehaviour
         transform.position = tmp;
         _rb.useGravity = true;
         _oneTime = false;
-        _rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+        _rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
     }
 
     public void SetID(int id)

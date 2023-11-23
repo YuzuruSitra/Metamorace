@@ -115,10 +115,9 @@ MonoBehaviour:
   _myPV: {fileID: -7006153795055791629}
   _objID: 1
   _objHealth: 3
-  _blocklength: 0.53
+  _blocklength: 0.6
   _isBigBlock: 0
   _rb: {fileID: -1556883281178353706}
-  _developMode: 0
 --- !u!54 &-1556883281178353706
 Rigidbody:
   m_ObjectHideFlags: 0
