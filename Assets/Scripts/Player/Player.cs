@@ -114,7 +114,7 @@ public class Player : MonoBehaviour
         if(Input.GetKey("d")) inputX = 1.0f;
         if(Input.GetKey("a")) inputX = -1.0f;
         if(Input.GetKey("a") && Input.GetKey("d")) inputX = 0.0f;
-        Debug.Log(inputX);
+        //Debug.Log(inputX);
         if(inputX == 0) return;
 
         Vector3 movement = new Vector3(inputX, 0, 0);
@@ -204,9 +204,8 @@ private bool CheckAndJump(Ray ray)
 
         _currentBlock = hit.collider.GetComponent<BlockBehaviour>();
         //対象ブロックの体力参照
-        float _objHealth = _currentBlock._ObjHealth;
-        float _maxobjHealth = _currentBlock._MaxobjHealth;
-        _uiHandler.DecreceGage(_objHealth,_maxobjHealth);
+        //float _objHealth = _currentBlock._ObjHealth;
+        _currentBlock.DecreceGage();
         if (hit.collider.CompareTag("ItemCBlock"))
         {
             _itemC = hit.collider.GetComponent<ItemC>();

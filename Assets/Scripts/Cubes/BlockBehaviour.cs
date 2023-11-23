@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class BlockBehaviour : MonoBehaviour
 {
     [SerializeField]
@@ -23,10 +23,27 @@ public class BlockBehaviour : MonoBehaviour
     private Rigidbody _rb;
     [SerializeField]
     bool _developMode = false;
-
+    [SerializeField] Image _gage;
+    float setTime = 1.0f;
+    float currentTime;
     void Start()
     {
         _maxobjHealth = _objHealth;
+    }
+    void Update()
+    {
+        Debug.Log(currentTime);
+        if(_isBigBlock) BigBlockMove();
+        else MoveBlock();      
+        if(currentTime >= 0) 
+        {
+            _gage.gameObject.SetActive(true);
+             currentTime -= Time.deltaTime;
+        }
+        else
+        {
+            _gage.gameObject.SetActive(false);
+        }    
     }
     public void DevModeSet(bool developMode)
     {
@@ -62,11 +79,7 @@ public class BlockBehaviour : MonoBehaviour
     }
 
 
-    void Update()
-    {
-        if(_isBigBlock) BigBlockMove();
-        else MoveBlock();
-    }
+    
 
     public void MoveBlock()
     {
@@ -119,4 +132,10 @@ public class BlockBehaviour : MonoBehaviour
         return collider.CompareTag("Ambras") || collider.CompareTag("Heros") || collider.CompareTag("ItemCBlock");
     }
 
+    public void DecreceGage()
+   {
+        currentTime = setTime;
+         float _nowhealth =  _objHealth/_maxobjHealth;
+        _gage.fillAmount = _nowhealth;
+   }
 }
