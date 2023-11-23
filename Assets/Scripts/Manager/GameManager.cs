@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField]
+    private PhotonView _myPV;
     private Player _player;
     [SerializeField] 
     private ColorManager _colorManager;
@@ -126,33 +128,59 @@ public class GameManager : MonoBehaviour
         if (_finGame) return;
         ReduceTimeLimit();
 
-        // 時間が切れて終了
-        if (_timeLimit <= 0)
+        // ゲーム終了処理
+        if (_timeLimit <= 0 || _player.IsDead)
         {
-            _finGame = true;
-            // リトライ時に値を戻す
-            Time.timeScale = 0;
-            // ObjManagerから勝敗を取得
-            
-            // UIの更新
-            int shareTeam1 = _blockManager.CalcCubeShare1(FIELD_SIZE);
-            int shareTeam2 = _blockManager.CalcCubeShare2(FIELD_SIZE);
-            bool karioki = false;
-            int karioki2 = 0;
-
-            _uiHandler.ShowResult(shareTeam1,shareTeam2,karioki,karioki2);
+            if(!DevelopeMode) 
+            {
+                _myPV.RPC(nameof(FinishGame), PhotonTargets.All, _player.IsDead, _teamID);
+            }
+            else
+            {
+                _finGame = true;
+                // リトライ時に値を戻す
+                Time.timeScale = 0;
+                // 死んだプレイヤーのチームを取得して勝敗を判定
+                int winTeam = 1 - _teamID;
+                // 占有率の取得
+                int shareTeam1 = _blockManager.CalcCubeShare1(FIELD_SIZE);
+                int shareTeam2 = _blockManager.CalcCubeShare2(FIELD_SIZE);
+                _uiHandler.ShowResult(shareTeam1,shareTeam2,_player.IsDead,_teamID);
+            }
         }
+    }
 
-        // Playerが死んで終了
-        if (_player.IsDead)
-        {
-            _finGame = true;
-            // リトライ時に値を戻す
-            Time.timeScale = 0;
-            // 死んだプレイヤーのチームを取得して勝敗を判定
-            
-            // UIの更新
-        }
+     // ゲーム終了同期処理
+    [PunRPC]
+    private void FinishGame(bool isDead, int team)
+    {
+        _finGame = true;
+        // リトライ時に値を戻す
+        Time.timeScale = 0;
+        // 死んだプレイヤーのチームを取得して勝敗を判定
+        int winTeam = 1 - team;
+        // 占有率の取得
+        int shareTeam1 = _blockManager.CalcCubeShare1(FIELD_SIZE);
+        int shareTeam2 = _blockManager.CalcCubeShare2(FIELD_SIZE);
+        // UIの更新
+        _uiHandler.ShowResult(shareTeam1, shareTeam2, isDead, team);
+    }
+
+    // ルームへ戻る処理
+    public void BackPrivateRomm()
+    {
+        if(!DevelopeMode) 
+            _myPV.RPC(nameof(ReturnRoom), PhotonTargets.All);
+        else
+            SceneManager.LoadScene("Master_Wait");
+    }
+
+    [PunRPC]
+    private IEnumerator ReturnRoom()
+    {
+        PhotonNetwork.isMessageQueueRunning = false;
+        yield return new WaitForSeconds(2.0f);
+        PhotonNetwork.LoadLevel("Master_Wait");
     }
 
     // 制限時間の減少処理
