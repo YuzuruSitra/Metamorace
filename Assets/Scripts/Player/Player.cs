@@ -17,9 +17,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _destroyPower = 1.0f;
     private float _useDestroyPower;
-    // [SerializeField] 
-    // ItemHandler _itemHandler;
-    //private GameObject _herosPrefab;
     //アイテムCブロックのプレハブ
     private GameObject _itemCBlock;
     [SerializeField]
@@ -64,7 +61,7 @@ public class Player : MonoBehaviour
         _mineTeam = thisTeam;
         _enemyTeam = 1 - _mineTeam;
         _developMode = isDevelop;
-         ChangeBlockID(thisTeam);
+        ChangeBlockID(thisTeam);
     }
     //IDからブロックの移動方向決定
     public void ChangeBlockID(int thisTeam)
