@@ -1630,13 +1630,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3a93e193c4914068a58369c7a6a9af2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _myPV: {fileID: 0}
   _colorManager: {fileID: 0}
   _blockManagerPrefab: {fileID: 1692291927690342940, guid: e4abd95c9218d5f45aea2b7c765ff2cc, type: 3}
   _camManager: {fileID: 1973404693}
   _TimeLimit: 90
   _playerPrefab: {fileID: 7544606331545972519, guid: 80b228bdc5e493d4a8e3dbe013fe0e18, type: 3}
   _itemCBlock: {fileID: 0}
-  DevelopeMode: 1
+  DevelopeMode: 0
   DevelopeTeamID: 0
   _calcInterval: 2.5
   _cubeParentTeam1: {fileID: 8716951255756122465}
@@ -7731,7 +7732,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 876f1afb4090025408b66b2031e45d04, type: 3}
   - {fileID: 21300000, guid: fe840b1bd2da9f6488065f9114511547, type: 3}
   _button: {fileID: 2101232006}
-  _gage: {fileID: 1240044011}
+  _resultPanel: {fileID: 0}
+  _winnerPanel: {fileID: 0}
+  _winBlockRate: {fileID: 0}
+  _loseBlockRate: {fileID: 0}
 --- !u!114 &1207385906
 MonoBehaviour:
   m_ObjectHideFlags: 0

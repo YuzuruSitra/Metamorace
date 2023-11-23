@@ -48,4 +48,6 @@ MonoBehaviour:
   - SyncHealth
   - SyncPlayerCount
   - SendScene
+  - FinishGame
+  - ReturnRoom
   DisableAutoOpenWizard: 1
