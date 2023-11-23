@@ -96,7 +96,7 @@ public class Player : MonoBehaviour
     void PlayerCtrl()
     {
         float inputX = Input.GetAxis("Horizontal");
-        
+        Debug.Log(inputX);
         if(inputX == 0) return;
 
         // カメラの方向を考慮して移動ベクトルを作成
@@ -107,7 +107,7 @@ public class Player : MonoBehaviour
         right.y = 0.0f;
         right.Normalize();
 
-        Vector3 movement = inputX * right;
+        Vector3 movement = new Vector3(inputX, 0, 0); 
 
         _rb.MovePosition(transform.position + movement * _usePlayerSpeed * Time.deltaTime);
 
