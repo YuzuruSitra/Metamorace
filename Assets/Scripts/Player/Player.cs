@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     private float _useDestroyPower;
     // [SerializeField] 
     // ItemHandler _itemHandler;
-    private GameObject _herosPrefab;
+    //private GameObject _herosPrefab;
     //アイテムCブロックのプレハブ
     private GameObject _itemCBlock;
     [SerializeField]
@@ -29,9 +29,16 @@ public class Player : MonoBehaviour
     ItemHandler _itemHandler;
     [SerializeField] 
     ItemC _itemC;
+    [SerializeField]
+    GameObject _herosPrefab;
+    [SerializeField]
+    GameObject _bigPrefab;
+    [SerializeField]
+    GameObject _cPrefab;
     //private Transform _cubeParent;
 
     BlockBehaviour _currentBlock;
+    HerosBehaviour _herosBehaviour,_bigBehaviour,_cBehaviour;
     private Rigidbody _rb;
     private bool _isJump,_isHead = false;
     private bool _hasBlock = false;
@@ -49,14 +56,25 @@ public class Player : MonoBehaviour
         _waitTime = new WaitForSeconds(_itemHandler._ItemAEffectTime);
     }
 
-    public void SetParameter(GameObject heros, Transform parent1, Transform parent2, int thisTeam, bool isDevelop)
+    public void SetParameter(Transform parent1, Transform parent2, int thisTeam, bool isDevelop)
     {
-        _herosPrefab = heros;
+       
         _cubeParentTeam[0] = parent1;
         _cubeParentTeam[1] = parent2;
         _mineTeam = thisTeam;
         _enemyTeam = 1 - _mineTeam;
         _developMode = isDevelop;
+         ChangeBlockID(thisTeam);
+    }
+    //IDからブロックの移動方向決定
+    public void ChangeBlockID(int thisTeam)
+    {
+        HerosBehaviour _herosBehaviour = _herosPrefab.GetComponent<HerosBehaviour>();
+        HerosBehaviour _bigBehaviour = _bigPrefab.GetComponent<HerosBehaviour>();
+        HerosBehaviour _cBehaviour = _cPrefab.GetComponent<HerosBehaviour>();
+       _herosBehaviour.SetID(thisTeam);
+       _bigBehaviour.SetID(thisTeam);
+       _cBehaviour.SetID(thisTeam);
     }
 
     void Update()

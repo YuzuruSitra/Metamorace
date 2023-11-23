@@ -18,8 +18,7 @@ public class GameManager : MonoBehaviour
     private UIHandler _uiHandler;
     [SerializeField] 
     private GameObject _playerPrefab;
-    [SerializeField] 
-    private GameObject[] _herosPrefab;
+    
     [SerializeField] 
     private GameObject _itemCBlock;
     private int _teamID;
@@ -61,7 +60,7 @@ public class GameManager : MonoBehaviour
     private void HandleDevelopmentMode()
     {
         _teamID = DevelopeTeamID;
-        SetupPlayer(_teamID == 0 ? TEAM1_POS_Z : TEAM2_POS_Z, _herosPrefab[_teamID]);
+        SetupPlayer(_teamID == 0 ? TEAM1_POS_Z : TEAM2_POS_Z);
         _coroutineCalc = StartCoroutine(CalcCubeShare());
     }
 
@@ -74,28 +73,28 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        SetupPhotonPlayer(_teamID == 0 ? TEAM1_POS_Z : TEAM2_POS_Z, _herosPrefab[_teamID]);
+        SetupPhotonPlayer(_teamID == 0 ? TEAM1_POS_Z : TEAM2_POS_Z);
 
         if (PhotonNetwork.isMasterClient) _coroutineCalc = StartCoroutine(CalcCubeShare());
     }
 
     // ローカルプレイヤーのセットアップ
-    private void SetupPlayer(float myPosZ, GameObject heros)
+    private void SetupPlayer(float myPosZ)
     {
         SetupBlockManager();
         GameObject player = Instantiate(_playerPrefab, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity);
         _camManager.SetPlayer(player, _teamID);
-        player.GetComponent<Player>().SetParameter(heros, _cubeParentTeam1, _cubeParentTeam2, _teamID,DevelopeMode);
+        player.GetComponent<Player>().SetParameter( _cubeParentTeam1, _cubeParentTeam2, _teamID,DevelopeMode);
     }
 
     // ネットワークプレイヤーのセットアップ
-    private void SetupPhotonPlayer(float myPosZ, GameObject heros)
+    private void SetupPhotonPlayer(float myPosZ)
     {
         if (PhotonNetwork.isMasterClient) SetupPhotonBlockManager();
 
         GameObject player = PhotonNetwork.Instantiate(_playerPrefab.name, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity, 0);
         _camManager.SetPlayer(player, _teamID);
-        player.GetComponent<Player>().SetParameter(heros, _cubeParentTeam1, _cubeParentTeam2, _teamID, DevelopeMode);
+        player.GetComponent<Player>().SetParameter( _cubeParentTeam1, _cubeParentTeam2, _teamID, DevelopeMode);
     }
 
     // ローカル用ブロックマネージャーのセットアップ

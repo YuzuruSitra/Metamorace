@@ -7,7 +7,8 @@ public class BlockBehaviour : MonoBehaviour
     [SerializeField]
     private PhotonView _myPV;
     [SerializeField]
-    private int _objID;
+    public int _objID; 
+    
     [SerializeField]
     private float _objHealth;
     [SerializeField]

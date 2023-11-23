@@ -9,6 +9,7 @@ public class HerosBehaviour : MonoBehaviour
     private float _speed = 20.0f;
     [SerializeField]
     private int _teamID;
+    
     [SerializeField]
     private Rigidbody _rb;
 
@@ -59,5 +60,9 @@ public class HerosBehaviour : MonoBehaviour
         transform.position = tmp;
         _rb.useGravity = true;
         _oneTime = false;
+    }
+    public void SetID(int id)
+    {
+       id = _teamID;
     }
 }
