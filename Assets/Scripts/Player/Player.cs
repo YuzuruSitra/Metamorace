@@ -50,6 +50,8 @@ public class Player : MonoBehaviour
     private Quaternion[] _insQuaternion = {Quaternion.Euler(0, 0, 0), Quaternion.Euler(0, 180, 0)};
     float inputX = 0;
     UIHandler _uiHandler;
+    private bool _isDead = false;
+    public bool IsDead => _isDead;
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -99,7 +101,8 @@ public class Player : MonoBehaviour
         _itemHandler.CreateItem();
         Item();
         Jump();
-        JudgeDeath();     
+        JudgeVerticalDeath();   
+        JudgeHorizontalDeath();
     }
     void FixedUpdate()
     {
@@ -144,33 +147,54 @@ public class Player : MonoBehaviour
             return false;
     }
 
-    void JudgeDeath()
+    // 縦方向の死亡判定
+    void JudgeVerticalDeath()
     {
-        Ray ray = new Ray(transform.position ,new Vector3(0,_jumprayrength,0));
+        Ray ray = new Ray(transform.position ,Vector3.up);
         RaycastHit _hitHead;
-        if (Physics.Raycast(ray, out _hitHead,_jumprayrength)) _isHead =true;
+        if (Physics.Raycast(ray, out _hitHead,_jumprayrength)) _isHead = true;
         else _isHead = false;
         //頭のRayと足のRayが両方ぶつかっていたら死亡
         if(!_isJump && _isHead)
         {
-            // Debug.Log("死亡");
+            StartCoroutine(DeathCoroutine("Vertical"));
         }
     }
 
-    void Jump()
-{
-    float raypos = 0.45f;
-    // Jump handling
-    bool _isJump = CheckAndJump(new Ray(transform.position + new Vector3(raypos, 0f, raypos), new Vector3(0, -_jumprayrength, 0))) ||
-                      CheckAndJump(new Ray(transform.position + new Vector3(-raypos, 0f, -raypos), new Vector3(0, -_jumprayrength, 0))) ||
-                      CheckAndJump(new Ray(transform.position + new Vector3(raypos, 0f, -raypos), new Vector3(0, -_jumprayrength, 0))) ||
-                      CheckAndJump(new Ray(transform.position + new Vector3(-raypos, 0f, raypos), new Vector3(0, -_jumprayrength, 0)));
-
-    if (Input.GetKeyDown(KeyCode.Space) && _isJump)
+    // 横方向の死亡判定
+    void JudgeHorizontalDeath()
     {
-        _rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
+        Ray ray;
+        if(_mineTeam == 0) ray = new Ray(transform.position , new Vector3(0f,0f,-1f));
+        else ray = new Ray(transform.position , new Vector3(0f,0f,1f));
+        Debug.DrawRay(transform.position, new Vector3(0f,0f,1f) * _jumprayrength, Color.blue, 1.0f);
+
+        RaycastHit _hit;
+        if (Physics.Raycast(ray, out _hit,_jumprayrength)) StartCoroutine(DeathCoroutine("Horizontal"));
     }
-}
+
+    private IEnumerator DeathCoroutine(string direction)
+    {
+        // 死亡アニメーション
+        //////////////////
+        yield return new WaitForSeconds(2.0f);
+        _isDead = true;
+    }
+
+    void Jump()
+    {
+        float raypos = 0.45f;
+        // Jump handling
+        bool _isJump = CheckAndJump(new Ray(transform.position + new Vector3(raypos, 0f, raypos), Vector3.down)) ||
+                        CheckAndJump(new Ray(transform.position + new Vector3(-raypos, 0f, -raypos), Vector3.down)) ||
+                        CheckAndJump(new Ray(transform.position + new Vector3(raypos, 0f, -raypos), Vector3.down)) ||
+                        CheckAndJump(new Ray(transform.position + new Vector3(-raypos, 0f, raypos), Vector3.down));
+
+        if (Input.GetKeyDown(KeyCode.Space) && _isJump)
+        {
+            _rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
+        }
+    }
 
 private bool CheckAndJump(Ray ray)
 {
