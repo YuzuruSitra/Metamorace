@@ -95,10 +95,10 @@ public class UIHandler : MonoBehaviour
         _BlockRateTeam1.text = ShareTeam1;
         _BlockRateTeam2.text = ShareTeam2;
    }
-   public void DecreceGage(float health,float maxhealth)
-   {
-          float _nowhealth =  health/maxhealth;
-             _gage.fillAmount = _nowhealth;
+//    public void DecreceGage(float health,float maxhealth)
+//    {
+//           float _nowhealth =  health/maxhealth;
+//              _gage.fillAmount = _nowhealth;
            
-   }
+//    }
 }
