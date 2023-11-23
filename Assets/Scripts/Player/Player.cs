@@ -74,9 +74,9 @@ public class Player : MonoBehaviour
         if(_developMode) 
         {
             _herosPrefab.GetComponent<BlockBehaviour>().DevModeSet(_developMode);
-            _bigPrefab.GetComponent<BlockBehaviour>().DevModeSet(_developMode);;
-            _cPrefab.GetComponent<BlockBehaviour>().DevModeSet(_developMode);;
-            _ambrasPrefab.GetComponent<BlockBehaviour>().DevModeSet(_developMode);;
+            _bigPrefab.GetComponent<BlockBehaviour>().DevModeSet(_developMode);
+            _cPrefab.GetComponent<BlockBehaviour>().DevModeSet(_developMode);
+            _ambrasPrefab.GetComponent<BlockBehaviour>().DevModeSet(_developMode);
         }
     }
     //IDからブロックの移動方向決定
