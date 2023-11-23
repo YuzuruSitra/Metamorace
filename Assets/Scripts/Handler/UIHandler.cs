@@ -15,10 +15,11 @@ public class UIHandler : MonoBehaviour
      [SerializeField] Image _itemImage;
      [SerializeField] Sprite[] _itemSprite;
     [SerializeField] GameObject _button;
+    //下記リザルト用
     [SerializeField] GameObject _resultPanel;
+    [SerializeField] GameObject _winnerPanel;
     [SerializeField] Text _winBlockRate,_loseBlockRate;
     
-
     void Start()
     {
         ChangeName();
@@ -97,11 +98,15 @@ public class UIHandler : MonoBehaviour
         _BlockRateTeam2.text = ShareTeam2;
    }
 
-   public void ShowResult(int shareTeam1,int shareTeam2)
+   public void ShowResult(int shareTeam1,int shareTeam2,bool isDead,int winteam)
    {
+        Debug.Log(shareTeam1);
+        Debug.Log(shareTeam2);
+        float WinnerSize = 1.2f;
         //Team1が勝ったとき
         if(shareTeam2 > shareTeam1) 
         {
+            _winnerPanel.transform.localScale = _winnerPanel.transform.localScale*WinnerSize; 
             _winBlockRate.text = shareTeam2.ToString();
             _loseBlockRate.text = shareTeam1.ToString();
             Debug.Log("Team1");
@@ -109,15 +114,14 @@ public class UIHandler : MonoBehaviour
          //Team2が勝ったとき
         else if(shareTeam1 > shareTeam2)
         {
+            _winnerPanel.transform.localScale = _winnerPanel.transform.localScale*WinnerSize; 
             _winBlockRate.text = shareTeam1.ToString();
              _loseBlockRate.text = shareTeam2.ToString();
               Debug.Log("Team2");
         }
+        //引き分けの時
         else    Debug.Log("Draw");
-        
-        _resultPanel.SetActive(true);
-       
-        
+        _resultPanel.SetActive(true);     
    }
 //    public void DecreceGage(float health,float maxhealth)
 //    {
