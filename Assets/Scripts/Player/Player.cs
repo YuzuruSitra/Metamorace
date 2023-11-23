@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
     private WaitForSeconds _waitTime;
     private Transform[] _cubeParentTeam = new Transform[2];
     private Quaternion[] _insQuaternion = {Quaternion.Euler(0, 0, 0), Quaternion.Euler(0, 180, 0)};
-
+    float inputX = 0;
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -95,8 +95,19 @@ public class Player : MonoBehaviour
     //プレイヤーの移動
     void PlayerCtrl()
     {
-        float inputX = Input.GetAxis("Horizontal");
-        Debug.Log(inputX);
+        //もっさり移動
+        //float inputX = Input.GetAxis("Horizontal");
+        //きびきびしている
+        inputX = 0.0f;
+        if(Input.GetKey("d"))
+        {
+            inputX = 1.0f;
+        }
+        else if(Input.GetKey("a"))
+        {
+            inputX = -1.0f;
+        }
+        
         if(inputX == 0) return;
 
         // カメラの方向を考慮して移動ベクトルを作成
@@ -131,21 +142,36 @@ public class Player : MonoBehaviour
     }
 
     void Jump()
-    {
-        // Jump handling
-        //後で綺麗にします
-        Ray ray = new Ray(transform.position,new Vector3(0,-_jumprayrength,0));
-        RaycastHit hit;
-        Debug.DrawRay(transform.position,Vector3.down * _jumprayrength, Color.red, 0.1f); 
-        if (Physics.Raycast(ray, out hit,_jumprayrength))  _isJump = false;
-        else _isJump = true;
+{
+    float raypos = 0.45f;
+    // Jump handling
+    bool _isJump = CheckAndJump(new Ray(transform.position + new Vector3(raypos, 0f, raypos), new Vector3(0, -_jumprayrength, 0))) ||
+                      CheckAndJump(new Ray(transform.position + new Vector3(-raypos, 0f, -raypos), new Vector3(0, -_jumprayrength, 0))) ||
+                      CheckAndJump(new Ray(transform.position + new Vector3(raypos, 0f, -raypos), new Vector3(0, -_jumprayrength, 0))) ||
+                      CheckAndJump(new Ray(transform.position + new Vector3(-raypos, 0f, raypos), new Vector3(0, -_jumprayrength, 0)));
 
-        if (Input.GetKeyDown(KeyCode.Space) && _isJump == false)
-        {         
-            _rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
-            _isJump = true;
-        }
+    if (Input.GetKeyDown(KeyCode.Space) && _isJump)
+    {
+        _rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
     }
+}
+
+private bool CheckAndJump(Ray ray)
+{
+    RaycastHit hit;
+    // Debug.DrawRay(transform.position, Vector3.down * _jumprayrength, Color.red, 0.1f); 
+    if (Physics.Raycast(ray, out hit, _jumprayrength))
+    {
+        _isJump = false;
+        return true; // 地面に当たっている場合はtrueを返す
+    }
+    else
+    {
+        _isJump = true;
+        return false; // 地面に当たっていない場合はfalseを返す
+    }
+}
+
 
     //オブジェクト破壊
     public void BreakBlock()
