@@ -213,8 +213,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _myPV: {fileID: -2435396714989491811}
-  _playerSpeed: 3
-  _jumpPower: 20
+  _playerSpeed: 5
+  _jumpPower: 30
   _jumprayrength: 0.78
   _destroyPower: 1
   _poolHandler: {fileID: 7454566972977520030, guid: c9c56267c0abf6843979b993354cb2d6, type: 3}

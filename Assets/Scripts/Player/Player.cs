@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _jumprayrength;
     [SerializeField]
+    private float _frontRayREngth = 0.51f;
+    [SerializeField]
     private float _destroyPower = 1.0f;
     private float _useDestroyPower;
     //アイテムCブロックのプレハブ
@@ -107,20 +109,21 @@ public class Player : MonoBehaviour
     void PlayerCtrl()
     {
         //もっさり移動
-        //float inputX = Input.GetAxis("Horizontal");
-        //きびきびしている
+        // float inputX = Input.GetAxis("Horizontal");
+        // きびきびしている
         inputX = 0.0f;
-        if(Input.GetKey("d"))
-        {
-            inputX = 1.0f;
-        }
-        else if(Input.GetKey("a"))
-        {
-            inputX = -1.0f;
-        }
-        
+        if(Input.GetKey("d")) inputX = 1.0f;
+        if(Input.GetKey("a")) inputX = -1.0f;
+        if(Input.GetKey("a") && Input.GetKey("d")) inputX = 0.0f;
+        Debug.Log(inputX);
         if(inputX == 0) return;
 
+        Vector3 movement = new Vector3(inputX, 0, 0);
+        // プレイヤーの向きを移動ベクトルに向ける
+        Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);
+
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 1080.0f * Time.deltaTime);
+        if(CheckFront(new Ray(transform.position - new Vector3(0,0.5f,0), transform.forward * _frontRayREngth))) return;
         // カメラの方向を考慮して移動ベクトルを作成
         Vector3 forward = Camera.main.transform.forward;
         forward.y = 0.0f;
@@ -128,15 +131,18 @@ public class Player : MonoBehaviour
         Vector3 right = Camera.main.transform.right;
         right.y = 0.0f;
         right.Normalize();
-
-        Vector3 movement = new Vector3(inputX, 0, 0); 
-
         _rb.MovePosition(transform.position + movement * _usePlayerSpeed * Time.deltaTime);
 
-        // プレイヤーの向きを移動ベクトルに向ける
-        Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 1080.0f * Time.deltaTime);
+    }
 
+    private bool CheckFront(Ray ray)
+    {
+        RaycastHit hit;
+        Debug.DrawRay(transform.position - new Vector3(0,0.5f,0), transform.forward * _frontRayREngth, Color.blue, 0.1f); 
+        if (Physics.Raycast(ray, out hit, _frontRayREngth))
+            return true;
+        else
+            return false;
     }
 
     void JudgeDeath()
