@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
         GameObject player = Instantiate(_playerPrefab, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity);
         _camManager.SetPlayer(player, _teamID);
         _player = player.GetComponent<Player>();
-        _player.SetParameter( _cubeParentTeam1, _cubeParentTeam2, _teamID,DevelopeMode);
+        _player.SetParameter( _cubeParentTeam1, _cubeParentTeam2, _teamID, DevelopeMode);
     }
 
     // ネットワークプレイヤーのセットアップ
