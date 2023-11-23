@@ -136,6 +136,7 @@ public class GameManager : MonoBehaviour
             int shareTeam1 = _blockManager.CalcCubeShare1(FIELD_SIZE);
             int shareTeam2 = _blockManager.CalcCubeShare2(FIELD_SIZE);
             Debug.Log("Team1 : " + shareTeam1 + " Team2 : " + shareTeam2);
+            _uiHandler.ShowCalc(shareTeam1,shareTeam2);
         }
     }
 }
