@@ -15,8 +15,9 @@ public class UIHandler : MonoBehaviour
      [SerializeField] Image _itemImage;
      [SerializeField] Sprite[] _itemSprite;
     [SerializeField] GameObject _button;
-
-    [SerializeField] Image _gage;
+    [SerializeField] GameObject _resultPanel;
+    [SerializeField] Text _winBlockRate,_loseBlockRate;
+    
 
     void Start()
     {
@@ -94,6 +95,29 @@ public class UIHandler : MonoBehaviour
         string ShareTeam2 = shareTeam2.ToString();
         _BlockRateTeam1.text = ShareTeam1;
         _BlockRateTeam2.text = ShareTeam2;
+   }
+
+   public void ShowResult(int shareTeam1,int shareTeam2)
+   {
+        //Team1が勝ったとき
+        if(shareTeam2 > shareTeam1) 
+        {
+            _winBlockRate.text = shareTeam2.ToString();
+            _loseBlockRate.text = shareTeam1.ToString();
+            Debug.Log("Team1");
+        }
+         //Team2が勝ったとき
+        else if(shareTeam1 > shareTeam2)
+        {
+            _winBlockRate.text = shareTeam1.ToString();
+             _loseBlockRate.text = shareTeam2.ToString();
+              Debug.Log("Team2");
+        }
+        else    Debug.Log("Draw");
+        
+        _resultPanel.SetActive(true);
+       
+        
    }
 //    public void DecreceGage(float health,float maxhealth)
 //    {
