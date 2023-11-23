@@ -24,7 +24,6 @@ public class HerosBehaviour : MonoBehaviour
         Debug.Log(_targetPosZ);
     }
 
-
     // Update is called once per frame
     void Update()
     {
