@@ -16,9 +16,12 @@ public class UIHandler : MonoBehaviour
      [SerializeField] Sprite[] _itemSprite;
     [SerializeField] GameObject _button;
 
+    [SerializeField] Image _gage;
+
     void Start()
     {
         ChangeName();
+        //DecreceGage();
     }
     public void ShowLimitTime(float _TimeLimit)
     {
@@ -91,5 +94,14 @@ public class UIHandler : MonoBehaviour
         string ShareTeam2 = shareTeam2.ToString();
         _BlockRateTeam1.text = ShareTeam1;
         _BlockRateTeam2.text = ShareTeam2;
+   }
+   public void DecreceGage(float health)
+   {
+            // if()
+            // {
+
+            // }
+            // _gage.fillAmount = 0.5f;
+            // health
    }
 }

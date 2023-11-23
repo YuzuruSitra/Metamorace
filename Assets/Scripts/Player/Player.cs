@@ -49,12 +49,14 @@ public class Player : MonoBehaviour
     private Transform[] _cubeParentTeam = new Transform[2];
     private Quaternion[] _insQuaternion = {Quaternion.Euler(0, 0, 0), Quaternion.Euler(0, 180, 0)};
     float inputX = 0;
+    UIHandler _uiHandler;
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _usePlayerSpeed = _playerSpeed;
         _useDestroyPower = _destroyPower;
         _waitTime = new WaitForSeconds(_itemHandler._ItemAEffectTime);
+        _uiHandler = GameObject.FindWithTag("UIHandler").GetComponent<UIHandler>();
     }
 
     public void SetParameter(Transform parent1, Transform parent2, int thisTeam, bool isDevelop)
@@ -108,9 +110,6 @@ public class Player : MonoBehaviour
     //プレイヤーの移動
     void PlayerCtrl()
     {
-        //もっさり移動
-        // float inputX = Input.GetAxis("Horizontal");
-        // きびきびしている
         inputX = 0.0f;
         if(Input.GetKey("d")) inputX = 1.0f;
         if(Input.GetKey("a")) inputX = -1.0f;
@@ -204,7 +203,9 @@ private bool CheckAndJump(Ray ray)
         if (!Physics.Raycast(ray, out RaycastHit hit) || !IsBlock(hit.collider)) return;
 
         _currentBlock = hit.collider.GetComponent<BlockBehaviour>();
-
+        //対象ブロックの体力参照
+        float _objHealth = _currentBlock._ObjHealth;
+        _uiHandler.DecreceGage(_objHealth);
         if (hit.collider.CompareTag("ItemCBlock"))
         {
             _itemC = hit.collider.GetComponent<ItemC>();
