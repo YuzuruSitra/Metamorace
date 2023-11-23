@@ -75,6 +75,7 @@ public class WaitSceneManager : MonoBehaviour
 
     private void OnLoadedScene( Scene i_scene, LoadSceneMode i_mode )
     {
+        if(i_scene.name != "Master_Battle") return;
         PhotonNetwork.isMessageQueueRunning = true;
         GameObject.FindWithTag("GameManager").GetComponent<GameManager>().SetInfo(_playerWait.SelectTeam, _playerWait.PlayerID);
     }

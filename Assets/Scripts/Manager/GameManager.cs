@@ -21,9 +21,6 @@ public class GameManager : MonoBehaviour
     private UIHandler _uiHandler;
     [SerializeField] 
     private GameObject _playerPrefab;
-    
-    [SerializeField] 
-    private GameObject _itemCBlock;
     private int _teamID;
     private int _playerID;
     public const float TEAM1_POS_Z = -3.0f;
@@ -51,7 +48,7 @@ public class GameManager : MonoBehaviour
     {
         _uiHandler = GameObject.FindWithTag("UIHandler").GetComponent<UIHandler>();
         _calcWaitTime = new WaitForSeconds(_calcInterval);
-
+        SceneManager.sceneLoaded += OnLoadedScene;
         if (DevelopeMode)
             HandleDevelopmentMode();
         else
@@ -139,12 +136,13 @@ public class GameManager : MonoBehaviour
             {
                 _finGame = true;
                 // リトライ時に値を戻す
-                Time.timeScale = 0;
+                // Time.timeScale = 0;
                 // 死んだプレイヤーのチームを取得して勝敗を判定
                 int winTeam = 1 - _teamID;
                 // 占有率の取得
                 int shareTeam1 = _blockManager.CalcCubeShare1(FIELD_SIZE);
                 int shareTeam2 = _blockManager.CalcCubeShare2(FIELD_SIZE);
+                _uiHandler.ShowCalc(shareTeam1,shareTeam2);
                 _uiHandler.ShowResult(shareTeam1,shareTeam2,_player.IsDead,_teamID);
             }
         }
@@ -156,18 +154,19 @@ public class GameManager : MonoBehaviour
     {
         _finGame = true;
         // リトライ時に値を戻す
-        Time.timeScale = 0;
+        // Time.timeScale = 0;
         // 死んだプレイヤーのチームを取得して勝敗を判定
         int winTeam = 1 - team;
         // 占有率の取得
         int shareTeam1 = _blockManager.CalcCubeShare1(FIELD_SIZE);
         int shareTeam2 = _blockManager.CalcCubeShare2(FIELD_SIZE);
         // UIの更新
+        _uiHandler.ShowCalc(shareTeam1,shareTeam2);
         _uiHandler.ShowResult(shareTeam1, shareTeam2, isDead, team);
     }
 
     // ルームへ戻る処理
-    public void BackPrivateRomm()
+    public void BackPrivateRoom()
     {
         if(!DevelopeMode) 
             _myPV.RPC(nameof(ReturnRoom), PhotonTargets.All);
@@ -178,9 +177,16 @@ public class GameManager : MonoBehaviour
     [PunRPC]
     private IEnumerator ReturnRoom()
     {
+        Debug.Log("aaaa");
         PhotonNetwork.isMessageQueueRunning = false;
         yield return new WaitForSeconds(2.0f);
         PhotonNetwork.LoadLevel("Master_Wait");
+    }
+
+    private void OnLoadedScene( Scene i_scene, LoadSceneMode i_mode )
+    {
+        // Time.timeScale = 1;
+        PhotonNetwork.isMessageQueueRunning = true;
     }
 
     // 制限時間の減少処理
