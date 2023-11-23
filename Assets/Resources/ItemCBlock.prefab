@@ -131,9 +131,10 @@ MonoBehaviour:
   _myPV: {fileID: 123403381103238760}
   _objID: 2
   _objHealth: 5
-  _blocklength: 0.51
+  _blocklength: 0.53
   _isBigBlock: 0
   _rb: {fileID: 7324530144936953020}
+  _developMode: 0
 --- !u!114 &-8608740970914843897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,6 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de0a0966998c341f1851f15e591dc37a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isBigBlock: 0
   _teamID: 1
   _rb: {fileID: 7324530144936953020}
 --- !u!54 &7324530144936953020
