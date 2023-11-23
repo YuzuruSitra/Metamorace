@@ -150,6 +150,7 @@ MonoBehaviour:
   _blocklength: 1.51
   _isBigBlock: 1
   _rb: {fileID: -5472741560256314941}
+  _developMode: 0
 --- !u!114 &-2690998331061227099
 MonoBehaviour:
   m_ObjectHideFlags: 0
