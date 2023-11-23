@@ -205,7 +205,8 @@ private bool CheckAndJump(Ray ray)
         _currentBlock = hit.collider.GetComponent<BlockBehaviour>();
         //対象ブロックの体力参照
         float _objHealth = _currentBlock._ObjHealth;
-        _uiHandler.DecreceGage(_objHealth);
+        float _maxobjHealth = _currentBlock._MaxobjHealth;
+        _uiHandler.DecreceGage(_objHealth,_maxobjHealth);
         if (hit.collider.CompareTag("ItemCBlock"))
         {
             _itemC = hit.collider.GetComponent<ItemC>();

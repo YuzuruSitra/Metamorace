@@ -12,6 +12,8 @@ public class BlockBehaviour : MonoBehaviour
     [SerializeField]
     private float _objHealth;
     public float _ObjHealth => _objHealth;
+    private float _maxobjHealth;
+    public float _MaxobjHealth => _maxobjHealth;
     [SerializeField]
     private float _blocklength;
     [SerializeField]
@@ -22,6 +24,10 @@ public class BlockBehaviour : MonoBehaviour
     [SerializeField]
     bool _developMode = false;
 
+    void Start()
+    {
+        _maxobjHealth = _objHealth;
+    }
     public void DevModeSet(bool developMode)
     {
         _developMode = developMode;
