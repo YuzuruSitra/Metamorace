@@ -74,6 +74,9 @@ public class BlockBehaviour : MonoBehaviour
             _hitmove.collider.CompareTag("Heros") || _hitmove.collider.CompareTag("ItemCBlock"))
             {
                 //当たったら移動
+                _rb.constraints = RigidbodyConstraints.None;
+                _rb.constraints = RigidbodyConstraints.FreezePositionX;
+                _rb.constraints = RigidbodyConstraints.FreezeRotation;
                 _rb.MovePosition(transform.position + transform.forward * _speed * Time.deltaTime);
             }
         }
