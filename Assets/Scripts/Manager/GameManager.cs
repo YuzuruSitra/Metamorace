@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     public const int MinPosX = -7;
     public const int MaxPosX = 8;
     private const int MAX_POS_X = MaxPosX - MinPosX;
+    public const int INS_POS_Y = 11;
     public const int MAX_POS_Y = 8;
     private const int FIELD_SIZE = MAX_POS_X * MAX_POS_Y;
     public bool DevelopeMode;

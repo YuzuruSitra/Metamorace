@@ -199,8 +199,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerSpeed: 3
-  _jumpPower: 9
+  _jumpPower: 5
   _jumprayrength: 0.78
+  _selectTeam: 0
 --- !u!65 &7544606331545972518
 BoxCollider:
   m_ObjectHideFlags: 0

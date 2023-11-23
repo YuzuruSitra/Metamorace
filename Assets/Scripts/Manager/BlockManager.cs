@@ -36,8 +36,8 @@ public class BlockManager : MonoBehaviour
     {
         if (!PhotonNetwork.isMasterClient && !_developMode) return;
         
-        _insPosTeam1.y = GameManager.MAX_POS_Y;
-        _insPosTeam2.y = GameManager.MAX_POS_Y;
+        _insPosTeam1.y = GameManager.INS_POS_Y;
+        _insPosTeam2.y = GameManager.INS_POS_Y;
         _insPosTeam1.z = GameManager.TEAM1_POS_Z;
         _insPosTeam2.z = GameManager.TEAM2_POS_Z;
         _waitTime = new WaitForSeconds(_insInterval);
