@@ -4,15 +4,22 @@ using UnityEngine;
 using UnityEngine.UI;
 public class UIHandler : MonoBehaviour
 {
-    [SerializeField] private Text _LimitTimeText,_BlockRate;
+    [SerializeField] private Text _LimitTimeText;
+     [SerializeField] private Text _BlockRateTeam1,_BlockRateTeam2;
     [SerializeField] Image[] _StackImage;
     //アンブラスとヘイロスのブロック画像、_objID1がヘイロス2がアンブラス
     [SerializeField] Sprite _herosSprite,_ambrasSprite;
 
+    [SerializeField] Text _nametext;
+    [SerializeField] string name;
      [SerializeField] Image _itemImage;
      [SerializeField] Sprite[] _itemSprite;
     [SerializeField] GameObject _button;
 
+    void Start()
+    {
+        ChangeName();
+    }
     public void ShowLimitTime(float _TimeLimit)
     {
         _LimitTimeText.text = _TimeLimit.ToString("f1") + "秒";
@@ -71,5 +78,18 @@ public class UIHandler : MonoBehaviour
     public void ActiveFalseButton()
    {
         _button.SetActive(false);
+   }
+   //名前表示
+   public void ChangeName()
+   {
+        _nametext.text = name; 
+   }
+   //占有率表示
+   public void ShowCalc(int shareTeam1,int shareTeam2)
+   {
+        string ShareTeam1 = shareTeam1.ToString();
+        string ShareTeam2 = shareTeam2.ToString();
+        _BlockRateTeam1.text = ShareTeam1;
+        _BlockRateTeam2.text = ShareTeam2;
    }
 }
