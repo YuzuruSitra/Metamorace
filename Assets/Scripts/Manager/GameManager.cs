@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Transform _cubeParentTeam1, _cubeParentTeam2;
     private bool _finGame = false;
-    int shareTeam1, shareTeam2;
+    int shareTeam1result, shareTeam2result;
     
     void Start()
     {
@@ -135,7 +135,12 @@ public class GameManager : MonoBehaviour
             // ObjManagerから勝敗を取得
             
             // UIの更新
-            _uiHandler.ShowResult(shareTeam1,shareTeam2);
+            int shareTeam1 = _blockManager.CalcCubeShare1(FIELD_SIZE);
+            int shareTeam2 = _blockManager.CalcCubeShare2(FIELD_SIZE);
+            bool karioki = false;
+            int karioki2 = 0;
+
+            _uiHandler.ShowResult(shareTeam1,shareTeam2,karioki,karioki2);
         }
 
         // Playerが死んで終了
