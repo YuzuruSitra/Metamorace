@@ -23,8 +23,10 @@ public class GameManager : MonoBehaviour
     private GameObject _itemCBlock;
     private int _teamID;
     private int _playerID;
-    public const float TEAM1_POS_Z = -2.5f;
-    public const float TEAM2_POS_Z = 1.5f;
+    public const float TEAM1_POS_Z = -3.0f;
+    public const float TEAM2_POS_Z = 2f;
+    public const float TEAM1_BIG_POS_Z = -2.0f;
+    public const float TEAM2_BIG_POS_Z = 1.0f;
     public const int MinPosX = -7;
     public const int MaxPosX = 8;
     private const int MAX_POS_X = MaxPosX - MinPosX;

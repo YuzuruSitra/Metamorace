@@ -8,6 +8,8 @@ public class HerosBehaviour : MonoBehaviour
     private float _targetPosZ = 0.0f;
     private float _speed = 20.0f;
     [SerializeField]
+    private bool _isBigBlock;
+    [SerializeField]
     private int _teamID;
     
     [SerializeField]
@@ -15,14 +17,16 @@ public class HerosBehaviour : MonoBehaviour
 
     void Start()
     {
-        if (_teamID == 1) _targetPosZ = GameManager.TEAM2_POS_Z;
-        else _targetPosZ = GameManager.TEAM1_POS_Z;
-    }
-
-    public void SetTargetPos(float posZ)
-    {
-        _targetPosZ = posZ;
-        Debug.Log(_targetPosZ);
+        if (_isBigBlock)
+        {
+            if (_teamID == 0) _targetPosZ = GameManager.TEAM2_BIG_POS_Z;
+            else _targetPosZ = GameManager.TEAM1_BIG_POS_Z;
+        }
+        else
+        {
+            if (_teamID == 0) _targetPosZ = GameManager.TEAM2_POS_Z;
+            else _targetPosZ = GameManager.TEAM1_POS_Z;
+        }
     }
 
     // Update is called once per frame
@@ -61,6 +65,7 @@ public class HerosBehaviour : MonoBehaviour
         _rb.useGravity = true;
         _oneTime = false;
     }
+
     public void SetID(int id)
     {
        id = _teamID;

@@ -113,6 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de0a0966998c341f1851f15e591dc37a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isBigBlock: 0
   _teamID: 1
   _rb: {fileID: -5472741560256314941}
 --- !u!54 &-5472741560256314941
@@ -147,7 +148,7 @@ MonoBehaviour:
   _objID: 2
   _objHealth: 5
   _blocklength: 1.51
-  _isBigBlock: 0
+  _isBigBlock: 1
   _rb: {fileID: -5472741560256314941}
 --- !u!114 &-2690998331061227099
 MonoBehaviour:
