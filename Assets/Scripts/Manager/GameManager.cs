@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    private Player _player;
     [SerializeField] 
     private ColorManager _colorManager;
     [SerializeField] 
@@ -41,7 +42,7 @@ public class GameManager : MonoBehaviour
     private WaitForSeconds _calcWaitTime;
     [SerializeField]
     private Transform _cubeParentTeam1, _cubeParentTeam2;
-
+    private bool _finGame = false;
     void Start()
     {
         _uiHandler = GameObject.FindWithTag("UIHandler").GetComponent<UIHandler>();
@@ -87,7 +88,8 @@ public class GameManager : MonoBehaviour
         SetupBlockManager();
         GameObject player = Instantiate(_playerPrefab, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity);
         _camManager.SetPlayer(player, _teamID);
-        player.GetComponent<Player>().SetParameter( _cubeParentTeam1, _cubeParentTeam2, _teamID,DevelopeMode);
+        _player = player.GetComponent<Player>();
+        _player.SetParameter( _cubeParentTeam1, _cubeParentTeam2, _teamID,DevelopeMode);
     }
 
     // ネットワークプレイヤーのセットアップ
@@ -97,7 +99,8 @@ public class GameManager : MonoBehaviour
 
         GameObject player = PhotonNetwork.Instantiate(_playerPrefab.name, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity, 0);
         _camManager.SetPlayer(player, _teamID);
-        player.GetComponent<Player>().SetParameter( _cubeParentTeam1, _cubeParentTeam2, _teamID, DevelopeMode);
+        _player = player.GetComponent<Player>();
+        _player.SetParameter( _cubeParentTeam1, _cubeParentTeam2, _teamID, DevelopeMode);
     }
 
     // ローカル用ブロックマネージャーのセットアップ
@@ -118,7 +121,30 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (_finGame) return;
         ReduceTimeLimit();
+
+        // 時間が切れて終了
+        if (_timeLimit <= 0)
+        {
+            _finGame = true;
+            // リトライ時に値を戻す
+            Time.timeScale = 0;
+            // ObjManagerから勝敗を取得
+            
+            // UIの更新
+        }
+
+        // Playerが死んで終了
+        if (_player.IsDead)
+        {
+            _finGame = true;
+            // リトライ時に値を戻す
+            Time.timeScale = 0;
+            // 死んだプレイヤーのチームを取得して勝敗を判定
+            
+            // UIの更新
+        }
     }
 
     // 制限時間の減少処理
@@ -140,4 +166,5 @@ public class GameManager : MonoBehaviour
             _uiHandler.ShowCalc(shareTeam1,shareTeam2);
         }
     }
+
 }
