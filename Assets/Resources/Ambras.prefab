@@ -310,7 +310,7 @@ MonoBehaviour:
   _blocklength: 0.53
   _isBigBlock: 0
   _rb: {fileID: -1556883281178353706}
-  _developMode: 0
+  _developMode: 1
   _gage: {fileID: 1782507033217686828}
 --- !u!54 &-1556883281178353706
 Rigidbody:
@@ -321,7 +321,7 @@ Rigidbody:
   m_GameObject: {fileID: 7828024547459711129}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 4.5
   m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
