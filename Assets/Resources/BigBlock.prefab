@@ -204,7 +204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isBigBlock: 0
-  _teamID: 1
+  _teamID: 0
   _rb: {fileID: -5472741560256314941}
 --- !u!54 &-5472741560256314941
 Rigidbody:
@@ -215,7 +215,7 @@ Rigidbody:
   m_GameObject: {fileID: 1184688255452857024}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 4.5
   m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -240,7 +240,7 @@ MonoBehaviour:
   _blocklength: 1.51
   _isBigBlock: 1
   _rb: {fileID: -5472741560256314941}
-  _developMode: 0
+  _developMode: 1
   _gage: {fileID: 1808507701394250944}
 --- !u!114 &-2690998331061227099
 MonoBehaviour:
