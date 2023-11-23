@@ -10,8 +10,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] 
     private GameObject _blockManagerPrefab;
     private BlockManager _blockManager;
-    [SerializeField]
-    private AmbrasPoolHandler _ambrasPoolHandler;
     [SerializeField] 
     private CamManager _camManager;
     [SerializeField] 
