@@ -13,8 +13,8 @@ TagManager:
   - ItemCBlock
   - Team1Area
   - Team2Area
-  - CubeParent1
-  - CubeParent2
+  - Ground
+  - BreakCol
   layers:
   - Default
   - TransparentFX

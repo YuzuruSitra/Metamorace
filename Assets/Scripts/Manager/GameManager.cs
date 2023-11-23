@@ -118,13 +118,13 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        //ReduceTimeLimit();
+        ReduceTimeLimit();
     }
 
     // 制限時間の減少処理
     void ReduceTimeLimit()
     {
-        _TimeLimit -= 1;
+        _TimeLimit -= Time.deltaTime;
         _uiHandler.ShowLimitTime(_TimeLimit);
     }
 

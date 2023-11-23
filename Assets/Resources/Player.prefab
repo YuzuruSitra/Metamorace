@@ -223,6 +223,7 @@ MonoBehaviour:
   _herosPrefab: {fileID: 7828024547459711129, guid: a674c91480e179f4fb5fc39f183f9f9b, type: 3}
   _bigPrefab: {fileID: 1184688255452857024, guid: 928b934e3c9ab1f4caaaeb2100c3cea2, type: 3}
   _cPrefab: {fileID: 2345590185025987352, guid: 9e0ed0407d10a9247bddc076d1e153b3, type: 3}
+  _ambrasPrefab: {fileID: 7828024547459711129, guid: 37bdfb20b21a0442e8ce4d3b8a0f7f3f, type: 3}
 --- !u!54 &7544606331545972537
 Rigidbody:
   m_ObjectHideFlags: 0
