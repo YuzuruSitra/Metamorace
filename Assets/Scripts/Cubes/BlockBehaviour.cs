@@ -11,6 +11,7 @@ public class BlockBehaviour : MonoBehaviour
     
     [SerializeField]
     private float _objHealth;
+    public float _ObjHealth => _objHealth;
     [SerializeField]
     private float _blocklength;
     [SerializeField]
