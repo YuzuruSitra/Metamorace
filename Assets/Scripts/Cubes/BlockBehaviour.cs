@@ -23,6 +23,7 @@ public class BlockBehaviour : MonoBehaviour
     private Rigidbody _rb;
     [SerializeField]
     bool _developMode = false;
+
     [SerializeField] Image _gage;
     float setTime = 1.0f;
     float currentTime;
@@ -32,7 +33,7 @@ public class BlockBehaviour : MonoBehaviour
     }
     void Update()
     {
-        Debug.Log(currentTime);
+        
         if(_isBigBlock) BigBlockMove();
         else MoveBlock();      
         if(currentTime >= 0) 

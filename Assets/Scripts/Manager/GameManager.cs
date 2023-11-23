@@ -43,6 +43,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Transform _cubeParentTeam1, _cubeParentTeam2;
     private bool _finGame = false;
+    int shareTeam1, shareTeam2;
+    
     void Start()
     {
         _uiHandler = GameObject.FindWithTag("UIHandler").GetComponent<UIHandler>();
@@ -133,6 +135,7 @@ public class GameManager : MonoBehaviour
             // ObjManagerから勝敗を取得
             
             // UIの更新
+            _uiHandler.ShowResult(shareTeam1,shareTeam2);
         }
 
         // Playerが死んで終了
