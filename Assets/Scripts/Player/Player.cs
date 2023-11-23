@@ -32,6 +32,8 @@ public class Player : MonoBehaviour
     GameObject _bigPrefab;
     [SerializeField]
     GameObject _cPrefab;
+    [SerializeField]
+    GameObject _ambrasPrefab;
     //private Transform _cubeParent;
 
     BlockBehaviour _currentBlock;
@@ -62,6 +64,14 @@ public class Player : MonoBehaviour
         _enemyTeam = 1 - _mineTeam;
         _developMode = isDevelop;
         ChangeBlockID(thisTeam);
+
+        if(_developMode) 
+        {
+            _herosPrefab.GetComponent<BlockBehaviour>().DevModeSet(_developMode);
+            _bigPrefab.GetComponent<BlockBehaviour>().DevModeSet(_developMode);;
+            _cPrefab.GetComponent<BlockBehaviour>().DevModeSet(_developMode);;
+            _ambrasPrefab.GetComponent<BlockBehaviour>().DevModeSet(_developMode);;
+        }
     }
     //IDからブロックの移動方向決定
     public void ChangeBlockID(int thisTeam)
@@ -72,6 +82,7 @@ public class Player : MonoBehaviour
        _herosBehaviour.SetID(thisTeam);
        _bigBehaviour.SetID(thisTeam);
        _cBehaviour.SetID(thisTeam);
+       Debug.Log(thisTeam);
     }
 
     void Update()
@@ -194,7 +205,7 @@ private bool CheckAndJump(Ray ray)
             ProcessItemCBlockEffect();
         }
 
-        int objID = _currentBlock.DestroyBlock(_useDestroyPower, _developMode);
+        int objID = _currentBlock.DestroyBlock(_useDestroyPower);
 
         if (objID == 1 || objID == 2)
         {

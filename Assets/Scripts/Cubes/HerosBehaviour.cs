@@ -68,6 +68,6 @@ public class HerosBehaviour : MonoBehaviour
 
     public void SetID(int id)
     {
-       id = _teamID;
+        _teamID = id;
     }
 }

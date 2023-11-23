@@ -18,13 +18,20 @@ public class BlockBehaviour : MonoBehaviour
     private float _speed = 20.0f;
     [SerializeField]
     private Rigidbody _rb;
+    [SerializeField]
+    bool _developMode = false;
+
+    public void DevModeSet(bool developMode)
+    {
+        _developMode = developMode;
+    }
 
     //Playerによるお邪魔ブロック破壊処理
-    public int DestroyBlock(float power, bool developMode)
+    public int DestroyBlock(float power)
     {
         _objHealth -= power * Time.deltaTime;
         // 同期処理
-        if (!developMode) _myPV.RPC(nameof(SyncHealth), PhotonTargets.All, _objHealth);
+        if (!_developMode) _myPV.RPC(nameof(SyncHealth), PhotonTargets.All, _objHealth);
 
         if (_objHealth >= 0) return -1;
         Destroy(this.gameObject);
@@ -37,6 +44,16 @@ public class BlockBehaviour : MonoBehaviour
         _objHealth = currentHealth;
         if (_objHealth <= 0) Destroy(this.gameObject);
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("BreakCol"))
+        {
+            if (!_developMode) _myPV.RPC(nameof(SyncHealth), PhotonTargets.All, 0f);
+            else Destroy(this.gameObject);
+        }
+    }
+
 
     void Update()
     {
@@ -93,4 +110,5 @@ public class BlockBehaviour : MonoBehaviour
     {
         return collider.CompareTag("Ambras") || collider.CompareTag("Heros") || collider.CompareTag("ItemCBlock");
     }
+
 }
