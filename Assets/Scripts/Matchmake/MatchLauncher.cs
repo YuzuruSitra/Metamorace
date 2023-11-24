@@ -63,9 +63,10 @@ public class MatchLauncher : Photon.PunBehaviour
     // プライベートルームを作成する
     private void CreatePrivateRoom(string password)
     {
+        Debug.Log("PrivateRoomを作成しました。");
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = _maxPlayer;
-        roomOptions.IsVisible = false; // プライベートルームは一覧に表示しない
+        //roomOptions.IsVisible = false; // プライベートルームは一覧に表示しない
         roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "password", password } };
 
         PhotonNetwork.CreateRoom(null, roomOptions, null);
