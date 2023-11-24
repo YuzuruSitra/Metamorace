@@ -36,6 +36,8 @@ public class Player : MonoBehaviour
     GameObject _cPrefab;
     [SerializeField]
     GameObject _ambrasPrefab;
+    [SerializeField]
+    Animator _stanEffect;
     //private Transform _cubeParent;
 
     BlockBehaviour _currentBlock;
@@ -267,6 +269,8 @@ private bool CheckAndJump(Ray ray)
         {
             case 1:
                 _itemC.EffectStan(ref _usePlayerSpeed);
+                //スタンエフェクト再生
+
                 Invoke("FinishItemC", _itemHandler._ItemCEffectTime);
                 break;
             case 2:
