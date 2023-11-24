@@ -16,7 +16,7 @@ public class ItemC : MonoBehaviour
    public void EffectStan(ref float _usePlayerSpeed)
    {
       _usePlayerSpeed = 0;
-      Debug.Log("すたん");
+      //Debug.Log("すたん");
       // _uiHandler.ResetItemImage();
       // Debug.Log("スタン");
       // _playerSpeed = _playerSpeed * 0;

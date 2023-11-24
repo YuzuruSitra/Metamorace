@@ -152,8 +152,7 @@ public class ItemHandler : MonoBehaviour
      public int ChoseEffectC()
      {
         //Cのエフェクト選定
-        int _effectid = Random.Range(2,3);
-        Debug.Log("Reset");
+        int _effectid = Random.Range(1,2);
         //ここ修正
        
          return _effectid; 
