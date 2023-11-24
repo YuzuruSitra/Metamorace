@@ -1797,7 +1797,7 @@ MonoBehaviour:
   _colorManager: {fileID: 0}
   _blockManagerPrefab: {fileID: 1692291927690342940, guid: e4abd95c9218d5f45aea2b7c765ff2cc, type: 3}
   _camManager: {fileID: 1973404693}
-  _TimeLimit: 7
+  _TimeLimit: 90
   _playerPrefab: {fileID: 984849509951851194, guid: 102e501df230be1438797ed51ef9a6db, type: 3}
   DevelopeMode: 0
   DevelopeTeamID: 0
