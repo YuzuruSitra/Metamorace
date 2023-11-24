@@ -41,9 +41,12 @@ public class GameManager : MonoBehaviour
     private WaitForSeconds _calcWaitTime;
     [SerializeField]
     private Transform _cubeParentTeam1, _cubeParentTeam2;
-    private bool _finGame = false;
+    private bool _isGame = false;
+    private bool _oneTime = true;
     int shareTeam1result, shareTeam2result;
-    
+    private int _joinPlayerCount = 0;
+    private int _currentPlayerCount = 0;
+
     void Start()
     {
         _uiHandler = GameObject.FindWithTag("UIHandler").GetComponent<UIHandler>();
@@ -55,10 +58,11 @@ public class GameManager : MonoBehaviour
             HandleProductionMode();
     }
 
-    public void SetInfo(int team, int id)
+    public void SetInfo(int team, int id, int maxPlayer)
     {
         _teamID = team;
         _playerID = id;
+        _joinPlayerCount = maxPlayer;
     }
 
     // 開発モードの初期化処理
@@ -99,9 +103,17 @@ public class GameManager : MonoBehaviour
         if (PhotonNetwork.isMasterClient) SetupPhotonBlockManager();
 
         GameObject player = PhotonNetwork.Instantiate(_playerPrefab.name, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity, 0);
+        _myPV.RPC(nameof(JoinPlayer), PhotonTargets.All);
         _camManager.SetPlayer(player, _teamID);
         _player = player.GetComponent<Player>();
         _player.SetParameter( _cubeParentTeam1, _cubeParentTeam2, _teamID, DevelopeMode);
+    }
+
+    // プレイヤーの参加数
+    [PunRPC]
+    private void JoinPlayer()
+    {
+        _joinPlayerCount ++;
     }
 
     // ローカル用ブロックマネージャーのセットアップ
@@ -122,38 +134,72 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (_finGame) return;
-        ReduceTimeLimit();
-
-        // ゲーム終了処理
-        if (_timeLimit <= 0 || _player.IsDead)
+        if(!_isGame && _oneTime)
         {
-            if(!DevelopeMode) 
+            if(!DevelopeMode)
             {
-                _myPV.RPC(nameof(FinishGame), PhotonTargets.All, _player.IsDead, _teamID);
+                if (PhotonNetwork.isMasterClient)
+                {
+                    if (_joinPlayerCount >= _currentPlayerCount)
+                    {
+                        _myPV.RPC(nameof(LaunchGame), PhotonTargets.All);
+                    }
+                }
             }
             else
             {
-                _finGame = true;
-                // リトライ時に値を戻す
-                // Time.timeScale = 0;
-                // 死んだプレイヤーのチームを取得して勝敗を判定
-                int winTeam = 1 - _teamID;
-                Debug.Log(winTeam);
-                // 占有率の取得
-                int shareTeam1 = _blockManager.CalcCubeShare1(FIELD_SIZE);
-                int shareTeam2 = _blockManager.CalcCubeShare2(FIELD_SIZE);
-                _uiHandler.ShowCalc(shareTeam1,shareTeam2);
-                _uiHandler.ShowResult(shareTeam1,shareTeam2,_player.IsDead,_teamID);
+                StartCoroutine(StartGame());
+            }
+        }
+        else
+        {
+            ReduceTimeLimit();
+
+            // ゲーム終了処理
+            if (_timeLimit <= 0 || _player.IsDead)
+            {
+                if(!DevelopeMode) 
+                {
+                    _myPV.RPC(nameof(FinishGame), PhotonTargets.All, _player.IsDead, _teamID);
+                }
+                else
+                {
+                    _isGame = false;
+                    // リトライ時に値を戻す
+                    // Time.timeScale = 0;
+                    // 死んだプレイヤーのチームを取得して勝敗を判定
+                    int winTeam = 1 - _teamID;
+                    Debug.Log(winTeam);
+                    // 占有率の取得
+                    int shareTeam1 = _blockManager.CalcCubeShare1(FIELD_SIZE);
+                    int shareTeam2 = _blockManager.CalcCubeShare2(FIELD_SIZE);
+                    _uiHandler.ShowCalc(shareTeam1,shareTeam2);
+                    _uiHandler.ShowResult(shareTeam1,shareTeam2,_player.IsDead,_teamID);
+                }
             }
         }
     }
 
-     // ゲーム終了同期処理
+    // ゲーム開始処理
+    [PunRPC]
+    private void LaunchGame()
+    {
+        _oneTime = false;
+        StartCoroutine(StartGame());
+    }
+
+    IEnumerator StartGame()
+    {
+        // UIの更新
+        yield return new WaitForSeconds(2.0f);
+        _isGame = true;
+    }
+
+    // ゲーム終了同期処理
     [PunRPC]
     private void FinishGame(bool isDead, int team)
     {
-        _finGame = true;
+        _isGame = false;
         // リトライ時に値を戻す
         // Time.timeScale = 0;
         // 死んだプレイヤーのチームを取得して勝敗を判定
@@ -178,7 +224,6 @@ public class GameManager : MonoBehaviour
     [PunRPC]
     private IEnumerator ReturnRoom()
     {
-        Debug.Log("aaaa");
         PhotonNetwork.isMessageQueueRunning = false;
         yield return new WaitForSeconds(2.0f);
         PhotonNetwork.LoadLevel("Master_Wait");
