@@ -195,6 +195,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator StartGame()
     {
+        // 待機処理
+        while (_blockManager == null) yield return null;
         Debug.Log("Waiting GameStart");
         // UIの更新
         yield return new WaitForSeconds(2.0f);
