@@ -66,8 +66,9 @@ public class WaitSceneManager : MonoBehaviour
     }
 
     [PunRPC]
-    private IEnumerator SendScene()
+    private IEnumerator SendScene(int playerCount)
     {
+        _playerCount = playerCount;
         PhotonNetwork.isMessageQueueRunning = false;
         yield return _waitTime;
         PhotonNetwork.LoadLevel("Master_Battle");
@@ -77,7 +78,7 @@ public class WaitSceneManager : MonoBehaviour
     {
         if(i_scene.name != "Master_Battle") return;
         PhotonNetwork.isMessageQueueRunning = true;
-        GameObject.FindWithTag("GameManager").GetComponent<GameManager>().SetInfo(_playerWait.SelectTeam, _playerWait.PlayerID);
+        GameObject.FindWithTag("GameManager").GetComponent<GameManager>().SetInfo(_playerWait.SelectTeam, _playerWait.PlayerID, _playerCount);
     }
 
 }
