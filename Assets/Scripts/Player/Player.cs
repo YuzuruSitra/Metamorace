@@ -241,16 +241,16 @@ private bool CheckAndJump(Ray ray)
         //対象ブロックの体力参照
         //float _objHealth = _currentBlock._ObjHealth;
         _currentBlock.DecreceGage();
-        if (hit.collider.CompareTag("ItemCBlock"))
-        {
-            _itemC = hit.collider.GetComponent<ItemC>();
-            ProcessItemCBlockEffect();
-        }
 
         int objID = _currentBlock.DestroyBlock(_useDestroyPower);
 
         if (objID == 1 || objID == 2)
         {
+            if (hit.collider.CompareTag("ItemCBlock"))
+            {
+                _itemC = hit.collider.GetComponent<ItemC>();
+                ProcessItemCBlockEffect();
+            }
             _hasBlock = true;
             _itemHandler.StackBlock(objID);
         }
@@ -264,13 +264,14 @@ private bool CheckAndJump(Ray ray)
     private void ProcessItemCBlockEffect()
     {
         int effectID = _itemHandler.ChoseEffectC();
-
+        //Debug.Log("C");
         switch (effectID)
         {
             case 1:
                 _itemC.EffectStan(ref _usePlayerSpeed);
                 //スタンエフェクト再生
-
+                _stanEffect.SetBool("Stan",true);
+                //Debug.Log("stan");
                 Invoke("FinishItemC", _itemHandler._ItemCEffectTime);
                 break;
             case 2:
@@ -365,6 +366,7 @@ private bool CheckAndJump(Ray ray)
     {
         Debug.Log("スタン解除");
         _usePlayerSpeed = _playerSpeed;
-        
+        //スタンエフェクト停止
+         _stanEffect.SetBool("Stan",false);
     }
 }
