@@ -50,4 +50,6 @@ MonoBehaviour:
   - SendScene
   - FinishGame
   - ReturnRoom
+  - JoinPlayer
+  - LaunchGame
   DisableAutoOpenWizard: 1

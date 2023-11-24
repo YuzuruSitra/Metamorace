@@ -54,6 +54,8 @@ public class Player : MonoBehaviour
     UIHandler _uiHandler;
     private bool _isDead = false;
     public bool IsDead => _isDead;
+    private bool _isGame = false;
+
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -61,6 +63,11 @@ public class Player : MonoBehaviour
         _useDestroyPower = _destroyPower;
         _waitTime = new WaitForSeconds(_itemHandler._ItemAEffectTime);
         _uiHandler = GameObject.FindWithTag("UIHandler").GetComponent<UIHandler>();
+    }
+
+    public void SetGameState(bool isGame)
+    {
+        _isGame = isGame;
     }
 
     public void SetParameter(Transform parent1, Transform parent2, int thisTeam, bool isDevelop)
@@ -96,6 +103,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         if (!_myPV.isMine && !_developMode) return;
+        if(!_isGame) return;
 
         BreakBlock();
         CreateBlock();
@@ -109,6 +117,7 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         if (!_myPV.isMine && !_developMode) return;
+        if(!_isGame) return;
         PlayerCtrl();
     }
 

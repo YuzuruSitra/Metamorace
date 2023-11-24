@@ -134,9 +134,10 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if(!_isGame && _oneTime)
+        if(!_isGame)
         {
-            if(!DevelopeMode)
+            if (!_oneTime) return;
+            if (!DevelopeMode)
             {
                 if (PhotonNetwork.isMasterClient)
                 {
@@ -165,8 +166,8 @@ public class GameManager : MonoBehaviour
                 else
                 {
                     _isGame = false;
-                    // リトライ時に値を戻す
-                    // Time.timeScale = 0;
+                    _player.SetGameState(_isGame);
+                    _blockManager.SetGameState(_isGame);
                     // 死んだプレイヤーのチームを取得して勝敗を判定
                     int winTeam = 1 - _teamID;
                     Debug.Log(winTeam);
@@ -190,9 +191,12 @@ public class GameManager : MonoBehaviour
 
     IEnumerator StartGame()
     {
+        Debug.Log("Waiting GameStart");
         // UIの更新
         yield return new WaitForSeconds(2.0f);
         _isGame = true;
+        _player.SetGameState(_isGame);
+        _blockManager.SetGameState(_isGame);
     }
 
     // ゲーム終了同期処理
@@ -200,8 +204,8 @@ public class GameManager : MonoBehaviour
     private void FinishGame(bool isDead, int team)
     {
         _isGame = false;
-        // リトライ時に値を戻す
-        // Time.timeScale = 0;
+        _player.SetGameState(_isGame);
+        _blockManager.SetGameState(_isGame);
         // 死んだプレイヤーのチームを取得して勝敗を判定
         int winTeam = 1 - team;
         // 占有率の取得

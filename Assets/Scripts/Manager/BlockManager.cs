@@ -17,7 +17,7 @@ public class BlockManager : MonoBehaviour
     private Vector3 _insPosTeam1, _insPosTeam2;
     private bool _developMode = false;
     private const float RAY_DISTANCE = 1.0f;
-    
+    private bool _isGame = false;
 
     void Awake()
     {
@@ -31,6 +31,12 @@ public class BlockManager : MonoBehaviour
         _cubeParentTeam1 = parent1;
         _cubeParentTeam2 = parent2;
     }
+
+    public void SetGameState(bool isGame)
+    {
+        _isGame = isGame;
+    }
+
 
     void Start()
     {
@@ -50,6 +56,8 @@ public class BlockManager : MonoBehaviour
     {
         while (true)
         {
+            while (!_isGame) yield return null;
+
             yield return _waitTime;
             int insCount = Random.Range(1, 3);
 

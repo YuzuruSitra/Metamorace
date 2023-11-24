@@ -58,11 +58,11 @@ public class WaitSceneManager : MonoBehaviour
             else if (playerWait.SelectTeam == 1) team2++;
         }
 
-        if(DebugMode)
-            _myPV.RPC(nameof(SendScene), PhotonTargets.All);
+        if (DebugMode)
+            _myPV.RPC(nameof(SendScene), PhotonTargets.All, _playerCount);
         else
             // プレイヤーが2人以上で、Team1とTeam2に均等に割り振られ、全員が準備完了ならシーン遷移
-            if (_playerCount >= 2 && team1 == team2 && team1 + team2 == _playerCount) _myPV.RPC(nameof(SendScene), PhotonTargets.All);
+            if (_playerCount >= 2 && team1 == team2 && team1 + team2 == _playerCount) _myPV.RPC(nameof(SendScene), PhotonTargets.All, _playerCount);
     }
 
     [PunRPC]
