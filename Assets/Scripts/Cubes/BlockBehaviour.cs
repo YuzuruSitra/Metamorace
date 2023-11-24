@@ -27,9 +27,12 @@ public class BlockBehaviour : MonoBehaviour
     [SerializeField] Image _gage;
     float setTime = 1.0f;
     float currentTime;
+    [SerializeField] GameObject _parentBlock;
+    [SerializeField] GameObject _cloudeffect;
     void Start()
     {
         _maxobjHealth = _objHealth;
+        //_cloudeffect.SetActive(false);
     }
     void Update()
     {
@@ -59,7 +62,10 @@ public class BlockBehaviour : MonoBehaviour
         if (!_developMode) _myPV.RPC(nameof(SyncHealth), PhotonTargets.All, _objHealth);
 
         if (_objHealth >= 0) return -1;
-        Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
+        _cloudeffect.transform.position = transform.position;
+        _cloudeffect.SetActive(true);
+        Destroy(_parentBlock,2.0f);
         return _objID;
     }
 
