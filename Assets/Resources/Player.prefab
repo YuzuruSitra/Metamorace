@@ -227,6 +227,7 @@ MonoBehaviour:
   _cPrefab: {fileID: 2345590185025987352, guid: 9e0ed0407d10a9247bddc076d1e153b3, type: 3}
   _ambrasPrefab: {fileID: 7828024547459711129, guid: 37bdfb20b21a0442e8ce4d3b8a0f7f3f, type: 3}
   _stanEffect: {fileID: 2203414079570782702}
+  _staneffect: {fileID: 0}
 --- !u!54 &7544606331545972537
 Rigidbody:
   m_ObjectHideFlags: 0
