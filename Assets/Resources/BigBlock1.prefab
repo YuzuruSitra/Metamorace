@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8946731305145559307}
+  - component: {fileID: 1088604028982492458}
   m_Layer: 0
   m_Name: BigBlock1
   m_TagString: Untagged
@@ -33,6 +34,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1088604028982492458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1664117124386851239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!1 &2730276579031527422
 GameObject:
   m_ObjectHideFlags: 0
@@ -51,7 +79,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1109281362504074803
 RectTransform:
   m_ObjectHideFlags: 0
@@ -137,7 +165,6 @@ GameObject:
   - component: {fileID: 3870422851319998575}
   - component: {fileID: 1681977153134753470}
   - component: {fileID: 8300604987891699507}
-  - component: {fileID: 8790138626993391320}
   m_Layer: 0
   m_Name: BigBlock
   m_TagString: Ambras
@@ -267,7 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96a0f744358e5b94097f9f9099ef48d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _myPV: {fileID: 8790138626993391320}
+  _myPV: {fileID: 1088604028982492458}
   _objID: 2
   _objHealth: 5
   _blocklength: 1.51
@@ -277,33 +304,6 @@ MonoBehaviour:
   _gage: {fileID: 4198027655018523581}
   _parentBlock: {fileID: 1664117124386851239}
   _cloudeffect: {fileID: 7767077858630284818}
---- !u!114 &8790138626993391320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3687221546081121725}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ownerId: 0
-  group: 0
-  OwnerShipWasTransfered: 0
-  prefixBackup: -1
-  synchronization: 0
-  onSerializeTransformOption: 3
-  onSerializeRigidBodyOption: 2
-  ownershipTransfer: 0
-  ObservedComponents:
-  - {fileID: 0}
-  ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
-  currentMasterID: -1
-  isRuntimeInstantiated: 0
 --- !u!1 &8311546171034987301
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,6 +417,10 @@ PrefabInstance:
     - target: {fileID: 7012878927143319529, guid: 1988fbd03c7f69443a6750dd767ad483, type: 3}
       propertyPath: m_Name
       value: CloudEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012878927143319529, guid: 1988fbd03c7f69443a6750dd767ad483, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7012878927143319530, guid: 1988fbd03c7f69443a6750dd767ad483, type: 3}
       propertyPath: m_RootOrder
