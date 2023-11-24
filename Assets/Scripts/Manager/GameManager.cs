@@ -159,7 +159,7 @@ public class GameManager : MonoBehaviour
             // ゲーム終了処理
             if (_timeLimit <= 0 || _player.IsDead)
             {
-                if(!DevelopeMode) 
+                if(!DevelopeMode && PhotonNetwork.isMasterClient) 
                 {
                     _blockManager.SetGameState(_isGame);
                     // 占有率の取得
@@ -195,14 +195,12 @@ public class GameManager : MonoBehaviour
 
     IEnumerator StartGame()
     {
-        // 待機処理
-        while (_blockManager == null) yield return null;
         Debug.Log("Waiting GameStart");
         // UIの更新
         yield return new WaitForSeconds(2.0f);
         _isGame = true;
         _player.SetGameState(_isGame);
-        _blockManager.SetGameState(_isGame);
+        if (PhotonNetwork.isMasterClient) _blockManager.SetGameState(_isGame);
     }
 
     // ゲーム終了同期処理
