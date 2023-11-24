@@ -32,7 +32,7 @@ public class BlockBehaviour : MonoBehaviour
     void Start()
     {
         _maxobjHealth = _objHealth;
-        //_cloudeffect.SetActive(false);
+        _cloudeffect.SetActive(false);
     }
     void Update()
     {

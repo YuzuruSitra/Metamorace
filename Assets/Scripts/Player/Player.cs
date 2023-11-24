@@ -83,18 +83,18 @@ public class Player : MonoBehaviour
 
         if(_developMode) 
         {
-            _herosPrefab.GetComponent<BlockBehaviour>().DevModeSet(_developMode);
-            _bigPrefab.GetComponent<BlockBehaviour>().DevModeSet(_developMode);
-            _cPrefab.GetComponent<BlockBehaviour>().DevModeSet(_developMode);
-            _ambrasPrefab.GetComponent<BlockBehaviour>().DevModeSet(_developMode);
+            _herosPrefab.transform.GetChild(1).gameObject.GetComponent<BlockBehaviour>().DevModeSet(_developMode);
+            _bigPrefab.transform.GetChild(1).gameObject.GetComponent<BlockBehaviour>().DevModeSet(_developMode);
+            _cPrefab.transform.GetChild(1).gameObject.GetComponent<BlockBehaviour>().DevModeSet(_developMode);
+            _ambrasPrefab.transform.GetChild(1).gameObject.GetComponent<BlockBehaviour>().DevModeSet(_developMode);
         }
     }
     //IDからブロックの移動方向決定
     public void ChangeBlockID(int thisTeam)
     {
-        HerosBehaviour _herosBehaviour = _herosPrefab.GetComponent<HerosBehaviour>();
-        HerosBehaviour _bigBehaviour = _bigPrefab.GetComponent<HerosBehaviour>();
-        HerosBehaviour _cBehaviour = _cPrefab.GetComponent<HerosBehaviour>();
+        HerosBehaviour _herosBehaviour = _herosPrefab.transform.GetChild(1).gameObject.GetComponent<HerosBehaviour>();
+        HerosBehaviour _bigBehaviour = _bigPrefab.transform.GetChild(1).gameObject.GetComponent<HerosBehaviour>();
+        HerosBehaviour _cBehaviour = _cPrefab.transform.GetChild(1).gameObject.GetComponent<HerosBehaviour>();
        _herosBehaviour.SetID(thisTeam);
        _bigBehaviour.SetID(thisTeam);
        _cBehaviour.SetID(thisTeam);
