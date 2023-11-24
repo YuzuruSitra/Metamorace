@@ -139,6 +139,7 @@ public class GameManager : MonoBehaviour
                 // Time.timeScale = 0;
                 // 死んだプレイヤーのチームを取得して勝敗を判定
                 int winTeam = 1 - _teamID;
+                Debug.Log(winTeam);
                 // 占有率の取得
                 int shareTeam1 = _blockManager.CalcCubeShare1(FIELD_SIZE);
                 int shareTeam2 = _blockManager.CalcCubeShare2(FIELD_SIZE);

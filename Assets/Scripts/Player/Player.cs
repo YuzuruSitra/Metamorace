@@ -114,8 +114,17 @@ public class Player : MonoBehaviour
     void PlayerCtrl()
     {
         inputX = 0.0f;
-        if(Input.GetKey("d")) inputX = 1.0f;
-        if(Input.GetKey("a")) inputX = -1.0f;
+        //チーム1とチーム2で操作反転
+        if(transform.position.z < 0)
+        {
+            if(Input.GetKey("d")) inputX = 1.0f;
+            if(Input.GetKey("a")) inputX = -1.0f;
+        }
+        else
+        {
+            if(Input.GetKey("d")) inputX = -1.0f;
+            if(Input.GetKey("a")) inputX = 1.0f;
+        }  
         if(Input.GetKey("a") && Input.GetKey("d")) inputX = 0.0f;
         //Debug.Log(inputX);
         if(inputX == 0) return;
