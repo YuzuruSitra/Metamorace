@@ -161,7 +161,11 @@ public class GameManager : MonoBehaviour
             {
                 if(!DevelopeMode) 
                 {
-                    _myPV.RPC(nameof(FinishGame), PhotonTargets.All, _player.IsDead, _teamID);
+                    _blockManager.SetGameState(_isGame);
+                    // 占有率の取得
+                    int shareTeam1 = _blockManager.CalcCubeShare1(FIELD_SIZE);
+                    int shareTeam2 = _blockManager.CalcCubeShare2(FIELD_SIZE);
+                    _myPV.RPC(nameof(FinishGame), PhotonTargets.All, _player.IsDead, _teamID, shareTeam1, shareTeam2);
                 }
                 else
                 {
@@ -201,16 +205,12 @@ public class GameManager : MonoBehaviour
 
     // ゲーム終了同期処理
     [PunRPC]
-    private void FinishGame(bool isDead, int team)
+    private void FinishGame(bool isDead, int team, int shareTeam1, int shareTeam2)
     {
         _isGame = false;
         _player.SetGameState(_isGame);
-        _blockManager.SetGameState(_isGame);
         // 死んだプレイヤーのチームを取得して勝敗を判定
         int winTeam = 1 - team;
-        // 占有率の取得
-        int shareTeam1 = _blockManager.CalcCubeShare1(FIELD_SIZE);
-        int shareTeam2 = _blockManager.CalcCubeShare2(FIELD_SIZE);
         // UIの更新
         _uiHandler.ShowCalc(shareTeam1,shareTeam2);
         _uiHandler.ShowResult(shareTeam1, shareTeam2, isDead, team);
