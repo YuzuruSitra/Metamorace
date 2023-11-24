@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     Animator _stanEffect;
     //private Transform _cubeParent;
+    [SerializeField] GameObject _staneffect;
 
     BlockBehaviour _currentBlock;
     HerosBehaviour _herosBehaviour,_bigBehaviour,_cBehaviour;
@@ -279,8 +280,11 @@ private bool CheckAndJump(Ray ray)
             case 1:
                 _itemC.EffectStan(ref _usePlayerSpeed);
                 //スタンエフェクト再生
+                if(transform.position.z < 0)_staneffect.transform.position = transform.position + new Vector3(0, 0, -1.0f);
+                else _staneffect.transform.position = transform.position + new Vector3(0, 0, 1.0f);
+                
                 _stanEffect.SetBool("Stan",true);
-                //Debug.Log("stan");
+                Debug.Log("stan");
                 Invoke("FinishItemC", _itemHandler._ItemCEffectTime);
                 break;
             case 2:

@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
         SetupBlockManager();
         GameObject player = Instantiate(_playerPrefab, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity);
         _camManager.SetPlayer(player, _teamID);
-        _player = player.GetComponent<Player>();
+        _player = player.transform.GetChild(0).gameObject.GetComponent<Player>();
         _player.SetParameter( _cubeParentTeam1, _cubeParentTeam2, _teamID, DevelopeMode);
     }
 
@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour
         GameObject player = PhotonNetwork.Instantiate(_playerPrefab.name, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity, 0);
         _myPV.RPC(nameof(JoinPlayer), PhotonTargets.All);
         _camManager.SetPlayer(player, _teamID);
-        _player = player.GetComponent<Player>();
+        _player = player.transform.GetChild(0).gameObject.GetComponent<Player>();
         _player.SetParameter( _cubeParentTeam1, _cubeParentTeam2, _teamID, DevelopeMode);
     }
 
