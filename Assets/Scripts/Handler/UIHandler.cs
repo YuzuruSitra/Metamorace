@@ -23,6 +23,7 @@ public class UIHandler : MonoBehaviour
     void Start()
     {
         ChangeName();
+        _resultPanel.SetActive(false);
         //DecreceGage();
     }
     public void ShowLimitTime(float _TimeLimit)
@@ -103,30 +104,52 @@ public class UIHandler : MonoBehaviour
         Debug.Log(shareTeam1);
         Debug.Log(shareTeam2);
         float WinnerSize = 1.2f;
-        //Team1が勝ったとき
-        if(shareTeam2 > shareTeam1) 
+        //時間制限が来た時
+        if(!isDead)
         {
-            _winnerPanel.transform.localScale = _winnerPanel.transform.localScale*WinnerSize; 
-            _winBlockRate.text = shareTeam2.ToString();
-            _loseBlockRate.text = shareTeam1.ToString();
-            Debug.Log("Team1");
+                //占有率でTeam1が勝ったとき
+            if(shareTeam2 > shareTeam1) 
+            {
+                _winnerPanel.transform.localScale = _winnerPanel.transform.localScale*WinnerSize; 
+                _winBlockRate.text = shareTeam1.ToString();
+                _loseBlockRate.text = shareTeam2.ToString();
+                Debug.Log("Team1Rate");
+            }
+            //占有率でTeam2が勝ったとき
+            else if(shareTeam1 > shareTeam2)
+            {
+                _winnerPanel.transform.localScale = _winnerPanel.transform.localScale*WinnerSize; 
+                _winBlockRate.text = shareTeam2.ToString();
+                _loseBlockRate.text = shareTeam1.ToString();
+                Debug.Log("Team2Rate");
+            }
+             //引き分けの時
+            else    Debug.Log("Draw");
         }
-         //Team2が勝ったとき
-        else if(shareTeam1 > shareTeam2)
-        {
-            _winnerPanel.transform.localScale = _winnerPanel.transform.localScale*WinnerSize; 
-            _winBlockRate.text = shareTeam1.ToString();
-             _loseBlockRate.text = shareTeam2.ToString();
-              Debug.Log("Team2");
-        }
-        //引き分けの時
-        else    Debug.Log("Draw");
-        _resultPanel.SetActive(true);     
+        //どちらかのチームで死者が出た時
+        else
+        {  
+             //Team1が勝ったとき
+            if(winteam == 1)
+            {
+                _winnerPanel.transform.localScale = _winnerPanel.transform.localScale*WinnerSize; 
+                _winBlockRate.text = shareTeam1.ToString();
+                _loseBlockRate.text = shareTeam2.ToString();
+                Debug.Log("Team2Death");
+            }
+            else 
+            {
+                 _winnerPanel.transform.localScale = _winnerPanel.transform.localScale*WinnerSize; 
+                _winBlockRate.text = shareTeam2.ToString();
+                _loseBlockRate.text = shareTeam1.ToString();
+                Debug.Log("Team1Death");
+            }
+        }     
+         _resultPanel.SetActive(true);    
    }
-//    public void DecreceGage(float health,float maxhealth)
-//    {
-//           float _nowhealth =  health/maxhealth;
-//              _gage.fillAmount = _nowhealth;
-           
-//    }
+    //上記を関数でまとめる
+   public void showJudg(int winteam)
+   {
+
+   }
 }
