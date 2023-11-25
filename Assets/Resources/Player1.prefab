@@ -270,6 +270,8 @@ MonoBehaviour:
   _ambrasPrefab: {fileID: 6252427330716548040, guid: d87e00c8c3069f849b854fd0cb7f68ee, type: 3}
   _stanEffect: {fileID: 7016385704350394749}
   _staneffect: {fileID: 7016385704350394751}
+  stanpos: 0
+  _playerReach: 0.5
 --- !u!54 &1691382643330117546
 Rigidbody:
   m_ObjectHideFlags: 0
