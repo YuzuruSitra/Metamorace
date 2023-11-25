@@ -185,13 +185,20 @@ MonoBehaviour:
   _poolHandler: {fileID: 7454566972977520030, guid: c9c56267c0abf6843979b993354cb2d6, type: 3}
   _itemHandler: {fileID: 6708401690013825303}
   _itemC: {fileID: 7040862465255695909, guid: 9e0ed0407d10a9247bddc076d1e153b3, type: 3}
-  _herosPrefab: {fileID: 1296549643261954888, guid: 36de42bbe2c4edd48af2924c3be698f7, type: 3}
-  _bigPrefab: {fileID: 1664117124386851239, guid: f13175661c7ad164db194d01f13af153, type: 3}
-  _cPrefab: {fileID: 933951156368605023, guid: 11b8429ffa31fc947a005816e48d2322, type: 3}
+  _herosPrefab:
+  - {fileID: 1296549643261954888, guid: 36de42bbe2c4edd48af2924c3be698f7, type: 3}
+  - {fileID: 1296549643261954888, guid: a2f45e0e96ef42d4787fb2e63c345455, type: 3}
+  _bigPrefab:
+  - {fileID: 1664117124386851239, guid: f13175661c7ad164db194d01f13af153, type: 3}
+  - {fileID: 1664117124386851239, guid: 3bdb86d8ed7defb4cbc097cbd066d4c3, type: 3}
+  _cPrefab:
+  - {fileID: 933951156368605023, guid: 11b8429ffa31fc947a005816e48d2322, type: 3}
+  - {fileID: 933951156368605023, guid: c8fd6d96ddefb8b4188fca24645568b7, type: 3}
   _ambrasPrefab: {fileID: 6252427330716548040, guid: d87e00c8c3069f849b854fd0cb7f68ee, type: 3}
   _stanEffect: {fileID: 7016385704350394749}
   _staneffect: {fileID: 7016385704350394751}
   stanpos: 0
+  _developMode: 0
   _playerReach: 0.5
 --- !u!54 &1691382643330117546
 Rigidbody:
