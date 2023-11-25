@@ -72,6 +72,7 @@ public class BlockBehaviour : MonoBehaviour
     [PunRPC]
     private void SyncHealth(float currentHealth)
     {
+        Debug.Log("call");
         _objHealth = currentHealth;
         if (_objHealth <= 0) Destroy(this.gameObject);
     }

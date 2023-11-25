@@ -210,14 +210,13 @@ public class GameManager : MonoBehaviour
         // 占有率の取得
         int shareTeam1 = _blockManager.CalcCubeShare1(FIELD_SIZE);
         int shareTeam2 = _blockManager.CalcCubeShare2(FIELD_SIZE);
-        _myPV.RPC(nameof(FinishGame), PhotonTargets.MasterClient, isDead, team, shareTeam1, shareTeam2);
+        _myPV.RPC(nameof(FinishGame), PhotonTargets.All, isDead, team, shareTeam1, shareTeam2);
     }
 
     // 全クライアントの終了処理
     [PunRPC]
     private void FinishGame(bool isDead, int team, int shareTeam1, int shareTeam2)
     {
-        Debug.Log("FinishGame");
         _isGame = false;
         _player.SetGameState(_isGame);
         // 死んだプレイヤーのチームを取得して勝敗を判定
