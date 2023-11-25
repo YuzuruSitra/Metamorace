@@ -21,6 +21,7 @@ public class BlockBehaviour : MonoBehaviour
     private float _speed = 20.0f;
     [SerializeField]
     private Rigidbody _rb;
+    [SerializeField]
     bool _developMode = false;
 
     [SerializeField] Image _gage;
