@@ -217,6 +217,7 @@ public class GameManager : MonoBehaviour
     [PunRPC]
     private void FinishGame(bool isDead, int team, int shareTeam1, int shareTeam2)
     {
+        Debug.Log("FinishGame");
         _isGame = false;
         _player.SetGameState(_isGame);
         // 死んだプレイヤーのチームを取得して勝敗を判定
