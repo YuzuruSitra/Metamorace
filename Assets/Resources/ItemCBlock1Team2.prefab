@@ -269,6 +269,7 @@ GameObject:
   - component: {fileID: 4990539121118569088}
   - component: {fileID: 2910339165191738683}
   - component: {fileID: 5146288136537980966}
+  - component: {fileID: 7294255166622919101}
   m_Layer: 0
   m_Name: ItemCBlock1
   m_TagString: ItemCBlock
@@ -449,6 +450,26 @@ MonoBehaviour:
   instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
+--- !u!95 &7294255166622919101
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7875487920154440351}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7e1df34bfedc3c14e9f63602759b798b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &9058769499305692561
 PrefabInstance:
   m_ObjectHideFlags: 0

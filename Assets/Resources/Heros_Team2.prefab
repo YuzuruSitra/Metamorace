@@ -162,7 +162,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2590571296356083441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,6 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96a0f744358e5b94097f9f9099ef48d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _anim: {fileID: 1491234004073073451}
   _myPV: {fileID: 7054379165291416063}
   _objID: 2
   _objHealth: 5
@@ -369,7 +370,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1.56}
+  m_AnchoredPosition: {x: 0, y: 1}
   m_SizeDelta: {x: 551, y: 310}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3804646523038091243
@@ -501,5 +502,10 @@ GameObject:
 --- !u!4 &1491234004073073450 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7012878927143319530, guid: 1988fbd03c7f69443a6750dd767ad483, type: 3}
+  m_PrefabInstance: {fileID: 8494683175865384128}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1491234004073073451 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7012878927143319531, guid: 1988fbd03c7f69443a6750dd767ad483, type: 3}
   m_PrefabInstance: {fileID: 8494683175865384128}
   m_PrefabAsset: {fileID: 0}

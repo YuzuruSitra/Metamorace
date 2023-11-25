@@ -5,6 +5,9 @@ using UnityEngine.UI;
 public class BlockBehaviour : MonoBehaviour
 {
     [SerializeField]
+    private Animator _anim;
+    private bool _isAnim = false;
+    [SerializeField]
     private PhotonView _myPV;
     [SerializeField]
     public int _objID; 
@@ -57,6 +60,7 @@ public class BlockBehaviour : MonoBehaviour
     //Playerによるお邪魔ブロック破壊処理
     public int DestroyBlock(float power)
     {
+        if(!_isAnim) _anim.SetBool("IsTouch", true);
         _objHealth -= power * Time.deltaTime;
         // 同期処理
         if (!_developMode) 
@@ -66,6 +70,12 @@ public class BlockBehaviour : MonoBehaviour
         if (_objHealth >= 0) return -1;
         
         return _objID;
+    }
+
+    // アニメーターから呼び出し
+    public void StopAnim()
+    {
+        _anim.SetBool("IsTouch", false);
     }
 
     [PunRPC]
