@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
     {
         _teamID = team;
         _playerID = id;
-        _joinPlayerCount = maxPlayer;
+        _currentPlayerCount = maxPlayer;
     }
 
     // 開発モードの初期化処理
@@ -197,7 +197,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Waiting GameStart");
         // UIの更新
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(3.0f);
         _isGame = true;
         _player.SetGameState(_isGame);
         if (PhotonNetwork.isMasterClient) _blockManager.SetGameState(_isGame);

@@ -103,6 +103,7 @@ public class BlockBehaviour : MonoBehaviour
             _hitmove.collider.CompareTag("Heros") || _hitmove.collider.CompareTag("ItemCBlock"))
             {
                 //当たったら移動
+                _rb.isKinematic = true;
                 _rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotation;
                 _rb.MovePosition(transform.position + transform.forward * _speed * Time.deltaTime);
             }
@@ -145,7 +146,7 @@ public class BlockBehaviour : MonoBehaviour
     public void DecreceGage()
    {
         currentTime = setTime;
-         float _nowhealth =  _objHealth/_maxobjHealth;
+        float _nowhealth =  _objHealth/_maxobjHealth;
         _gage.fillAmount = _nowhealth;
    }
 }

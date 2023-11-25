@@ -178,7 +178,7 @@ MonoBehaviour:
   _myPV: {fileID: 7054379165291416063}
   _objID: 2
   _objHealth: 5
-  _blocklength: 0.53
+  _blocklength: 0.6
   _isBigBlock: 0
   _rb: {fileID: 869590501930964805}
   _developMode: 0
