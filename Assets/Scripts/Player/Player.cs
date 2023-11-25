@@ -57,6 +57,7 @@ public class Player : MonoBehaviour
     private bool _isDead = false;
     public bool IsDead => _isDead;
     private bool _isGame = false;
+    [SerializeField] float _playerReach;
 
     void Start()
     {
@@ -246,7 +247,7 @@ private bool CheckAndJump(Ray ray)
 
         Debug.DrawRay(transform.position, ray.direction * 0.5f, Color.red, 1.0f);
 
-        if (!Physics.Raycast(ray, out RaycastHit hit) || !IsBlock(hit.collider)) return;
+        if (!Physics.Raycast(ray, out RaycastHit hit,_playerReach) || !IsBlock(hit.collider)) return;
 
         _currentBlock = hit.collider.GetComponent<BlockBehaviour>();
         //対象ブロックの体力参照
