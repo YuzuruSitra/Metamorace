@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
- 
+ using System.Collections;
+
 public class MatchLauncher : Photon.PunBehaviour
 {
     #region Public変数定義
@@ -16,7 +17,7 @@ public class MatchLauncher : Photon.PunBehaviour
     private string _sceneName;
     [SerializeField]
     private byte _maxPlayer = 4;
-
+    private string _currentPassword;
     #endregion
  
  
@@ -43,21 +44,14 @@ public class MatchLauncher : Photon.PunBehaviour
     // プライベートルームへの参加する
     public void OnJoinPrivateRoom(string password)
     {
-        RoomInfo[] privateRooms = PhotonNetwork.GetRoomList(); // 現在のルームリストを取得
+        _currentPassword = password; // パスワードを保存
+        PhotonNetwork.JoinRoom(password);
+    }
 
-        foreach (RoomInfo room in privateRooms)
-        {
-            if (room.CustomProperties.ContainsKey("password") && (string)room.CustomProperties["password"] == password)
-            {
-                PhotonNetwork.JoinRoom(room.Name); // 合言葉が一致するプライベートルームに参加
-                return;
-            }
-        }
-
-        Debug.Log("指定された合言葉のプライベートルームが見つかりませんでした。");
-        
-        // プライベートルームが見つからない場合は新しいプライベートルームを作成
-        CreatePrivateRoom(password);
+    // JoinRoomが失敗した場合、新しいプライベートルームを作成する
+    public override void OnPhotonJoinRoomFailed (object[] codeAndMsg)
+    {
+        CreatePrivateRoom(_currentPassword);
     }
 
     // プライベートルームを作成する
