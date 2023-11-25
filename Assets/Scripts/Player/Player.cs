@@ -336,26 +336,48 @@ private bool CheckAndJump(Ray ray)
             if (_itemHandler._HasItemB)
             {
                 //アイテムB微調整
-                insObj = PhotonNetwork.Instantiate(_itemHandler._BigBlock.name, insBigPos, _insQuaternion[_mineTeam], 0);
-                insObj.transform.parent = _cubeParentTeam[_enemyTeam];
+                _myPV.RPC(nameof(SyncCreateBig), PhotonTargets.All, insBigPos, _mineTeam, _enemyTeam);
                 _itemHandler.ItemEffectB();
             }
             //ItemCBlock生成
             else if(_itemHandler._HasItemC)
             {
                 _itemHandler.ItemEffectC();
-                insObj = PhotonNetwork.Instantiate(_itemHandler._ItemCBlock.name, insPos, _insQuaternion[_mineTeam], 0);
-                insObj.transform.parent = _cubeParentTeam[_enemyTeam];
+                _myPV.RPC(nameof(SyncCreateItemC), PhotonTargets.All, insPos, _mineTeam, _enemyTeam);
             }
             else
             {
-                insObj = PhotonNetwork.Instantiate(_herosPrefab.name, insPos, _insQuaternion[_mineTeam], 0);
-                insObj.transform.parent = _cubeParentTeam[_enemyTeam];
+                _myPV.RPC(nameof(SyncCreateHeros), PhotonTargets.All, insPos, _mineTeam, _enemyTeam);
             }
 
         }
         // 仮置き
         _hasBlock = false;
+    }
+
+    // ネットワーク上のキューブ生成
+    [PunRPC]
+    private void SyncCreateBig(Vector3 pos, int mineTeam, int enemyTeam)
+    {
+        GameObject insObj = Instantiate(_itemHandler._BigBlock, pos, _insQuaternion[mineTeam],_cubeParentTeam[enemyTeam]);
+        HerosBehaviour herosBehaviour =  insObj.transform.GetChild(1).gameObject.GetComponent<HerosBehaviour>();
+        herosBehaviour.SetID(mineTeam);
+    }
+
+    [PunRPC]
+    private void SyncCreateItemC(Vector3 pos, int mineTeam, int enemyTeam)
+    {
+        GameObject insObj = Instantiate(_itemHandler._ItemCBlock, pos, _insQuaternion[mineTeam],_cubeParentTeam[enemyTeam]);
+        HerosBehaviour herosBehaviour =  insObj.transform.GetChild(1).gameObject.GetComponent<HerosBehaviour>();
+        herosBehaviour.SetID(mineTeam);
+    }
+
+    [PunRPC]
+    private void SyncCreateHeros(Vector3 pos, int mineTeam, int enemyTeam)
+    {
+        GameObject insObj = Instantiate(_herosPrefab, pos, _insQuaternion[mineTeam],_cubeParentTeam[enemyTeam]);
+        HerosBehaviour herosBehaviour =  insObj.transform.GetChild(1).gameObject.GetComponent<HerosBehaviour>();
+        herosBehaviour.SetID(mineTeam);
     }
 
     //アイテムを使う

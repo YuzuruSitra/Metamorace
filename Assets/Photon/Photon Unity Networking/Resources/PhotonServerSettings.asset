@@ -52,4 +52,7 @@ MonoBehaviour:
   - ReturnRoom
   - JoinPlayer
   - LaunchGame
+  - SyncCreateHeros
+  - SyncCreateBig
+  - SyncCreateItemC
   DisableAutoOpenWizard: 1

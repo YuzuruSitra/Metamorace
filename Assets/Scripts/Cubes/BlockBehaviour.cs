@@ -42,7 +42,7 @@ public class BlockBehaviour : MonoBehaviour
         if(currentTime >= 0) 
         {
             _gage.gameObject.SetActive(true);
-             currentTime -= Time.deltaTime;
+            currentTime -= Time.deltaTime;
         }
         else
         {
