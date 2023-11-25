@@ -167,7 +167,7 @@ public class GameManager : MonoBehaviour
                     int shareTeam2 = _blockManager.CalcCubeShare2(FIELD_SIZE);
                     _myPV.RPC(nameof(FinishGame), PhotonTargets.All, _player.IsDead, _teamID, shareTeam1, shareTeam2);
                 }
-                else
+                else if(DevelopeMode)
                 {
                     _isGame = false;
                     _player.SetGameState(_isGame);
@@ -219,7 +219,7 @@ public class GameManager : MonoBehaviour
     // ルームへ戻る処理
     public void BackPrivateRoom()
     {
-        if(!DevelopeMode) 
+        if (!DevelopeMode) 
             _myPV.RPC(nameof(ReturnRoom), PhotonTargets.All);
         else
             SceneManager.LoadScene("Master_Wait");
