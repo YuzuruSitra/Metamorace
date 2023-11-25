@@ -237,16 +237,14 @@ public class GameManager : MonoBehaviour
     }
 
     [PunRPC]
-    private IEnumerator ReturnRoom()
+    private void ReturnRoom()
     {
         PhotonNetwork.isMessageQueueRunning = false;
-        yield return new WaitForSeconds(2.0f);
         PhotonNetwork.LoadLevel("Master_Wait");
     }
 
     private void OnLoadedScene( Scene i_scene, LoadSceneMode i_mode )
     {
-        // Time.timeScale = 1;
         PhotonNetwork.isMessageQueueRunning = true;
     }
 
