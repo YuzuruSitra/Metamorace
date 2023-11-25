@@ -58,9 +58,12 @@ public class Player : MonoBehaviour
     public bool IsDead => _isDead;
     private bool _isGame = false;
     [SerializeField] float _playerReach;
+    [SerializeField] AudioClip jump,breakBlock;
+    private SoundHandler _soundHandler;
 
     void Start()
     {
+        _soundHandler = SoundHandler.InstanceSoundHandler;
         _rb = GetComponent<Rigidbody>();
         _usePlayerSpeed = _playerSpeed;
         _useDestroyPower = _destroyPower;
@@ -215,6 +218,8 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && _isJump)
         {
+            //ジャンプSE鳴らす
+            _soundHandler.PlaySE(jump);
             _rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
         }
     }
@@ -263,6 +268,8 @@ private bool CheckAndJump(Ray ray)
                 _itemC = hit.collider.GetComponent<ItemC>();
                 ProcessItemCBlockEffect();
             }
+            //ブロック破壊SE;
+            _soundHandler.PlaySE(breakBlock);
             _hasBlock = true;
             _itemHandler.StackBlock(objID);
         }

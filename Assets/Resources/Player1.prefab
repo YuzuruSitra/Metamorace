@@ -272,6 +272,8 @@ MonoBehaviour:
   _staneffect: {fileID: 7016385704350394751}
   stanpos: 0
   _playerReach: 0.5
+  jump: {fileID: 8300000, guid: ebcc14a5cf598467395b503f961b57fd, type: 3}
+  breakBlock: {fileID: 8300000, guid: 2b1265111f91441ef93d276c56a85bfb, type: 3}
 --- !u!54 &1691382643330117546
 Rigidbody:
   m_ObjectHideFlags: 0
