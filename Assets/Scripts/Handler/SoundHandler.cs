@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SoundHandler : MonoBehaviour
 {
+    public static SoundHandler InstanceSoundHandler;
     [SerializeField]
     private AudioSource _bgmAudioSource;
     [SerializeField]
@@ -21,23 +22,18 @@ public class SoundHandler : MonoBehaviour
         _seAudioSource.volume = Mathf.Clamp01(newValueSE);
     }
 
-    void Start()
+    void Awake()
     {
-        GameObject soundManager = CheckOtherSoundManager();
-        bool checkResult = soundManager != null && soundManager != gameObject;
-
-        if (checkResult)
+        if (InstanceSoundHandler != null)
         {
             Destroy(gameObject);
+            return;
         }
 
+        InstanceSoundHandler = this;
         DontDestroyOnLoad(gameObject);
     }
 
-    GameObject CheckOtherSoundManager()
-    {
-        return GameObject.FindGameObjectWithTag("SoundHandler");
-    }
 
     public void PlayBGM(AudioClip clip)
     {
