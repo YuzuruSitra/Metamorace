@@ -341,7 +341,7 @@ private bool CheckAndJump(Ray ray)
     private void SyncCreateBig(Vector3 pos, int mineTeam, int enemyTeam)
     {
         if (!PhotonNetwork.isMasterClient) return;
-        GameObject insObj = PhotonNetwork.Instantiate(_bigPrefab[_mineTeam].name, pos, _insQuaternion[mineTeam], 0);
+        GameObject insObj = PhotonNetwork.Instantiate(_bigPrefab[mineTeam].name, pos, _insQuaternion[mineTeam], 0);
         insObj.transform.parent = _cubeParentTeam[enemyTeam];
     }
 
@@ -349,7 +349,7 @@ private bool CheckAndJump(Ray ray)
     private void SyncCreateItemC(Vector3 pos, int mineTeam, int enemyTeam)
     {
         if (!PhotonNetwork.isMasterClient) return;
-        GameObject insObj = PhotonNetwork.Instantiate(_cPrefab[_mineTeam].name, pos, _insQuaternion[mineTeam], 0);
+        GameObject insObj = PhotonNetwork.Instantiate(_cPrefab[mineTeam].name, pos, _insQuaternion[mineTeam], 0);
         insObj.transform.parent = _cubeParentTeam[enemyTeam];
     }
 
@@ -357,7 +357,7 @@ private bool CheckAndJump(Ray ray)
     private void SyncCreateHeros(Vector3 pos, int mineTeam, int enemyTeam)
     {
         if (!PhotonNetwork.isMasterClient) return;
-        GameObject insObj = PhotonNetwork.Instantiate(_herosPrefab[_mineTeam].name, pos, _insQuaternion[mineTeam], 0);
+        GameObject insObj = PhotonNetwork.Instantiate(_herosPrefab[mineTeam].name, pos, _insQuaternion[mineTeam], 0);
         insObj.transform.parent = _cubeParentTeam[enemyTeam];
     }
 
