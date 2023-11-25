@@ -163,6 +163,7 @@ public class GameManager : MonoBehaviour
             {
                 if(!DevelopeMode) 
                 {            
+                    _isGame = false;
                     _myPV.RPC(nameof(FinishMasterGame), PhotonTargets.MasterClient, _player.IsDead, _teamID);
                 }
                 else
@@ -205,7 +206,7 @@ public class GameManager : MonoBehaviour
     [PunRPC]
     private void FinishMasterGame(bool isDead, int team)
     {
-        _blockManager.SetGameState(_isGame);
+        _blockManager.SetGameState(false);
         // 占有率の取得
         int shareTeam1 = _blockManager.CalcCubeShare1(FIELD_SIZE);
         int shareTeam2 = _blockManager.CalcCubeShare2(FIELD_SIZE);

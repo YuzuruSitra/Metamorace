@@ -55,4 +55,5 @@ MonoBehaviour:
   - SyncCreateHeros
   - SyncCreateBig
   - SyncCreateItemC
+  - FinishMasterGame
   DisableAutoOpenWizard: 1

@@ -268,6 +268,7 @@ GameObject:
   - component: {fileID: 4470326491395914327}
   - component: {fileID: 4990539121118569088}
   - component: {fileID: 2910339165191738683}
+  - component: {fileID: 4166478112196459592}
   m_Layer: 0
   m_Name: ItemCBlock1
   m_TagString: ItemCBlock
@@ -380,7 +381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96a0f744358e5b94097f9f9099ef48d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _myPV: {fileID: 2874768690144058947}
+  _myPV: {fileID: 4166478112196459592}
   _objID: 2
   _objHealth: 5
   _blocklength: 0.53
@@ -421,6 +422,33 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 114
   m_CollisionDetection: 0
+--- !u!114 &4166478112196459592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7875487920154440351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!1001 &9058769499305692561
 PrefabInstance:
   m_ObjectHideFlags: 0

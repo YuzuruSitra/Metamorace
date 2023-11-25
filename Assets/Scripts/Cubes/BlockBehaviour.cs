@@ -85,9 +85,6 @@ public class BlockBehaviour : MonoBehaviour
         }
     }
 
-
-    
-
     public void MoveBlock()
     {
         Ray _move = new Ray(transform.position, -transform.forward);
