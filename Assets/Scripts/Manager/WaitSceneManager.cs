@@ -12,7 +12,7 @@ public class WaitSceneManager : MonoBehaviour
     private GameObject _playerPrefab;
     private Player_Wait _playerWait;
     private int _playerCount = 0;
-    private float _transitionTime = 2.0f;
+    private float _transitionTime = 1.0f;
     private WaitForSeconds _waitTime;
     public bool DebugMode;
     
@@ -69,8 +69,8 @@ public class WaitSceneManager : MonoBehaviour
     private IEnumerator SendScene(int playerCount)
     {
         _playerCount = playerCount;
-        PhotonNetwork.isMessageQueueRunning = false;
         yield return _waitTime;
+        PhotonNetwork.isMessageQueueRunning = false;
         PhotonNetwork.LoadLevel("Master_Battle");
     }
 
