@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private PhotonView _myPV;
+    [SerializeField]
     private Player _player;
     [SerializeField] 
     private ColorManager _colorManager;
@@ -94,7 +95,7 @@ public class GameManager : MonoBehaviour
         GameObject player = Instantiate(_playerPrefab, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity);
         _camManager.SetPlayer(player, _teamID);
         _player = player.transform.GetChild(0).gameObject.GetComponent<Player>();
-        _player.SetParameter( _cubeParentTeam1, _cubeParentTeam2, _teamID, DevelopeMode);
+        _player.SetParameter( _cubeParentTeam1, _cubeParentTeam2, _teamID, true);
     }
 
     // ネットワークプレイヤーのセットアップ
@@ -106,7 +107,7 @@ public class GameManager : MonoBehaviour
         _myPV.RPC(nameof(JoinPlayer), PhotonTargets.All);
         _camManager.SetPlayer(player, _teamID);
         _player = player.transform.GetChild(0).gameObject.GetComponent<Player>();
-        _player.SetParameter( _cubeParentTeam1, _cubeParentTeam2, _teamID, DevelopeMode);
+        _player.SetParameter( _cubeParentTeam1, _cubeParentTeam2, _teamID, false);
     }
 
     // プレイヤーの参加数

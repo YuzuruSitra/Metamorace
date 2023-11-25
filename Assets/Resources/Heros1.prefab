@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 2590571296356083441}
   - component: {fileID: 4029764847745981502}
   - component: {fileID: 869590501930964805}
-  - component: {fileID: 7592439770719308257}
+  - component: {fileID: 7054379165291416063}
   m_Layer: 0
   m_Name: Heros
   m_TagString: Heros
@@ -175,13 +175,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96a0f744358e5b94097f9f9099ef48d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _myPV: {fileID: 7592439770719308257}
+  _myPV: {fileID: 7054379165291416063}
   _objID: 2
   _objHealth: 5
   _blocklength: 0.53
   _isBigBlock: 0
   _rb: {fileID: 869590501930964805}
-  _developMode: 1
+  _developMode: 0
   _gage: {fileID: 8995698550052264974}
   _parentBlock: {fileID: 1296549643261954888}
   _cloudeffect: {fileID: 1491234004073073449}
@@ -216,7 +216,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 114
   m_CollisionDetection: 0
---- !u!114 &7592439770719308257
+--- !u!114 &7054379165291416063
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

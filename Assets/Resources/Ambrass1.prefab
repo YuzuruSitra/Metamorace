@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2752334942250380794}
   - component: {fileID: 2752334942250380797}
   - component: {fileID: 2374573697013641907}
-  - component: {fileID: 2255807502543424476}
+  - component: {fileID: 5483787968176147098}
   m_Layer: 0
   m_Name: Ambras (1)
   m_TagString: Ambras
@@ -113,13 +113,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96a0f744358e5b94097f9f9099ef48d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _myPV: {fileID: 2255807502543424476}
+  _myPV: {fileID: 5483787968176147098}
   _objID: 1
   _objHealth: 3
   _blocklength: 0.53
   _isBigBlock: 0
   _rb: {fileID: 2374573697013641907}
-  _developMode: 1
+  _developMode: 0
   _gage: {fileID: 5921182815356334153}
   _parentBlock: {fileID: 6252427330716548040}
   _cloudeffect: {fileID: 5697575003319578938}
@@ -139,7 +139,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
---- !u!114 &2255807502543424476
+--- !u!114 &5483787968176147098
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
