@@ -42,7 +42,7 @@ public class BlockBehaviour : MonoBehaviour
         if(currentTime >= 0) 
         {
             _gage.gameObject.SetActive(true);
-             currentTime -= Time.deltaTime;
+            currentTime -= Time.deltaTime;
         }
         else
         {
@@ -59,34 +59,37 @@ public class BlockBehaviour : MonoBehaviour
     {
         _objHealth -= power * Time.deltaTime;
         // 同期処理
-        if (!_developMode) _myPV.RPC(nameof(SyncHealth), PhotonTargets.All, _objHealth);
-
+        if (!_developMode) 
+        {
+            _myPV.RPC(nameof(SyncHealth), PhotonTargets.All, _objHealth);
+        }
         if (_objHealth >= 0) return -1;
-        this.gameObject.SetActive(false);
-        _cloudeffect.transform.position = transform.position;
-        _cloudeffect.SetActive(true);
-        Destroy(_parentBlock,2.0f);
+        
         return _objID;
     }
 
     [PunRPC]
     private void SyncHealth(float currentHealth)
     {
+        Debug.Log("call");
         _objHealth = currentHealth;
-        if (_objHealth <= 0) Destroy(this.gameObject);
+        if (_objHealth <= 0)
+        {
+            this.gameObject.SetActive(false);
+            _cloudeffect.transform.position = transform.position;
+            _cloudeffect.SetActive(true);
+            Destroy(_parentBlock,2.0f);
+        }
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("BreakCol"))
         {
-            if (!_developMode) _myPV.RPC(nameof(SyncHealth), PhotonTargets.All, 0f);
+            if (!_developMode) _myPV.RPC(nameof(SyncHealth), PhotonTargets.All, 0.0f);
             else Destroy(this.gameObject);
         }
     }
-
-
-    
 
     public void MoveBlock()
     {

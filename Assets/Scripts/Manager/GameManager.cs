@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private PhotonView _myPV;
+    [SerializeField]
     private Player _player;
     [SerializeField] 
     private ColorManager _colorManager;
@@ -94,7 +95,7 @@ public class GameManager : MonoBehaviour
         GameObject player = Instantiate(_playerPrefab, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity);
         _camManager.SetPlayer(player, _teamID);
         _player = player.transform.GetChild(0).gameObject.GetComponent<Player>();
-        _player.SetParameter( _cubeParentTeam1, _cubeParentTeam2, _teamID, DevelopeMode);
+        _player.SetParameter( _cubeParentTeam1, _cubeParentTeam2, _teamID, true);
     }
 
     // ネットワークプレイヤーのセットアップ
@@ -106,7 +107,7 @@ public class GameManager : MonoBehaviour
         _myPV.RPC(nameof(JoinPlayer), PhotonTargets.All);
         _camManager.SetPlayer(player, _teamID);
         _player = player.transform.GetChild(0).gameObject.GetComponent<Player>();
-        _player.SetParameter( _cubeParentTeam1, _cubeParentTeam2, _teamID, DevelopeMode);
+        _player.SetParameter( _cubeParentTeam1, _cubeParentTeam2, _teamID, false);
     }
 
     // プレイヤーの参加数
@@ -131,6 +132,8 @@ public class GameManager : MonoBehaviour
         _blockManager = blockManagerObj.GetComponent<BlockManager>();
         _blockManager.SetParam(DevelopeMode, _cubeParentTeam1, _cubeParentTeam2);
     }
+
+
 
     void Update()
     {
@@ -159,13 +162,10 @@ public class GameManager : MonoBehaviour
             // ゲーム終了処理
             if (_timeLimit <= 0 || _player.IsDead)
             {
-                if(!DevelopeMode && PhotonNetwork.isMasterClient) 
-                {
-                    _blockManager.SetGameState(_isGame);
-                    // 占有率の取得
-                    int shareTeam1 = _blockManager.CalcCubeShare1(FIELD_SIZE);
-                    int shareTeam2 = _blockManager.CalcCubeShare2(FIELD_SIZE);
-                    _myPV.RPC(nameof(FinishGame), PhotonTargets.All, _player.IsDead, _teamID, shareTeam1, shareTeam2);
+                if(!DevelopeMode) 
+                {            
+                    _isGame = false;
+                    _myPV.RPC(nameof(FinishMasterGame), PhotonTargets.MasterClient, _player.IsDead, _teamID);
                 }
                 else
                 {
@@ -203,7 +203,18 @@ public class GameManager : MonoBehaviour
         if (PhotonNetwork.isMasterClient) _blockManager.SetGameState(_isGame);
     }
 
-    // ゲーム終了同期処理
+    // ゲーム終了準備マスタークライアントのみの処理
+    [PunRPC]
+    private void FinishMasterGame(bool isDead, int team)
+    {
+        _blockManager.SetGameState(false);
+        // 占有率の取得
+        int shareTeam1 = _blockManager.CalcCubeShare1(FIELD_SIZE);
+        int shareTeam2 = _blockManager.CalcCubeShare2(FIELD_SIZE);
+        _myPV.RPC(nameof(FinishGame), PhotonTargets.All, isDead, team, shareTeam1, shareTeam2);
+    }
+
+    // 全クライアントの終了処理
     [PunRPC]
     private void FinishGame(bool isDead, int team, int shareTeam1, int shareTeam2)
     {
@@ -219,7 +230,7 @@ public class GameManager : MonoBehaviour
     // ルームへ戻る処理
     public void BackPrivateRoom()
     {
-        if(!DevelopeMode) 
+        if (!DevelopeMode) 
             _myPV.RPC(nameof(ReturnRoom), PhotonTargets.All);
         else
             SceneManager.LoadScene("Master_Wait");

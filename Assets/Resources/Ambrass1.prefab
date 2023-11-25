@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2752334942250380794}
   - component: {fileID: 2752334942250380797}
   - component: {fileID: 2374573697013641907}
+  - component: {fileID: 5483787968176147098}
   m_Layer: 0
   m_Name: Ambras (1)
   m_TagString: Ambras
@@ -112,13 +113,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96a0f744358e5b94097f9f9099ef48d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _myPV: {fileID: 985142421573186090}
+  _myPV: {fileID: 5483787968176147098}
   _objID: 1
   _objHealth: 3
   _blocklength: 0.53
   _isBigBlock: 0
   _rb: {fileID: 2374573697013641907}
-  _developMode: 1
+  _developMode: 0
   _gage: {fileID: 5921182815356334153}
   _parentBlock: {fileID: 6252427330716548040}
   _cloudeffect: {fileID: 5697575003319578938}
@@ -138,6 +139,33 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
+--- !u!114 &5483787968176147098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2752334942250380796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!1 &5697575003319578938
 GameObject:
   m_ObjectHideFlags: 0

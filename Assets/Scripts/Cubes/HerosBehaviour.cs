@@ -68,8 +68,4 @@ public class HerosBehaviour : MonoBehaviour
         _rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
     }
 
-    public void SetID(int id)
-    {
-        _teamID = id;
-    }
 }
