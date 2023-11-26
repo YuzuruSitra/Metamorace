@@ -127,14 +127,14 @@ public class UIHandler : MonoBehaviour
             //占有率でTeam1が勝ったとき
             if (shareTeam2 > shareTeam1)
             {
-                _winnerPanel.transform.localScale = _winnerPanel.transform.localScale * WinnerSize;
+                //_winnerPanel.transform.localScale = _winnerPanel.transform.localScale * WinnerSize;
                 _winBlockRate.text = shareTeam1.ToString();
                 _loseBlockRate.text = shareTeam2.ToString();
             }
             //占有率でTeam2が勝ったとき
             else if (shareTeam1 > shareTeam2)
             {
-                _winnerPanel.transform.localScale = _winnerPanel.transform.localScale * WinnerSize;
+                //_winnerPanel.transform.localScale = _winnerPanel.transform.localScale * WinnerSize;
                 _winBlockRate.text = shareTeam2.ToString();
                 _loseBlockRate.text = shareTeam1.ToString();
             }
@@ -147,7 +147,7 @@ public class UIHandler : MonoBehaviour
             //Team1が勝ったとき
             if (winteam == 1)
             {
-                _winnerPanel.transform.localScale = _winnerPanel.transform.localScale * WinnerSize;
+                //_winnerPanel.transform.localScale = _winnerPanel.transform.localScale * WinnerSize;
                 _winBlockRate.text = shareTeam1.ToString();
                 _loseBlockRate.text = "Dead";
                 //_loseBlockRate.text = shareTeam2.ToString();
@@ -155,7 +155,7 @@ public class UIHandler : MonoBehaviour
             //Team2が勝ったとき
             else
             {
-                _winnerPanel.transform.localScale = _winnerPanel.transform.localScale * WinnerSize;
+               // _winnerPanel.transform.localScale = _winnerPanel.transform.localScale * WinnerSize;
                 _winBlockRate.text = shareTeam2.ToString();
                 _loseBlockRate.text = "Dead";
                 //_loseBlockRate.text = shareTeam1.ToString();
