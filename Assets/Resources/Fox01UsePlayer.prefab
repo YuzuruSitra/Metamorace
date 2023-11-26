@@ -2728,7 +2728,6 @@ MonoBehaviour:
   _cPrefab:
   - {fileID: 933951156368605023, guid: c2f415d55aad22543bbe3319b71c4e36, type: 3}
   - {fileID: 933951156368605023, guid: c299c008d3393574cbe719c6b3af987a, type: 3}
-  _ambrasPrefab: {fileID: 933951156368605023, guid: 11b8429ffa31fc947a005816e48d2322, type: 3}
   _playerAnim: {fileID: 8520456443667393430}
   _stanEffect: {fileID: 2587801957149257156}
   _staneffect: {fileID: 2587801957149257158}
@@ -2737,8 +2736,8 @@ MonoBehaviour:
   _developMode: 0
   _playerReach: 1
   jump: {fileID: 8300000, guid: 8435c23312ad2934a972e15f0a48c4f8, type: 3}
-  breakBlock: {fileID: 8300000, guid: 5517bab65ff12964c84d8dddd3d11e0b, type: 3}
-  createBlock: {fileID: 8300000, guid: eb853d49557906d48af9307043ecb13f, type: 3}
+  breakBlock: {fileID: 8300000, guid: a36f30c4df2344a4980a7e9965851ee8, type: 3}
+  createBlock: {fileID: 8300000, guid: 3b21016f888eda14e9c4644263996cab, type: 3}
 --- !u!54 &5353145884009873201
 Rigidbody:
   m_ObjectHideFlags: 0
