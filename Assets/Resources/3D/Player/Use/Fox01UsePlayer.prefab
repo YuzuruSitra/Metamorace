@@ -2734,8 +2734,9 @@ MonoBehaviour:
   stanpos: 0
   _developMode: 0
   _playerReach: 1
-  jump: {fileID: 8300000, guid: 86406e9d2b9fd418ca7c561ea829005c, type: 3}
-  breakBlock: {fileID: 8300000, guid: 2b1265111f91441ef93d276c56a85bfb, type: 3}
+  jump: {fileID: 8300000, guid: 8435c23312ad2934a972e15f0a48c4f8, type: 3}
+  breakBlock: {fileID: 8300000, guid: 5517bab65ff12964c84d8dddd3d11e0b, type: 3}
+  createBlock: {fileID: 8300000, guid: eb853d49557906d48af9307043ecb13f, type: 3}
 --- !u!54 &5353145884009873201
 Rigidbody:
   m_ObjectHideFlags: 0

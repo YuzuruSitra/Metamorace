@@ -59,7 +59,7 @@ public class Player : MonoBehaviour
     public bool IsDead => _isDead;
     private bool _isGame = false;
     [SerializeField] float _playerReach;
-    [SerializeField] AudioClip jump,breakBlock;
+    [SerializeField] AudioClip jump,breakBlock,createBlock;
     private SoundHandler _soundHandler;
 
     void Start()
@@ -309,6 +309,7 @@ private bool CheckAndJump(Ray ray)
         GameObject insObj;
         if (_developMode)
         {
+             _soundHandler.PlaySE(createBlock);
             //アイテムBを持っていたら巨大ブロック一回だけ生成
             if (_itemHandler._HasItemB)
             {

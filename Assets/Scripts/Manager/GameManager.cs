@@ -47,9 +47,12 @@ public class GameManager : MonoBehaviour
     int shareTeam1result, shareTeam2result;
     private int _joinPlayerCount = 0;
     private int _currentPlayerCount = 0;
-
+    bool IsOnce = false;
+    private SoundHandler _soundHandler;
+    [SerializeField] AudioClip countDown;
     void Start()
     {
+         _soundHandler = SoundHandler.InstanceSoundHandler;
         _uiHandler = GameObject.FindWithTag("UIHandler").GetComponent<UIHandler>();
         _calcWaitTime = new WaitForSeconds(_calcInterval);
         SceneManager.sceneLoaded += OnLoadedScene;
@@ -137,6 +140,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+
         if(!_isGame)
         {
             if (!_oneTime) return;
@@ -253,6 +257,12 @@ public class GameManager : MonoBehaviour
     {
         _TimeLimit -= Time.deltaTime;
         _uiHandler.ShowLimitTime(_TimeLimit);
+        if(_TimeLimit < 10 && !IsOnce)
+        {
+            IsOnce = true;
+            Debug.Log("Called");
+            _soundHandler.PlaySE(countDown);
+        }  
     }
 
     // オブジェクトの占有率を計算するコルーチン
