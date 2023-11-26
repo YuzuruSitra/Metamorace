@@ -28,7 +28,7 @@ public class ItemHandler : MonoBehaviour
 
     void Start()
     {
-        // _uiHandler = GameObject.FindWithTag("UIHandler").GetComponent<UIHandler>();
+        _uiHandler = GameObject.FindWithTag("UIHandler").GetComponent<UIHandler>();
         //デバッグ用
         //_hasItemB = true;
     }
