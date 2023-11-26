@@ -31,7 +31,6 @@ Transform:
   m_Children:
   - {fileID: 2082341875891665531}
   - {fileID: 7430094026966327143}
-  - {fileID: 8852857924214133534}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -284,7 +283,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7379414304278866445}
+  m_Father: {fileID: 7430094026966327143}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6615310461573922448
@@ -392,6 +391,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8269188457450891799}
+  - {fileID: 8852857924214133534}
   m_Father: {fileID: 7379414304278866445}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

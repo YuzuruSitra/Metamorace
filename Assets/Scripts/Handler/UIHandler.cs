@@ -69,6 +69,7 @@ public class UIHandler : MonoBehaviour
     //アイテムの画像を格納
     public void SetItemImage(int _itemnum)
     {
+        if(_itemSprite[_itemnum] == null) return;
         _itemImage.sprite = _itemSprite[_itemnum];
     }
     //アイテムの画像をリセット

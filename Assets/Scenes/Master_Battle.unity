@@ -9567,8 +9567,11 @@ MonoBehaviour:
   _ambrasSprite: {fileID: 21300000, guid: f04db24ec1bfb14469491b751f2723b4, type: 3}
   _nametext: {fileID: 0}
   name: 
-  _itemImage: {fileID: 0}
-  _itemSprite: []
+  _itemImage: {fileID: 178556829}
+  _itemSprite:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _button: {fileID: 0}
   _resultPanel: {fileID: 1647894664}
   _winnerPanel: {fileID: 1047477435}

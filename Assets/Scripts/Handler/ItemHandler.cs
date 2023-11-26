@@ -6,17 +6,12 @@ public class ItemHandler : MonoBehaviour
 {
     UIHandler _uiHandler;
     //保持ブロックを管理する配列
-    private int[] _stackBlocks = new int[3];
+    private int[] _stackBlocks = {0,0,0};
     public int[] _StackBlocks => _stackBlocks;
-    //アイテムB用のブロック
-    [SerializeField] GameObject _bigBlock;
-     public GameObject _BigBlock => _bigBlock;
-    [SerializeField] GameObject _itemCBlock;
-    public GameObject _ItemCBlock => _itemCBlock;
    
     
     //[SerializeField] ItemC _itemc;
- //スタックの中の自ブロックの数を格納
+    //スタックの中の自ブロックの数を格納
     int _myBrockNum;
     int _objID;
     //float _itemAEffectTime = 6.0f;
