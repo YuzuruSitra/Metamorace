@@ -117,11 +117,11 @@ MonoBehaviour:
   _anim: {fileID: 20145636080971593}
   _myPV: {fileID: 5483787968176147098}
   _objID: 1
-  _objHealth: 3
+  _objHealth: 0.1
   _blocklength: 0.6
   _isBigBlock: 0
   _rb: {fileID: 2374573697013641907}
-  _developMode: 0
+  _developMode: 1
   _gage: {fileID: 5921182815356334153}
   _parentBlock: {fileID: 6252427330716548040}
   _cloudeffect: {fileID: 5697575003319578938}

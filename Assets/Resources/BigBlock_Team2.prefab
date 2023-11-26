@@ -303,7 +303,7 @@ MonoBehaviour:
   _blocklength: 1.61
   _isBigBlock: 1
   _rb: {fileID: 1681977153134753470}
-  _developMode: 0
+  _developMode: 1
   _gage: {fileID: 4198027655018523581}
   _parentBlock: {fileID: 1664117124386851239}
   _cloudeffect: {fileID: 7767077858630284818}

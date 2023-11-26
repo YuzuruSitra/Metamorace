@@ -382,13 +382,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96a0f744358e5b94097f9f9099ef48d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _anim: {fileID: 0}
   _myPV: {fileID: 5146288136537980966}
-  _objID: 2
-  _objHealth: 5
+  _objID: 1
+  _objHealth: 0.1
   _blocklength: 0.6
   _isBigBlock: 0
   _rb: {fileID: 2910339165191738683}
-  _developMode: 0
+  _developMode: 1
   _gage: {fileID: 5190817532096405292}
   _parentBlock: {fileID: 933951156368605023}
   _cloudeffect: {fileID: 2082341875891665528}

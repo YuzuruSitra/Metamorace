@@ -178,7 +178,7 @@ MonoBehaviour:
   _anim: {fileID: 1491234004073073451}
   _myPV: {fileID: 7054379165291416063}
   _objID: 2
-  _objHealth: 5
+  _objHealth: 0.1
   _blocklength: 0.6
   _isBigBlock: 0
   _rb: {fileID: 869590501930964805}
