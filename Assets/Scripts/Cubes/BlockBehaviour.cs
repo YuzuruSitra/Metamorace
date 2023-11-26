@@ -46,10 +46,17 @@ public class BlockBehaviour : MonoBehaviour
         {
             _gage.gameObject.SetActive(true);
             currentTime -= Time.deltaTime;
+            _anim.SetBool("IsTouch", true);
+            _isAnim = true;
+            Debug.Log(_isAnim);
         }
         else
         {
             _gage.gameObject.SetActive(false);
+            
+            _anim.SetBool("IsTouch", false);
+            _isAnim = false;
+            Debug.Log(_isAnim);
         }    
     }
     public void DevModeSet(bool developMode)
@@ -60,7 +67,6 @@ public class BlockBehaviour : MonoBehaviour
     //Playerによるお邪魔ブロック破壊処理
     public int DestroyBlock(float power)
     {
-        if(!_isAnim) _anim.SetBool("IsTouch", true);
         _objHealth -= power * Time.deltaTime;
         // 同期処理
         if (!_developMode) 
@@ -80,12 +86,6 @@ public class BlockBehaviour : MonoBehaviour
         if (_objHealth >= 0) return -1;
         
         return _objID;
-    }
-
-    // アニメーターから呼び出し
-    public void StopAnim()
-    {
-        _anim.SetBool("IsTouch", false);
     }
 
     [PunRPC]
