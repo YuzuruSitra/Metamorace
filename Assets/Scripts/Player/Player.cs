@@ -289,6 +289,7 @@ public class Player : MonoBehaviour
                 else _staneffect.transform.position = transform.position + new Vector3(0, 0, stanpos);
 
                 _stanEffect.SetBool("Stan", true);
+                _playerAnim.SetBool("_isStan", true);
                 Debug.Log("stan");
                 Invoke("FinishItemC", _itemHandler._ItemCEffectTime);
                 break;
@@ -416,5 +417,6 @@ public class Player : MonoBehaviour
         _usePlayerSpeed = _playerSpeed;
         //スタンエフェクト停止
         _stanEffect.SetBool("Stan", false);
+        _playerAnim.SetBool("_isStan", false);
     }
 }

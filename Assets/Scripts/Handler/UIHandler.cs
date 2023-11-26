@@ -19,12 +19,18 @@ public class UIHandler : MonoBehaviour
     [SerializeField] GameObject _resultPanel;
     [SerializeField] GameObject _winnerPanel;
     [SerializeField] Text _winBlockRate, _loseBlockRate;
-
-    void Start()
+    [SerializeField] GameObject itemeffect;
+    void Start() 
     {
+         Animator itemEffectAnimator = itemEffect.GetComponent<Animator>();
         ChangeName();
         _resultPanel.SetActive(false);
         //DecreceGage();
+    }
+
+    public void GetItemEffect()
+    {
+        itemeffect.Animator()
     }
     public void ShowLimitTime(float _TimeLimit)
     {
