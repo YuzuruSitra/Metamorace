@@ -91,7 +91,6 @@ public class Player : MonoBehaviour
     {
         if (!_myPV.isMine && !_developMode) return;
         if(!_isGame) return;
-
         BreakBlock();
         CreateBlock();
         //アイテム生成
@@ -99,7 +98,7 @@ public class Player : MonoBehaviour
         Item();
         Jump();
         JudgeVerticalDeath();   
-        //JudgeHorizontalDeath();
+        JudgeHorizontalDeath();
     }
     void FixedUpdate()
     {
@@ -132,7 +131,7 @@ public class Player : MonoBehaviour
         Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);
 
         transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 1080.0f * Time.deltaTime);
-        if(CheckFront(new Ray(transform.position - new Vector3(0,0.5f,0), transform.forward * _frontRayREngth))) return;
+        if(CheckFront(new Ray(transform.position + new Vector3(0,0.5f,0), transform.forward * _frontRayREngth))) return;
         // カメラの方向を考慮して移動ベクトルを作成
         Vector3 forward = Camera.main.transform.forward;
         forward.y = 0.0f;
@@ -147,7 +146,7 @@ public class Player : MonoBehaviour
     private bool CheckFront(Ray ray)
     {
         RaycastHit hit;
-        Debug.DrawRay(transform.position - new Vector3(0,0.5f,0), transform.forward * _frontRayREngth, Color.blue, 0.1f); 
+        Debug.DrawRay(transform.position + new Vector3(0,0.5f,0), transform.forward * _frontRayREngth, Color.blue, 0.1f); 
         if (Physics.Raycast(ray, out hit, _frontRayREngth))
             return true;
         else
@@ -157,7 +156,7 @@ public class Player : MonoBehaviour
     // 縦方向の死亡判定
     void JudgeVerticalDeath()
     {
-        Ray ray = new Ray(transform.position + Vector3.up,Vector3.up);
+        Ray ray = new Ray(transform.position + new Vector3(0f, 2.0f, 0f),Vector3.up);
         RaycastHit _hitHead;
         if (Physics.Raycast(ray, out _hitHead,_jumprayrength)) _isHead = true ;
         else _isHead = false;
@@ -174,7 +173,7 @@ public class Player : MonoBehaviour
     void JudgeHorizontalDeath()
     {
         Ray ray;
-        if(_mineTeam == 0) ray = new Ray(transform.position , new Vector3(0f,0f,-1f));
+        if(_mineTeam == 0) ray = new Ray(transform.position + Vector3.up, new Vector3(0f,0f,-1f));
         else ray = new Ray(transform.position , new Vector3(0f,0f,1f));
         Debug.DrawRay(transform.position, new Vector3(0f,0f,1f) * _jumprayrength, Color.blue, 1.0f);
 
@@ -189,6 +188,9 @@ public class Player : MonoBehaviour
     private IEnumerator DeathCoroutine(string direction)
     {
         // 死亡アニメーション
+        if(direction == "Vertical") _playerAnim.SetBool("_isVDeath",true);
+        else _playerAnim.SetBool("_isHDeath",true);
+       
         //////////////////
         yield return new WaitForSeconds(2.0f);
         _isDead = true;
@@ -220,8 +222,8 @@ private bool CheckAndJump(Ray ray)
     Debug.DrawRay(ray.origin, ray.direction * _jumprayrength, Color.red, 0.1f);
     if (Physics.Raycast(ray, out hit, _jumprayrength))
     {
-         _playerAnim.SetBool("_isJump",false);
         _isJump = false;
+        _playerAnim.SetBool("_isJump",false);
         return true; // 地面に当たっている場合はtrueを返す
     }
     else
@@ -239,7 +241,7 @@ private bool CheckAndJump(Ray ray)
 
         Vector3 direction = transform.forward;
         direction.Normalize();
-        Ray ray = new Ray(transform.position, direction);
+        Ray ray = new Ray(transform.position + Vector3.up, direction);
 
         Debug.DrawRay(transform.position, ray.direction * 0.5f, Color.red, 1.0f);
 
@@ -300,7 +302,8 @@ private bool CheckAndJump(Ray ray)
         //ブロックを持ってれば処理を行う
         if (_hasBlock == false) return;
         if (!Input.GetMouseButtonDown(1)) return;
-
+        //swingAnim再生
+        _playerAnim.SetBool("_isSwing",true);
         Vector3 insPos = new Vector3((int)transform.position.x, (int)transform.position.y, -1.0f);
         Vector3 insBigPos = new Vector3((int)transform.position.x, (int)transform.position.y  + 0.75f, -1.0f);
         GameObject insObj;
