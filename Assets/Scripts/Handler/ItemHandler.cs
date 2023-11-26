@@ -75,6 +75,7 @@ public class ItemHandler : MonoBehaviour
                  _uiHandler.SetItemImage(0);
                 _uiHandler.ResetStackImage();
                 ResetBlock();
+                _uiHandler.GetItemEffect();
                 _hasItemA = true;
             }
             else if(_myBrockNum == 3)
@@ -83,6 +84,7 @@ public class ItemHandler : MonoBehaviour
                  _uiHandler.SetItemImage(2);
                  _uiHandler.ResetStackImage();
                 ResetBlock();
+                _uiHandler.GetItemEffect();
                 _hasItemB = true;
             }
             else
@@ -91,6 +93,7 @@ public class ItemHandler : MonoBehaviour
                  _uiHandler.SetItemImage(1);
                  _uiHandler.ResetStackImage();
                 ResetBlock();
+                _uiHandler.GetItemEffect();
                 _hasItemC = true;
                 
             }    

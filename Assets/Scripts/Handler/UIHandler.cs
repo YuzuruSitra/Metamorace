@@ -23,8 +23,10 @@ public class UIHandler : MonoBehaviour
     Animator itemEffectAnimator;
     void Start() 
     {
-         itemEffectAnimator = itemeffect.GetComponent<Animator>();
-        _resultPanel.SetActive(false);
+        itemeffect.SetActive(false);
+        itemEffectAnimator = itemeffect.GetComponent<Animator>();
+        // _resultPanel.SetActive(false);
+        //GetItemEffect();
         //GetItemEffect();
         //DecreceGage();
     }
@@ -32,9 +34,15 @@ public class UIHandler : MonoBehaviour
     
     public void GetItemEffect()
     {
-        itemEffectAnimator.SetBool("G",true);
-        itemEffectAnimator.SetBool("G",false);
+        // itemEffectAnimator.SetBool("G",true);
+        // itemEffectAnimator.SetBool("G",false);
+        itemeffect.SetActive(true);
+        Invoke("Activefalse",0.40f);
         Debug.Log("a");
+    }
+    public void Activefalse()
+    {
+        itemeffect.SetActive(false);
     }
     public void ShowLimitTime(float _TimeLimit)
     {
