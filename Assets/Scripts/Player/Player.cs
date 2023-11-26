@@ -34,8 +34,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     GameObject[] _cPrefab = new GameObject[2];
     [SerializeField]
-    GameObject _ambrasPrefab;
-    [SerializeField]
     Animator _playerAnim, _stanEffect;
     //private Transform _cubeParent;
     [SerializeField] GameObject _staneffect;

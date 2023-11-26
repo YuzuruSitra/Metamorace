@@ -1600,7 +1600,7 @@ MonoBehaviour:
   _camManager: {fileID: 1973404693}
   _TimeLimit: 90
   _playerPrefab: {fileID: 4877800243297777295, guid: 2a3cf850266e7314f9c57709ac0f5b75, type: 3}
-  DevelopeMode: 1
+  DevelopeMode: 0
   DevelopeTeamID: 0
   _calcInterval: 2.5
   _cubeParentTeam1: {fileID: 8716951255756122465}
@@ -4279,10 +4279,10 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0.24012882
-    width: 1
-    height: 0.51974237
+    x: 0.055179864
+    y: 0
+    width: 0.8896403
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 45
@@ -9574,6 +9574,7 @@ MonoBehaviour:
   _winnerPanel: {fileID: 1047477435}
   _winBlockRate: {fileID: 1671656780}
   _loseBlockRate: {fileID: 1099142232}
+  itemeffect: {fileID: 0}
 --- !u!4 &1407746772
 Transform:
   m_ObjectHideFlags: 0
