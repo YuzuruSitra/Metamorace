@@ -184,7 +184,6 @@ MonoBehaviour:
   _destroyPower: 1
   _poolHandler: {fileID: 7454566972977520030, guid: c9c56267c0abf6843979b993354cb2d6, type: 3}
   _itemHandler: {fileID: 6708401690013825303}
-  _itemC: {fileID: 7040862465255695909, guid: 9e0ed0407d10a9247bddc076d1e153b3, type: 3}
   _herosPrefab:
   - {fileID: 1296549643261954888, guid: 36de42bbe2c4edd48af2924c3be698f7, type: 3}
   - {fileID: 1296549643261954888, guid: ed6b56d9e5ef5004ba389acc99c3d453, type: 3}
@@ -195,6 +194,7 @@ MonoBehaviour:
   - {fileID: 933951156368605023, guid: 11b8429ffa31fc947a005816e48d2322, type: 3}
   - {fileID: 933951156368605023, guid: c8fd6d96ddefb8b4188fca24645568b7, type: 3}
   _ambrasPrefab: {fileID: 6252427330716548040, guid: d87e00c8c3069f849b854fd0cb7f68ee, type: 3}
+  _playerAnim: {fileID: 0}
   _stanEffect: {fileID: 7016385704350394749}
   _staneffect: {fileID: 7016385704350394751}
   stanpos: 0
@@ -202,6 +202,7 @@ MonoBehaviour:
   _playerReach: 0.6
   jump: {fileID: 8300000, guid: ebcc14a5cf598467395b503f961b57fd, type: 3}
   breakBlock: {fileID: 8300000, guid: 2b1265111f91441ef93d276c56a85bfb, type: 3}
+  createBlock: {fileID: 0}
 --- !u!54 &1691382643330117546
 Rigidbody:
   m_ObjectHideFlags: 0

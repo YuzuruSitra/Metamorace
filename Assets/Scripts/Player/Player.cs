@@ -26,7 +26,6 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     ItemHandler _itemHandler;
-    [SerializeField] 
     ItemC _itemC;
     [SerializeField]
     GameObject[] _herosPrefab = new GameObject[2];
@@ -89,6 +88,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+         //if(Input.GetKeyDown("q")) ProcessItemCBlockEffect();
         if (!_myPV.isMine && !_developMode) return;
         if(!_isGame) return;
         BreakBlock();

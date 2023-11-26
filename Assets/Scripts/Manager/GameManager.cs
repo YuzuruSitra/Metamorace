@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
     private int _currentPlayerCount = 0;
     bool IsOnce = false;
     private SoundHandler _soundHandler;
-    [SerializeField] AudioClip countDown;
+    [SerializeField] AudioClip countDown,gameStart,gameEnd,drumroll;
     void Start()
     {
          _soundHandler = SoundHandler.InstanceSoundHandler;
@@ -166,6 +166,7 @@ public class GameManager : MonoBehaviour
             // ゲーム終了処理
             if (_timeLimit <= 0 || _player.IsDead)
             {
+                _soundHandler.PlaySE(gameEnd); 
                 if(!DevelopeMode) 
                 {            
                     _isGame = false;
@@ -193,15 +194,17 @@ public class GameManager : MonoBehaviour
     [PunRPC]
     private void LaunchGame()
     {
-        _oneTime = false;
         StartCoroutine(StartGame());
     }
 
     IEnumerator StartGame()
     {
+        _oneTime = false;
         //Debug.Log("Waiting GameStart");
         // UIの更新
         yield return new WaitForSeconds(3.0f);
+        //ホイッスル
+         _soundHandler.PlaySE(gameStart);
         _isGame = true;
         _player.SetGameState(_isGame);
         if (PhotonNetwork.isMasterClient) _blockManager.SetGameState(_isGame);
