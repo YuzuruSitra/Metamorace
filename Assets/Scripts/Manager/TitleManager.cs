@@ -19,6 +19,7 @@ public class TitleManager : MonoBehaviour
     private string _roomPas = "";
     [SerializeField]
     private InputField _roomPasField;
+    private int _modeState = 1;
 
     // Start is called before the first frame update
     public void Awake()   
@@ -52,10 +53,28 @@ public class TitleManager : MonoBehaviour
         _roomPas = _roomPasField.text;
     }
 
-    // プレイべートルームへ参加
-    public void joinPrivateRoom()
+    public void SetRandomRoom()
     {
-        _matchLuncher.OnJoinPrivateRoom(_roomPas);
+        _modeState = 1;
+    }
+    public void SetPrivateRoom()
+    {
+        _modeState = 2;
+    }
+
+    public void joinRoom()
+    {
+        switch (_modeState)
+        {
+            case 0:
+                break;
+            case 1:
+                _matchLuncher.OnJoinedRondom();
+                break;
+            case 2:
+                _matchLuncher.OnJoinPrivateRoom(_roomPas);
+                break;
+        }
     }
 
 }
