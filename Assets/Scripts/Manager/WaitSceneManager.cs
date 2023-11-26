@@ -28,7 +28,7 @@ public class WaitSceneManager : MonoBehaviour
         _waitTime = new WaitForSeconds(_transitionTime);
 
         //Photonに接続していれば自プレイヤーを生成
-        GameObject Player = PhotonNetwork.Instantiate(this._playerPrefab.name, new Vector3(0f, 1.5f, 84.0f), Quaternion.identity, 0);
+        GameObject Player = PhotonNetwork.Instantiate(this._playerPrefab.name, new Vector3(24.0f, -15.0f, 84.0f), Quaternion.identity, 0);
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         _playerCount = players.Length;
 

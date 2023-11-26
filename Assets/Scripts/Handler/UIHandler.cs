@@ -22,8 +22,7 @@ public class UIHandler : MonoBehaviour
     [SerializeField] GameObject itemeffect;
     void Start() 
     {
-         Animator itemEffectAnimator = itemEffect.GetComponent<Animator>();
-        ChangeName();
+        
         _resultPanel.SetActive(false);
         //DecreceGage();
     }
