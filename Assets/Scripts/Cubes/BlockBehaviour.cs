@@ -69,10 +69,13 @@ public class BlockBehaviour : MonoBehaviour
         }
         else
         {
-            this.gameObject.SetActive(false);
-            _cloudeffect.transform.position = transform.position;
-            _cloudeffect.SetActive(true);
-            Destroy(_parentBlock,2.0f);
+            if (_objHealth <= 0)
+            {
+                this.gameObject.SetActive(false);
+                _cloudeffect.transform.position = transform.position;
+                _cloudeffect.SetActive(true);
+                Destroy(_parentBlock,2.0f);
+            }
         }
         if (_objHealth >= 0) return -1;
         

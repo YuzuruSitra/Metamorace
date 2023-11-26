@@ -309,7 +309,7 @@ private bool CheckAndJump(Ray ray)
         GameObject insObj;
         if (_developMode)
         {
-             _soundHandler.PlaySE(createBlock);
+            _soundHandler.PlaySE(createBlock);
             //アイテムBを持っていたら巨大ブロック一回だけ生成
             if (_itemHandler._HasItemB)
             {
