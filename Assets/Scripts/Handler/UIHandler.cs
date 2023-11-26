@@ -20,16 +20,29 @@ public class UIHandler : MonoBehaviour
     [SerializeField] GameObject _winnerPanel;
     [SerializeField] Text _winBlockRate, _loseBlockRate;
     [SerializeField] GameObject itemeffect;
+    Animator itemEffectAnimator;
     void Start() 
     {
-        
-        _resultPanel.SetActive(false);
+        itemeffect.SetActive(false);
+        itemEffectAnimator = itemeffect.GetComponent<Animator>();
+        // _resultPanel.SetActive(false);
+        //GetItemEffect();
+        //GetItemEffect();
         //DecreceGage();
     }
 
+    
     public void GetItemEffect()
     {
-       // itemeffect.Animator()
+        // itemEffectAnimator.SetBool("G",true);
+        // itemEffectAnimator.SetBool("G",false);
+        itemeffect.SetActive(true);
+        Invoke("Activefalse",0.40f);
+        Debug.Log("a");
+    }
+    public void Activefalse()
+    {
+        itemeffect.SetActive(false);
     }
     public void ShowLimitTime(float _TimeLimit)
     {
@@ -51,7 +64,7 @@ public class UIHandler : MonoBehaviour
                 {
                     _StackImage[i].sprite = _ambrasSprite;
                 }
-                else Debug.Log("Null _objID");
+                else 
 
                 break;
             }
@@ -107,8 +120,6 @@ public class UIHandler : MonoBehaviour
 
     public void ShowResult(int shareTeam1, int shareTeam2, bool isDead, int winteam)
     {
-        // Debug.Log(shareTeam1);
-        // Debug.Log(shareTeam2);
         float WinnerSize = 1.2f;
         //時間制限が来た時
         if (!isDead)
@@ -119,7 +130,6 @@ public class UIHandler : MonoBehaviour
                 _winnerPanel.transform.localScale = _winnerPanel.transform.localScale * WinnerSize;
                 _winBlockRate.text = shareTeam1.ToString();
                 _loseBlockRate.text = shareTeam2.ToString();
-                Debug.Log("Team1Rate");
             }
             //占有率でTeam2が勝ったとき
             else if (shareTeam1 > shareTeam2)
@@ -127,10 +137,9 @@ public class UIHandler : MonoBehaviour
                 _winnerPanel.transform.localScale = _winnerPanel.transform.localScale * WinnerSize;
                 _winBlockRate.text = shareTeam2.ToString();
                 _loseBlockRate.text = shareTeam1.ToString();
-                Debug.Log("Team2Rate");
             }
             //引き分けの時
-            else Debug.Log("Draw");
+            else;
         }
         //どちらかのチームで死者が出た時
         else

@@ -111,7 +111,15 @@ public class Player : MonoBehaviour
     //プレイヤーの移動
     void PlayerCtrl()
     {   
-        inputX = 0.0f;
+         inputX = 0.0f;
+        if (!Input.anyKey)
+        {
+            // If there is no key input, set the "MovingSpeed" parameter to 0.0f
+           _playerAnim.SetFloat("MoveSpeed", 0.0f);
+        }
+        else{
+            _playerAnim.SetFloat("MoveSpeed", 1.0f);
+        }
         //チーム1とチーム2で操作反転
         if (transform.position.z < 0)
         {
