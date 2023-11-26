@@ -19,8 +19,21 @@ public class TitleManager : MonoBehaviour
     private string _roomPas = "";
     [SerializeField]
     private InputField _roomPasField;
-    private int _modeState = 1;
+    private SoundHandler _soundHandler;
+    [SerializeField]
+    private AudioClip _titleBGM;
+    [SerializeField]
+    private AudioClip _buttonSE;
+    [SerializeField]
+    private AudioClip _inputSE;
+    [SerializeField]
+    private TitleUIHandler _titleUIHandler;
 
+    [SerializeField]
+    private Slider _sliderBGM;
+    [SerializeField]
+    private Slider _sliderSE;
+    
     // Start is called before the first frame update
     public void Awake()   
     {
@@ -37,6 +50,8 @@ public class TitleManager : MonoBehaviour
             _playerName = PlayerPrefs.GetString(playerNamePrefKey);
             _nameField.text = _playerName;
         }
+        _soundHandler = SoundHandler.InstanceSoundHandler;
+        _soundHandler.PlayBGM(_titleBGM);
     }
     
     public void InputPlayerName()
@@ -53,18 +68,9 @@ public class TitleManager : MonoBehaviour
         _roomPas = _roomPasField.text;
     }
 
-    public void SetRandomRoom()
-    {
-        _modeState = 1;
-    }
-    public void SetPrivateRoom()
-    {
-        _modeState = 2;
-    }
-
     public void joinRoom()
     {
-        switch (_modeState)
+        switch (_titleUIHandler.ModeState)
         {
             case 0:
                 break;
@@ -75,6 +81,25 @@ public class TitleManager : MonoBehaviour
                 _matchLuncher.OnJoinPrivateRoom(_roomPas);
                 break;
         }
+    }
+
+    public void PushSE()
+    {
+        _soundHandler.PlaySE(_buttonSE);
+    }
+
+    public void InputSE()
+    {
+        _soundHandler.PlaySE(_inputSE);
+    }
+
+    public void ChangeBGMValue()
+    {
+        _soundHandler.SetNewValueBGM(_sliderBGM.value);
+    }
+    public void ChangeSEValue()
+    {
+        _soundHandler.SetNewValueSE(_sliderSE.value);
     }
 
 }
