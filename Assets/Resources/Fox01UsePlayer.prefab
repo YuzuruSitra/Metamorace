@@ -2721,13 +2721,13 @@ MonoBehaviour:
   _itemHandler: {fileID: 126352862618281623}
   _herosPrefab:
   - {fileID: 1296549643261954888, guid: 36de42bbe2c4edd48af2924c3be698f7, type: 3}
-  - {fileID: 1296549643261954888, guid: ed6b56d9e5ef5004ba389acc99c3d453, type: 3}
+  - {fileID: 1296549643261954888, guid: 7627e6ec5ed56f74ca126dc30b17dee9, type: 3}
   _bigPrefab:
   - {fileID: 1664117124386851239, guid: f13175661c7ad164db194d01f13af153, type: 3}
-  - {fileID: 1664117124386851239, guid: 6a864630e84f9e045bcb3702969da6f5, type: 3}
+  - {fileID: 1664117124386851239, guid: 5a8e200b20ff90e4fb51279c198ef9a6, type: 3}
   _cPrefab:
   - {fileID: 933951156368605023, guid: c2f415d55aad22543bbe3319b71c4e36, type: 3}
-  - {fileID: 933951156368605023, guid: 1ab42984e06245a45ad2a25a6eba3837, type: 3}
+  - {fileID: 933951156368605023, guid: c299c008d3393574cbe719c6b3af987a, type: 3}
   _ambrasPrefab: {fileID: 933951156368605023, guid: 11b8429ffa31fc947a005816e48d2322, type: 3}
   _playerAnim: {fileID: 8520456443667393430}
   _stanEffect: {fileID: 2587801957149257156}

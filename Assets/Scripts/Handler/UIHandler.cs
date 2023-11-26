@@ -141,7 +141,6 @@ public class UIHandler : MonoBehaviour
                 _winBlockRate.text = shareTeam1.ToString();
                 _loseBlockRate.text = "Dead";
                 //_loseBlockRate.text = shareTeam2.ToString();
-                Debug.Log("Team2Death");
             }
             //Team2が勝ったとき
             else
@@ -150,7 +149,6 @@ public class UIHandler : MonoBehaviour
                 _winBlockRate.text = shareTeam2.ToString();
                 _loseBlockRate.text = "Dead";
                 //_loseBlockRate.text = shareTeam1.ToString();
-                Debug.Log("Team1Death");
             }
         }
         _resultPanel.SetActive(true);

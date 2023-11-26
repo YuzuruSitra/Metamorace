@@ -48,7 +48,6 @@ public class BlockBehaviour : MonoBehaviour
             currentTime -= Time.deltaTime;
             _anim.SetBool("IsTouch", true);
             _isAnim = true;
-            Debug.Log(_isAnim);
         }
         else
         {
@@ -56,7 +55,6 @@ public class BlockBehaviour : MonoBehaviour
             
             _anim.SetBool("IsTouch", false);
             _isAnim = false;
-            Debug.Log(_isAnim);
         }    
     }
     public void DevModeSet(bool developMode)
