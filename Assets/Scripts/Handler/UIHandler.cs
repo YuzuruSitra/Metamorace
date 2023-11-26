@@ -17,27 +17,29 @@ public class UIHandler : MonoBehaviour
     [SerializeField] GameObject _button;
     //下記リザルト用
     [SerializeField] GameObject _resultPanel;
-    [SerializeField] GameObject _winnerPanel;
-    [SerializeField] Text _winBlockRate, _loseBlockRate;
+    [SerializeField] GameObject _winandlose, _draw;
+    [SerializeField] Text _winBlockRate, _loseBlockRate, _drawBlockRate1, _drawBlockRate2;
     [SerializeField] GameObject itemeffect;
     Animator itemEffectAnimator;
-    void Start() 
+    void Start()
     {
         itemeffect.SetActive(false);
         itemEffectAnimator = itemeffect.GetComponent<Animator>();
-        // _resultPanel.SetActive(false);
+        _resultPanel.SetActive(false);
+        _winandlose.SetActive(false);
+        _draw.SetActive(false);
         //GetItemEffect();
         //GetItemEffect();
         //DecreceGage();
     }
 
-    
+
     public void GetItemEffect()
     {
         // itemEffectAnimator.SetBool("G",true);
         // itemEffectAnimator.SetBool("G",false);
         itemeffect.SetActive(true);
-        Invoke("Activefalse",0.40f);
+        Invoke("Activefalse", 0.40f);
         Debug.Log("a");
     }
     public void Activefalse()
@@ -64,9 +66,9 @@ public class UIHandler : MonoBehaviour
                 {
                     _StackImage[i].sprite = _ambrasSprite;
                 }
-                else 
+                else
 
-                break;
+                    break;
             }
         }
     }
@@ -82,7 +84,7 @@ public class UIHandler : MonoBehaviour
     //アイテムの画像を格納
     public void SetItemImage(int _itemnum)
     {
-        if(_itemSprite[_itemnum] == null) return;
+        if (_itemSprite[_itemnum] == null) return;
         _itemImage.sprite = _itemSprite[_itemnum];
     }
     //アイテムの画像をリセット
@@ -127,19 +129,24 @@ public class UIHandler : MonoBehaviour
             //占有率でTeam1が勝ったとき
             if (shareTeam2 > shareTeam1)
             {
-                //_winnerPanel.transform.localScale = _winnerPanel.transform.localScale * WinnerSize;
+                _winandlose.SetActive(true);
                 _winBlockRate.text = shareTeam1.ToString();
                 _loseBlockRate.text = shareTeam2.ToString();
             }
             //占有率でTeam2が勝ったとき
             else if (shareTeam1 > shareTeam2)
             {
-                //_winnerPanel.transform.localScale = _winnerPanel.transform.localScale * WinnerSize;
+                _winandlose.SetActive(true);
                 _winBlockRate.text = shareTeam2.ToString();
                 _loseBlockRate.text = shareTeam1.ToString();
             }
             //引き分けの時
             else;
+            {
+                _draw.SetActive(true);
+                _drawBlockRate1.text = shareTeam1.ToString();
+                _drawBlockRate2.text = shareTeam2.ToString();
+            }
         }
         //どちらかのチームで死者が出た時
         else
@@ -147,7 +154,7 @@ public class UIHandler : MonoBehaviour
             //Team1が勝ったとき
             if (winteam == 1)
             {
-                //_winnerPanel.transform.localScale = _winnerPanel.transform.localScale * WinnerSize;
+                _winandlose.SetActive(true);
                 _winBlockRate.text = shareTeam1.ToString();
                 _loseBlockRate.text = "Dead";
                 //_loseBlockRate.text = shareTeam2.ToString();
@@ -155,7 +162,7 @@ public class UIHandler : MonoBehaviour
             //Team2が勝ったとき
             else
             {
-               // _winnerPanel.transform.localScale = _winnerPanel.transform.localScale * WinnerSize;
+                _winandlose.SetActive(true);
                 _winBlockRate.text = shareTeam2.ToString();
                 _loseBlockRate.text = "Dead";
                 //_loseBlockRate.text = shareTeam1.ToString();
