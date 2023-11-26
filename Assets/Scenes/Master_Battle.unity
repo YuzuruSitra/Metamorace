@@ -1599,16 +1599,16 @@ MonoBehaviour:
   _blockManagerPrefab: {fileID: 1692291927690342940, guid: e4abd95c9218d5f45aea2b7c765ff2cc, type: 3}
   _camManager: {fileID: 1973404693}
   _TimeLimit: 90
-  _playerPrefab: {fileID: 984849509951851194, guid: 102e501df230be1438797ed51ef9a6db, type: 3}
+  _playerPrefab: {fileID: 4877800243297777295, guid: 2a3cf850266e7314f9c57709ac0f5b75, type: 3}
   DevelopeMode: 1
   DevelopeTeamID: 0
   _calcInterval: 2.5
   _cubeParentTeam1: {fileID: 8716951255756122465}
   _cubeParentTeam2: {fileID: 1438134090218069681}
-  countDown: {fileID: 0}
-  gameStart: {fileID: 0}
-  gameEnd: {fileID: 0}
-  drumroll: {fileID: 0}
+  countDown: {fileID: 8300000, guid: 41c4a7f01e6b411418f7cd12a60e66bd, type: 3}
+  gameStart: {fileID: 8300000, guid: 3bee2cd39c9b65f46aa938b761d59a31, type: 3}
+  gameEnd: {fileID: 8300000, guid: 58bbd745e36da034787a7db6c18df639, type: 3}
+  drumroll: {fileID: 8300000, guid: d6ce26680777e4847846909c3c7c9359, type: 3}
 --- !u!4 &194663889
 Transform:
   m_ObjectHideFlags: 0
@@ -9539,7 +9539,7 @@ GameObject:
   - component: {fileID: 1407746771}
   m_Layer: 0
   m_Name: UIHandler
-  m_TagString: Untagged
+  m_TagString: UIHandler
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

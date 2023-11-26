@@ -22,7 +22,7 @@ public class UIHandler : MonoBehaviour
 
     void Start()
     {
-        ChangeName();
+        //ChangeName();
         _resultPanel.SetActive(false);
         //DecreceGage();
     }
