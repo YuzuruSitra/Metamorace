@@ -174,7 +174,7 @@ public class GameManager : MonoBehaviour
                     _blockManager.SetGameState(_isGame);
                     // 死んだプレイヤーのチームを取得して勝敗を判定
                     int winTeam = 1 - _teamID;
-                    Debug.Log(winTeam);
+                    //Debug.Log(winTeam);
                     // 占有率の取得
                     int shareTeam1 = _blockManager.CalcCubeShare1(FIELD_SIZE);
                     int shareTeam2 = _blockManager.CalcCubeShare2(FIELD_SIZE);
@@ -195,7 +195,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator StartGame()
     {
-        Debug.Log("Waiting GameStart");
+        //Debug.Log("Waiting GameStart");
         // UIの更新
         yield return new WaitForSeconds(3.0f);
         _isGame = true;

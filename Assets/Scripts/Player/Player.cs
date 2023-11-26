@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     GameObject _ambrasPrefab;
     [SerializeField]
-    Animator _stanEffect;
+    Animator _playerAnim, _stanEffect;
     //private Transform _cubeParent;
     [SerializeField] GameObject _staneffect;
     [SerializeField] float stanpos;
@@ -99,7 +99,7 @@ public class Player : MonoBehaviour
         Item();
         Jump();
         JudgeVerticalDeath();   
-        JudgeHorizontalDeath();
+        //JudgeHorizontalDeath();
     }
     void FixedUpdate()
     {
@@ -157,13 +157,15 @@ public class Player : MonoBehaviour
     // 縦方向の死亡判定
     void JudgeVerticalDeath()
     {
-        Ray ray = new Ray(transform.position ,Vector3.up);
+        Ray ray = new Ray(transform.position + Vector3.up,Vector3.up);
         RaycastHit _hitHead;
-        if (Physics.Raycast(ray, out _hitHead,_jumprayrength)) _isHead = true;
+        if (Physics.Raycast(ray, out _hitHead,_jumprayrength)) _isHead = true ;
         else _isHead = false;
         //頭のRayと足のRayが両方ぶつかっていたら死亡
+        Debug.DrawRay(ray.origin, ray.direction * _jumprayrength, Color.green); // レイを描画
         if(!_isJump && _isHead)
         {
+             Debug.Log("tate");
             StartCoroutine(DeathCoroutine("Vertical"));
         }
     }
@@ -177,7 +179,11 @@ public class Player : MonoBehaviour
         Debug.DrawRay(transform.position, new Vector3(0f,0f,1f) * _jumprayrength, Color.blue, 1.0f);
 
         RaycastHit _hit;
-        if (Physics.Raycast(ray, out _hit,_jumprayrength)) StartCoroutine(DeathCoroutine("Horizontal"));
+        if (Physics.Raycast(ray, out _hit,_jumprayrength))
+        {
+            StartCoroutine(DeathCoroutine("Horizontal"));
+             Debug.Log("yoko");
+        } 
     }
 
     private IEnumerator DeathCoroutine(string direction)
@@ -191,15 +197,17 @@ public class Player : MonoBehaviour
     void Jump()
     {
         float raypos = 0.45f;
+        float rayheight = 0.1f;
         // Jump handling
-        bool _isJump = CheckAndJump(new Ray(transform.position + new Vector3(raypos, 0f, raypos), Vector3.down)) ||
-                        CheckAndJump(new Ray(transform.position + new Vector3(-raypos, 0f, -raypos), Vector3.down)) ||
-                        CheckAndJump(new Ray(transform.position + new Vector3(raypos, 0f, -raypos), Vector3.down)) ||
-                        CheckAndJump(new Ray(transform.position + new Vector3(-raypos, 0f, raypos), Vector3.down));
-
+        bool _isJump = CheckAndJump(new Ray(transform.position + new Vector3(raypos, rayheight, raypos), Vector3.down)) ||
+                        CheckAndJump(new Ray(transform.position + new Vector3(-raypos, rayheight, -raypos), Vector3.down)) ||
+                        CheckAndJump(new Ray(transform.position + new Vector3(raypos, rayheight, -raypos), Vector3.down)) ||
+                        CheckAndJump(new Ray(transform.position + new Vector3(-raypos, rayheight, raypos), Vector3.down));
         if (Input.GetKeyDown(KeyCode.Space) && _isJump)
         {
             //ジャンプSE鳴らす
+            _playerAnim.SetBool("_isJump",true);
+            Debug.Log("jump");
             _soundHandler.PlaySE(jump);
             _rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
         }
@@ -209,8 +217,10 @@ private bool CheckAndJump(Ray ray)
 {
     RaycastHit hit;
     // Debug.DrawRay(transform.position, Vector3.down * _jumprayrength, Color.red, 0.1f); 
+    Debug.DrawRay(ray.origin, ray.direction * _jumprayrength, Color.red, 0.1f);
     if (Physics.Raycast(ray, out hit, _jumprayrength))
     {
+         _playerAnim.SetBool("_isJump",false);
         _isJump = false;
         return true; // 地面に当たっている場合はtrueを返す
     }

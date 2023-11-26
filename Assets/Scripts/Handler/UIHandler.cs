@@ -101,8 +101,8 @@ public class UIHandler : MonoBehaviour
 
     public void ShowResult(int shareTeam1, int shareTeam2, bool isDead, int winteam)
     {
-        Debug.Log(shareTeam1);
-        Debug.Log(shareTeam2);
+        // Debug.Log(shareTeam1);
+        // Debug.Log(shareTeam2);
         float WinnerSize = 1.2f;
         //時間制限が来た時
         if (!isDead)
