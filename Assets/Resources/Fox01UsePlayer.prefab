@@ -2731,10 +2731,9 @@ MonoBehaviour:
   _ambrasPrefab: {fileID: 933951156368605023, guid: 11b8429ffa31fc947a005816e48d2322, type: 3}
   _playerAnim: {fileID: 8520456443667393430}
   _stanEffect: {fileID: 2587801957149257156}
-  _saiyaEffect: {fileID: 0}
   _staneffect: {fileID: 2587801957149257158}
   _saiyaeffect: {fileID: 4955215041919156892}
-  stanpos: 0
+  stanpos: 0.3
   _developMode: 0
   _playerReach: 1
   jump: {fileID: 8300000, guid: 8435c23312ad2934a972e15f0a48c4f8, type: 3}
@@ -2985,15 +2984,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8230843998025336592, guid: 40b481f26c98126449b7c2ed6341bc37, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.1
+      value: 0.050000004
       objectReference: {fileID: 0}
     - target: {fileID: 8230843998025336592, guid: 40b481f26c98126449b7c2ed6341bc37, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.1
+      value: 0.050000004
       objectReference: {fileID: 0}
     - target: {fileID: 8230843998025336592, guid: 40b481f26c98126449b7c2ed6341bc37, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.1
+      value: 0.050000004
       objectReference: {fileID: 0}
     - target: {fileID: 8230843998025336592, guid: 40b481f26c98126449b7c2ed6341bc37, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3037,7 +3036,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8230843998025336592, guid: 40b481f26c98126449b7c2ed6341bc37, type: 3}
       propertyPath: m_ConstrainProportionsScale
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8230843998025336597, guid: 40b481f26c98126449b7c2ed6341bc37, type: 3}
       propertyPath: m_Name

@@ -36,29 +36,30 @@ public class Player : MonoBehaviour
     [SerializeField]
     GameObject _ambrasPrefab;
     [SerializeField]
-    Animator _playerAnim, _stanEffect,_saiyaEffect;
+    Animator _playerAnim, _stanEffect;
     //private Transform _cubeParent;
-    [SerializeField] GameObject _staneffect,_saiyaeffect;
+    [SerializeField] GameObject _staneffect;
+    [SerializeField] GameObject _saiyaeffect;
     [SerializeField] float stanpos;
 
     BlockBehaviour _currentBlock;
-    HerosBehaviour _herosBehaviour,_bigBehaviour,_cBehaviour;
+    HerosBehaviour _herosBehaviour, _bigBehaviour, _cBehaviour;
     private Rigidbody _rb;
-    private bool _isJump,_isHead = false;
+    private bool _isJump, _isHead = false;
     private bool _hasBlock = false;
-    private int _mineTeam,_enemyTeam;
+    private int _mineTeam, _enemyTeam;
     [SerializeField]
     private bool _developMode = false;
     private WaitForSeconds _waitTime;
     private Transform[] _cubeParentTeam = new Transform[2];
-    private Quaternion[] _insQuaternion = {Quaternion.Euler(0, 0, 0), Quaternion.Euler(0, 180, 0)};
+    private Quaternion[] _insQuaternion = { Quaternion.Euler(0, 0, 0), Quaternion.Euler(0, 180, 0) };
     float inputX = 0;
     UIHandler _uiHandler;
     private bool _isDead = false;
     public bool IsDead => _isDead;
     private bool _isGame = false;
     [SerializeField] float _playerReach;
-    [SerializeField] AudioClip jump,breakBlock,createBlock;
+    [SerializeField] AudioClip jump, breakBlock, createBlock;
     private SoundHandler _soundHandler;
 
     void Start()
@@ -78,7 +79,7 @@ public class Player : MonoBehaviour
 
     public void SetParameter(Transform parent1, Transform parent2, int thisTeam, bool isDevelop)
     {
-       
+
         _cubeParentTeam[0] = parent1;
         _cubeParentTeam[1] = parent2;
         _mineTeam = thisTeam;
@@ -88,50 +89,52 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-         //if(Input.GetKeyDown("q")) ProcessItemCBlockEffect();
+         //エフェクト移動させてる
+        if (transform.position.z < 0 &&_saiyaeffect.activeSelf) _saiyaeffect.transform.position = transform.position + new Vector3(0, 0.5f, -stanpos);
+        else _saiyaeffect.transform.position = transform.position + new Vector3(0, 0.5f, stanpos);
         if (!_myPV.isMine && !_developMode) return;
-        if(!_isGame) return;
+        if (!_isGame) return;
         BreakBlock();
         CreateBlock();
         //アイテム生成
         _itemHandler.CreateItem();
         Item();
         Jump();
-        JudgeVerticalDeath();   
+        JudgeVerticalDeath();
         JudgeHorizontalDeath();
     }
     void FixedUpdate()
     {
         if (!_myPV.isMine && !_developMode) return;
-        if(!_isGame) return;
+        if (!_isGame) return;
         PlayerCtrl();
     }
 
     //プレイヤーの移動
     void PlayerCtrl()
-    {
+    {   
         inputX = 0.0f;
         //チーム1とチーム2で操作反転
-        if(transform.position.z < 0)
+        if (transform.position.z < 0)
         {
-            if(Input.GetKey("d")) inputX = 1.0f;
-            if(Input.GetKey("a")) inputX = -1.0f;
+            if (Input.GetKey("d")) inputX = 1.0f;
+            if (Input.GetKey("a")) inputX = -1.0f;
         }
         else
         {
-            if(Input.GetKey("d")) inputX = -1.0f;
-            if(Input.GetKey("a")) inputX = 1.0f;
-        }  
-        if(Input.GetKey("a") && Input.GetKey("d")) inputX = 0.0f;
+            if (Input.GetKey("d")) inputX = -1.0f;
+            if (Input.GetKey("a")) inputX = 1.0f;
+        }
+        if (Input.GetKey("a") && Input.GetKey("d")) inputX = 0.0f;
         //Debug.Log(inputX);
-        if(inputX == 0) return;
+        if (inputX == 0) return;
 
         Vector3 movement = new Vector3(inputX, 0, 0);
         // プレイヤーの向きを移動ベクトルに向ける
         Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);
 
         transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 1080.0f * Time.deltaTime);
-        if(CheckFront(new Ray(transform.position + new Vector3(0,0.5f,0), transform.forward * _frontRayREngth))) return;
+        if (CheckFront(new Ray(transform.position + new Vector3(0, 0.5f, 0), transform.forward * _frontRayREngth))) return;
         // カメラの方向を考慮して移動ベクトルを作成
         Vector3 forward = Camera.main.transform.forward;
         forward.y = 0.0f;
@@ -146,7 +149,7 @@ public class Player : MonoBehaviour
     private bool CheckFront(Ray ray)
     {
         RaycastHit hit;
-        Debug.DrawRay(transform.position + new Vector3(0,0.5f,0), transform.forward * _frontRayREngth, Color.blue, 0.1f); 
+        Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), transform.forward * _frontRayREngth, Color.blue, 0.1f);
         if (Physics.Raycast(ray, out hit, _frontRayREngth))
             return true;
         else
@@ -156,15 +159,15 @@ public class Player : MonoBehaviour
     // 縦方向の死亡判定
     void JudgeVerticalDeath()
     {
-        Ray ray = new Ray(transform.position + new Vector3(0f, 2.0f, 0f),Vector3.up);
+        Ray ray = new Ray(transform.position + new Vector3(0f, 2.0f, 0f), Vector3.up);
         RaycastHit _hitHead;
-        if (Physics.Raycast(ray, out _hitHead,_jumprayrength)) _isHead = true ;
+        if (Physics.Raycast(ray, out _hitHead, _jumprayrength)) _isHead = true;
         else _isHead = false;
         //頭のRayと足のRayが両方ぶつかっていたら死亡
         Debug.DrawRay(ray.origin, ray.direction * _jumprayrength, Color.green); // レイを描画
-        if(!_isJump && _isHead)
+        if (!_isJump && _isHead)
         {
-             Debug.Log("tate");
+            Debug.Log("tate");
             StartCoroutine(DeathCoroutine("Vertical"));
         }
     }
@@ -173,24 +176,24 @@ public class Player : MonoBehaviour
     void JudgeHorizontalDeath()
     {
         Ray ray;
-        if(_mineTeam == 0) ray = new Ray(transform.position + Vector3.up, new Vector3(0f,0f,-1f));
-        else ray = new Ray(transform.position , new Vector3(0f,0f,1f));
-        Debug.DrawRay(transform.position + Vector3.up, new Vector3(0f,0f,1f) * _jumprayrength, Color.blue, 1.0f);
+        if (_mineTeam == 0) ray = new Ray(transform.position + Vector3.up, new Vector3(0f, 0f, -1f));
+        else ray = new Ray(transform.position, new Vector3(0f, 0f, 1f));
+        Debug.DrawRay(transform.position + Vector3.up, new Vector3(0f, 0f, 1f) * _jumprayrength, Color.blue, 1.0f);
 
         RaycastHit _hit;
-        if (Physics.Raycast(ray, out _hit,_jumprayrength))
+        if (Physics.Raycast(ray, out _hit, _jumprayrength))
         {
             StartCoroutine(DeathCoroutine("Horizontal"));
-             Debug.Log("yoko");
-        } 
+            Debug.Log("yoko");
+        }
     }
 
     private IEnumerator DeathCoroutine(string direction)
     {
         // 死亡アニメーション
-        if(direction == "Vertical") _playerAnim.SetBool("_isVDeath",true);
-        else _playerAnim.SetBool("_isHDeath",true);
-       
+        if (direction == "Vertical") _playerAnim.SetBool("_isVDeath", true);
+        else _playerAnim.SetBool("_isHDeath", true);
+
         //////////////////
         yield return new WaitForSeconds(2.0f);
         _isDead = true;
@@ -208,30 +211,30 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && _isJump)
         {
             //ジャンプSE鳴らす
-            _playerAnim.SetBool("_isJump",true);
+            _playerAnim.SetBool("_isJump", true);
             Debug.Log("jump");
             _soundHandler.PlaySE(jump);
             _rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
         }
     }
 
-private bool CheckAndJump(Ray ray)
-{
-    RaycastHit hit;
-    // Debug.DrawRay(transform.position, Vector3.down * _jumprayrength, Color.red, 0.1f); 
-    Debug.DrawRay(ray.origin, ray.direction * _jumprayrength, Color.red, 0.1f);
-    if (Physics.Raycast(ray, out hit, _jumprayrength))
+    private bool CheckAndJump(Ray ray)
     {
-        _isJump = false;
-        _playerAnim.SetBool("_isJump",false);
-        return true; // 地面に当たっている場合はtrueを返す
+        RaycastHit hit;
+        // Debug.DrawRay(transform.position, Vector3.down * _jumprayrength, Color.red, 0.1f); 
+        Debug.DrawRay(ray.origin, ray.direction * _jumprayrength, Color.red, 0.1f);
+        if (Physics.Raycast(ray, out hit, _jumprayrength))
+        {
+            _isJump = false;
+            _playerAnim.SetBool("_isJump", false);
+            return true; // 地面に当たっている場合はtrueを返す
+        }
+        else
+        {
+            _isJump = true;
+            return false; // 地面に当たっていない場合はfalseを返す
+        }
     }
-    else
-    {
-        _isJump = true;
-        return false; // 地面に当たっていない場合はfalseを返す
-    }
-}
 
 
     //オブジェクト破壊
@@ -245,7 +248,7 @@ private bool CheckAndJump(Ray ray)
 
         Debug.DrawRay(transform.position, ray.direction * 0.5f, Color.red, 1.0f);
 
-        if (!Physics.Raycast(ray, out RaycastHit hit,_playerReach) || !IsBlock(hit.collider)) return;
+        if (!Physics.Raycast(ray, out RaycastHit hit, _playerReach) || !IsBlock(hit.collider)) return;
 
         _currentBlock = hit.collider.GetComponent<BlockBehaviour>();
         //対象ブロックの体力参照
@@ -282,10 +285,10 @@ private bool CheckAndJump(Ray ray)
             case 1:
                 _itemC.EffectStan(ref _usePlayerSpeed);
                 //スタンエフェクト再生
-                if(transform.position.z < 0)_staneffect.transform.position = transform.position + new Vector3(0, 0, -stanpos);
-                else _staneffect.transform.position = transform.position + new Vector3(0, 0,stanpos);
-                
-                _stanEffect.SetBool("Stan",true);
+                if (transform.position.z < 0) _staneffect.transform.position = transform.position + new Vector3(0, 0, -stanpos);
+                else _staneffect.transform.position = transform.position + new Vector3(0, 0, stanpos);
+
+                _stanEffect.SetBool("Stan", true);
                 Debug.Log("stan");
                 Invoke("FinishItemC", _itemHandler._ItemCEffectTime);
                 break;
@@ -303,9 +306,10 @@ private bool CheckAndJump(Ray ray)
         if (_hasBlock == false) return;
         if (!Input.GetMouseButtonDown(1)) return;
         //swingAnim再生
-        _playerAnim.SetBool("_isSwing",true);
+        _playerAnim.SetBool("_isSwing", true);
+       
         Vector3 insPos = new Vector3((int)transform.position.x, (int)transform.position.y, -1.0f);
-        Vector3 insBigPos = new Vector3((int)transform.position.x, (int)transform.position.y  + 0.75f, -1.0f);
+        Vector3 insBigPos = new Vector3((int)transform.position.x, (int)transform.position.y + 0.75f, -1.0f);
         GameObject insObj;
         if (_developMode)
         {
@@ -319,7 +323,7 @@ private bool CheckAndJump(Ray ray)
                 _itemHandler.ItemEffectB();
             }
             //ItemCBlock生成
-            else if(_itemHandler._HasItemC)
+            else if (_itemHandler._HasItemC)
             {
                 _itemHandler.ItemEffectC();
                 insObj = Instantiate(_cPrefab[_mineTeam], insPos, _insQuaternion[_mineTeam]);
@@ -332,7 +336,7 @@ private bool CheckAndJump(Ray ray)
                 insObj.transform.parent = _cubeParentTeam[_enemyTeam];
             }
         }
-        else 
+        else
         {
             //アイテムBを持っていたら巨大ブロック一回だけ生成
             if (_itemHandler._HasItemB)
@@ -342,7 +346,7 @@ private bool CheckAndJump(Ray ray)
                 _itemHandler.ItemEffectB();
             }
             //ItemCBlock生成
-            else if(_itemHandler._HasItemC)
+            else if (_itemHandler._HasItemC)
             {
                 _itemHandler.ItemEffectC();
                 _myPV.RPC(nameof(SyncCreateItemC), PhotonTargets.All, insPos, _mineTeam, _enemyTeam);
@@ -389,12 +393,12 @@ private bool CheckAndJump(Ray ray)
 
         if (_itemHandler._HasItemA == true)
         {
-            StartCoroutine(FinishItemA());
-             //スタンエフェクト再生
-                if(transform.position.z < 0)_staneffect.transform.position = transform.position + new Vector3(0, 0, -stanpos);
-                else _staneffect.transform.position = transform.position + new Vector3(0, 0,stanpos);
-                _saiyaeffect.SetActive(true);
+            //さいやエフェクト再生
+            _saiyaeffect.SetActive(true);
             _itemHandler.ItemEffectA(ref _useDestroyPower, ref _usePlayerSpeed);
+            StartCoroutine(FinishItemA());
+
+
         }
     }
 
@@ -411,6 +415,6 @@ private bool CheckAndJump(Ray ray)
         Debug.Log("スタン解除");
         _usePlayerSpeed = _playerSpeed;
         //スタンエフェクト停止
-         _stanEffect.SetBool("Stan",false);
+        _stanEffect.SetBool("Stan", false);
     }
 }
