@@ -29,7 +29,7 @@ public class UIHandler : MonoBehaviour
 
     public void GetItemEffect()
     {
-        itemeffect.Animator()
+       // itemeffect.Animator()
     }
     public void ShowLimitTime(float _TimeLimit)
     {
