@@ -67,8 +67,10 @@ public class UIHandler : MonoBehaviour
                     _StackImage[i].sprite = _ambrasSprite;
                 }
                 else
+                {
 
-                    break;
+                }
+                 break;
             }
         }
     }

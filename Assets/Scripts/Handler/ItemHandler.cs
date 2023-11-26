@@ -38,7 +38,7 @@ public class ItemHandler : MonoBehaviour
     {        
         //1または2でない値を弾く（BlockBehaviourの DestroyBlock()参照）
         if(_objID == -1) return;
-       
+       //保持しているブロックUI表示
         for(int i = 0; i < _stackBlocks.Length; i++) 
         {          
             //配列のi番目が空（０）だったら処理実行
