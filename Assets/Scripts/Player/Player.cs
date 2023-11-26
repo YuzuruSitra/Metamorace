@@ -35,7 +35,6 @@ public class Player : MonoBehaviour
     GameObject[] _cPrefab = new GameObject[2];
     [SerializeField]
     Animator _playerAnim, _stanEffect;
-    //private Transform _cubeParent;
     [SerializeField] GameObject _staneffect;
     [SerializeField] GameObject _saiyaeffect;
     [SerializeField] float stanpos;
@@ -59,6 +58,13 @@ public class Player : MonoBehaviour
     [SerializeField] float _playerReach;
     [SerializeField] AudioClip jump, breakBlock, createBlock;
     private SoundHandler _soundHandler;
+    private bool _animJump = false;
+    private bool _animWalk = false;
+    private bool _animSwing = false;
+    private bool _animVDeat = false;
+    private bool _animHDeat = false;
+    private bool _animStan = false;
+    private bool _animIdole = false;
 
     void Start()
     {
@@ -100,6 +106,7 @@ public class Player : MonoBehaviour
         Jump();
         JudgeVerticalDeath();
         JudgeHorizontalDeath();
+        AnimSelecter();
     }
     void FixedUpdate()
     {
@@ -111,15 +118,7 @@ public class Player : MonoBehaviour
     //プレイヤーの移動
     void PlayerCtrl()
     {   
-         inputX = 0.0f;
-        if (!Input.anyKey)
-        {
-            // If there is no key input, set the "MovingSpeed" parameter to 0.0f
-           _playerAnim.SetFloat("MoveSpeed", 0.0f);
-        }
-        else{
-            _playerAnim.SetFloat("MoveSpeed", 1.0f);
-        }
+        inputX = 0.0f;
         //チーム1とチーム2で操作反転
         if (transform.position.z < 0)
         {
@@ -132,8 +131,16 @@ public class Player : MonoBehaviour
             if (Input.GetKey("a")) inputX = 1.0f;
         }
         if (Input.GetKey("a") && Input.GetKey("d")) inputX = 0.0f;
-        if (inputX == 0) return;
 
+        if (inputX == 0)
+        {
+            _animIdole = true;
+            _animWalk = false;
+            return;
+        }
+        _animIdole = false;
+        _animWalk = true;
+        
         Vector3 movement = new Vector3(inputX, 0, 0);
         // プレイヤーの向きを移動ベクトルに向ける
         Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);
@@ -194,8 +201,8 @@ public class Player : MonoBehaviour
     private IEnumerator DeathCoroutine(string direction)
     {
         // 死亡アニメーション
-        if (direction == "Vertical") _playerAnim.SetBool("_isVDeath", true);
-        else _playerAnim.SetBool("_isHDeath", true);
+        if (direction == "Vertical") _animVDeat = true;
+        else _animHDeat = true;
 
         //////////////////
         yield return new WaitForSeconds(2.0f);
@@ -214,7 +221,6 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && _isJump)
         {
             //ジャンプSE鳴らす
-            _playerAnim.SetBool("_isJump", true);
             _soundHandler.PlaySE(jump);
             _rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
         }
@@ -228,12 +234,13 @@ public class Player : MonoBehaviour
         if (Physics.Raycast(ray, out hit, _jumprayrength))
         {
             _isJump = false;
-            _playerAnim.SetBool("_isJump", false);
+            _animJump = false;
             return true; // 地面に当たっている場合はtrueを返す
         }
         else
         {
             _isJump = true;
+            _animJump = true;
             return false; // 地面に当たっていない場合はfalseを返す
         }
     }
@@ -290,7 +297,7 @@ public class Player : MonoBehaviour
                 else _staneffect.transform.position = transform.position + new Vector3(0, 0, stanpos);
 
                 _stanEffect.SetBool("Stan", true);
-                _playerAnim.SetBool("_isStan", true);
+                _animStan = true;
                 Invoke("FinishItemC", _itemHandler._ItemCEffectTime);
                 break;
             case 2:
@@ -307,8 +314,7 @@ public class Player : MonoBehaviour
         if (_hasBlock == false) return;
         if (!Input.GetMouseButtonDown(1)) return;
         //swingAnim再生
-        _playerAnim.SetBool("_isSwing", true);
-       
+       _animSwing = true;
         Vector3 insPos = new Vector3((int)transform.position.x, (int)transform.position.y, -1.0f);
         Vector3 insBigPos = new Vector3((int)transform.position.x, (int)transform.position.y + 0.75f, -1.0f);
         GameObject insObj;
@@ -415,6 +421,93 @@ public class Player : MonoBehaviour
         _usePlayerSpeed = _playerSpeed;
         //スタンエフェクト停止
         _stanEffect.SetBool("Stan", false);
-        _playerAnim.SetBool("_isStan", false);
+        _animStan = false;
     }
+
+    // 時短につき良くない実装
+    private void AnimSelecter()
+    {
+        int i = 0;
+        if (_animVDeat)
+        {
+            _playerAnim.SetBool("_isVDeat", true);
+            _playerAnim.SetBool("_isHDeat", false);
+            _playerAnim.SetBool("_isStan", false);
+            _playerAnim.SetBool("_isSwing", false);
+            _playerAnim.SetBool("_isJump", false);
+            _playerAnim.SetBool("_isIdole", false);
+            _playerAnim.SetBool("_isWalk", false);
+            i = 1;
+        }
+        else if(_animHDeat)
+        {
+            _playerAnim.SetBool("_isVDeath", false);
+            _playerAnim.SetBool("_isHDeath", true);
+            _playerAnim.SetBool("_isStan", false);
+            _playerAnim.SetBool("_isSwing", false);
+            _playerAnim.SetBool("_isJump", false);
+            _playerAnim.SetBool("_isIdole", false);
+            _playerAnim.SetBool("_isWalk", false);
+            i = 2;
+        }
+        else if(_animStan)
+        {
+            _playerAnim.SetBool("_isVDeath", false);
+            _playerAnim.SetBool("_isHDeath", false);
+            _playerAnim.SetBool("_isStan", true);
+            _playerAnim.SetBool("_isSwing", false);
+            _playerAnim.SetBool("_isJump", false);
+            _playerAnim.SetBool("_isIdole", false);
+            _playerAnim.SetBool("_isWalk", false);
+            i = 3;
+        }
+        else if(_animSwing)
+        {
+            _playerAnim.SetBool("_isVDeath", false);
+            _playerAnim.SetBool("_isHDeath", false);
+            _playerAnim.SetBool("_isStan", false);
+            _playerAnim.SetBool("_isSwing", true);
+            _playerAnim.SetBool("_isJump", false);
+            _playerAnim.SetBool("_isIdole", false);
+            _playerAnim.SetBool("_isWalk", false);
+            i = 4;
+        }
+        else if(_animJump)
+        {
+            _playerAnim.SetBool("_isVDeath", false);
+            _playerAnim.SetBool("_isHDeath", false);
+            _playerAnim.SetBool("_isStan", false);
+            _playerAnim.SetBool("_isSwing", false);
+            _playerAnim.SetBool("_isJump", true);
+            _playerAnim.SetBool("_isIdole", false);
+            _playerAnim.SetBool("_isWalk", false);
+            i = 5;
+        }
+        else if(_animIdole)
+        {
+            _playerAnim.SetBool("_isVDeath", false);
+            _playerAnim.SetBool("_isHDeath", false);
+            _playerAnim.SetBool("_isStan", false);
+            _playerAnim.SetBool("_isSwing", false);
+            _playerAnim.SetBool("_isJump", false);
+            _playerAnim.SetBool("_isIdole", true);
+            _playerAnim.SetBool("_isWalk", false);
+            _playerAnim.SetFloat("MoveSpeed", 0.0f);
+            i = 6;
+        }
+        else if(_animWalk)
+        {
+            _playerAnim.SetBool("_isVDeath", false);
+            _playerAnim.SetBool("_isHDeath", false);
+            _playerAnim.SetBool("_isStan", false);
+            _playerAnim.SetBool("_isSwing", false);
+            _playerAnim.SetBool("_isJump", false);
+            _playerAnim.SetBool("_isIdole", false);
+            _playerAnim.SetBool("_isWalk", true);
+            _playerAnim.SetFloat("MoveSpeed", 1.0f);
+            i = 7;
+        }
+        Debug.Log(i);
+    }
+
 }
