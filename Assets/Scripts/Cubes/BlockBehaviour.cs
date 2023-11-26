@@ -67,6 +67,13 @@ public class BlockBehaviour : MonoBehaviour
         {
             _myPV.RPC(nameof(SyncHealth), PhotonTargets.All, _objHealth);
         }
+        else
+        {
+            this.gameObject.SetActive(false);
+            _cloudeffect.transform.position = transform.position;
+            _cloudeffect.SetActive(true);
+            Destroy(_parentBlock,2.0f);
+        }
         if (_objHealth >= 0) return -1;
         
         return _objID;
