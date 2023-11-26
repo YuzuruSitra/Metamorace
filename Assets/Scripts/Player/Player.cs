@@ -36,9 +36,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     GameObject _ambrasPrefab;
     [SerializeField]
-    Animator _playerAnim, _stanEffect;
+    Animator _playerAnim, _stanEffect,_saiyaEffect;
     //private Transform _cubeParent;
-    [SerializeField] GameObject _staneffect;
+    [SerializeField] GameObject _staneffect,_saiyaeffect;
     [SerializeField] float stanpos;
 
     BlockBehaviour _currentBlock;
@@ -175,7 +175,7 @@ public class Player : MonoBehaviour
         Ray ray;
         if(_mineTeam == 0) ray = new Ray(transform.position + Vector3.up, new Vector3(0f,0f,-1f));
         else ray = new Ray(transform.position , new Vector3(0f,0f,1f));
-        Debug.DrawRay(transform.position, new Vector3(0f,0f,1f) * _jumprayrength, Color.blue, 1.0f);
+        Debug.DrawRay(transform.position + Vector3.up, new Vector3(0f,0f,1f) * _jumprayrength, Color.blue, 1.0f);
 
         RaycastHit _hit;
         if (Physics.Raycast(ray, out _hit,_jumprayrength))
@@ -390,6 +390,10 @@ private bool CheckAndJump(Ray ray)
         if (_itemHandler._HasItemA == true)
         {
             StartCoroutine(FinishItemA());
+             //スタンエフェクト再生
+                if(transform.position.z < 0)_staneffect.transform.position = transform.position + new Vector3(0, 0, -stanpos);
+                else _staneffect.transform.position = transform.position + new Vector3(0, 0,stanpos);
+                _saiyaeffect.SetActive(true);
             _itemHandler.ItemEffectA(ref _useDestroyPower, ref _usePlayerSpeed);
         }
     }
@@ -399,6 +403,7 @@ private bool CheckAndJump(Ray ray)
         yield return _waitTime;
         _usePlayerSpeed = _playerSpeed;
         _useDestroyPower = _destroyPower;
+        _saiyaeffect.SetActive(false);
     }
 
     void FinishItemC()

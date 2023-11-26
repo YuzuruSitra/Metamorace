@@ -191,8 +191,8 @@ MonoBehaviour:
   - {fileID: 1664117124386851239, guid: f13175661c7ad164db194d01f13af153, type: 3}
   - {fileID: 1664117124386851239, guid: 6a864630e84f9e045bcb3702969da6f5, type: 3}
   _cPrefab:
-  - {fileID: 933951156368605023, guid: 11b8429ffa31fc947a005816e48d2322, type: 3}
-  - {fileID: 933951156368605023, guid: c8fd6d96ddefb8b4188fca24645568b7, type: 3}
+  - {fileID: 933951156368605023, guid: c2f415d55aad22543bbe3319b71c4e36, type: 3}
+  - {fileID: 933951156368605023, guid: 1ab42984e06245a45ad2a25a6eba3837, type: 3}
   _ambrasPrefab: {fileID: 6252427330716548040, guid: d87e00c8c3069f849b854fd0cb7f68ee, type: 3}
   _playerAnim: {fileID: 0}
   _stanEffect: {fileID: 7016385704350394749}
