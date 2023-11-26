@@ -126,7 +126,6 @@ public class Player : MonoBehaviour
             if (Input.GetKey("a")) inputX = 1.0f;
         }
         if (Input.GetKey("a") && Input.GetKey("d")) inputX = 0.0f;
-        //Debug.Log(inputX);
         if (inputX == 0) return;
 
         Vector3 movement = new Vector3(inputX, 0, 0);
@@ -167,7 +166,6 @@ public class Player : MonoBehaviour
         Debug.DrawRay(ray.origin, ray.direction * _jumprayrength, Color.green); // レイを描画
         if (!_isJump && _isHead)
         {
-            Debug.Log("tate");
             StartCoroutine(DeathCoroutine("Vertical"));
         }
     }
@@ -184,7 +182,6 @@ public class Player : MonoBehaviour
         if (Physics.Raycast(ray, out _hit, _jumprayrength))
         {
             StartCoroutine(DeathCoroutine("Horizontal"));
-            Debug.Log("yoko");
         }
     }
 
@@ -212,7 +209,6 @@ public class Player : MonoBehaviour
         {
             //ジャンプSE鳴らす
             _playerAnim.SetBool("_isJump", true);
-            Debug.Log("jump");
             _soundHandler.PlaySE(jump);
             _rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
         }
@@ -279,7 +275,6 @@ public class Player : MonoBehaviour
     private void ProcessItemCBlockEffect()
     {
         int effectID = _itemHandler.ChoseEffectC();
-        //Debug.Log("C");
         switch (effectID)
         {
             case 1:
@@ -290,7 +285,6 @@ public class Player : MonoBehaviour
 
                 _stanEffect.SetBool("Stan", true);
                 _playerAnim.SetBool("_isStan", true);
-                Debug.Log("stan");
                 Invoke("FinishItemC", _itemHandler._ItemCEffectTime);
                 break;
             case 2:
@@ -329,7 +323,6 @@ public class Player : MonoBehaviour
                 _itemHandler.ItemEffectC();
                 insObj = Instantiate(_cPrefab[_mineTeam], insPos, _insQuaternion[_mineTeam]);
                 insObj.transform.parent = _cubeParentTeam[_enemyTeam];
-                // Debug.Log("せいせい");
             }
             else
             {
@@ -413,7 +406,6 @@ public class Player : MonoBehaviour
 
     void FinishItemC()
     {
-        Debug.Log("スタン解除");
         _usePlayerSpeed = _playerSpeed;
         //スタンエフェクト停止
         _stanEffect.SetBool("Stan", false);

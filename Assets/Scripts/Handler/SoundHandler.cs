@@ -49,10 +49,9 @@ public class SoundHandler : MonoBehaviour
     {   
         if(clip == null)
         {
-            Debug.Log("bull");
             return;
         }
-        Debug.Log("play");
+
         _seAudioSource.PlayOneShot(clip);
     }
 }

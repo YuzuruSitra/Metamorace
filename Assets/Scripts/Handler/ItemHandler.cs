@@ -50,7 +50,6 @@ public class ItemHandler : MonoBehaviour
             if(_stackBlocks[i] == 0)
             {
                 _stackBlocks[i] = _objID;
-                //Debug.Log(string.Join(", ", _stackBlocks));
                 _uiHandler.SetStackImage(_objID);
                  break;
             }
@@ -65,8 +64,7 @@ public class ItemHandler : MonoBehaviour
             //配列のi番目が空（０）だったら処理実行
            
                 _stackBlocks[i] = 0;      
-        }  
-        //Debug.Log(string.Join(", ", _stackBlocks));   
+        }   
     }
 
     //所持しているブロックによって生成されるアイテム変化
@@ -76,11 +74,9 @@ public class ItemHandler : MonoBehaviour
         if(_stackBlocks[2] == 1 || _stackBlocks[2] == 2)
         {
             _myBrockNum = CheckMyBrock();
-            Debug.Log(_myBrockNum);
             if(_myBrockNum == 0)
             {
                 //アイテムA
-                Debug.Log("アイテムA生成");
                  _uiHandler.SetItemImage(0);
                 _uiHandler.ResetStackImage();
                 ResetBlock();
@@ -89,7 +85,6 @@ public class ItemHandler : MonoBehaviour
             else if(_myBrockNum == 3)
             {
                 //アイテムB
-                Debug.Log("アイテムB生成");
                  _uiHandler.SetItemImage(2);
                  _uiHandler.ResetStackImage();
                 ResetBlock();
@@ -98,7 +93,6 @@ public class ItemHandler : MonoBehaviour
             else
             {
                  //アイテムC
-                Debug.Log("アイテムC生成");
                  _uiHandler.SetItemImage(1);
                  _uiHandler.ResetStackImage();
                 ResetBlock();
@@ -126,9 +120,7 @@ public class ItemHandler : MonoBehaviour
     public void ItemEffectA(ref float _destroyPower, ref float _playerSpeed)
      {
         //if (!_hasItemC) return;        
-        Debug.Log(_hasItemA);
         _uiHandler.ResetItemImage();   
-        Debug.Log("アイテムA効果発動");
         _destroyPower = _destroyPower*2;
         _playerSpeed = _playerSpeed*2;
        
@@ -137,9 +129,7 @@ public class ItemHandler : MonoBehaviour
      }
      public void ItemEffectB()
      { 
-             Debug.Log(_hasItemB);
-            _uiHandler.ResetItemImage();   
-            Debug.Log("アイテムB効果発動");         
+            _uiHandler.ResetItemImage();         
             _hasItemB = false;
      }
      public void ItemEffectC()
