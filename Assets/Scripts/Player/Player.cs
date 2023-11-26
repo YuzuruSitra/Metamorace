@@ -65,6 +65,7 @@ public class Player : MonoBehaviour
     private bool _animHDeat = false;
     private bool _animStan = false;
     private bool _animIdole = false;
+    private bool _animBreak = false;
 
     void Start()
     {
@@ -118,6 +119,7 @@ public class Player : MonoBehaviour
     //プレイヤーの移動
     void PlayerCtrl()
     {   
+        if(_animSwing) return;
         inputX = 0.0f;
         //チーム1とチーム2で操作反転
         if (transform.position.z < 0)
@@ -211,6 +213,7 @@ public class Player : MonoBehaviour
 
     void Jump()
     {
+        if(_animSwing) return;
         float raypos = 0.45f;
         float rayheight = 0.1f;
         // Jump handling
@@ -249,8 +252,9 @@ public class Player : MonoBehaviour
     //オブジェクト破壊
     public void BreakBlock()
     {
+        _animBreak = false;
         if (_hasBlock || !Input.GetMouseButton(0)) return;
-
+        _animBreak = true;
         Vector3 direction = transform.forward;
         direction.Normalize();
         Ray ray = new Ray(transform.position + Vector3.up, direction);
@@ -314,7 +318,13 @@ public class Player : MonoBehaviour
         if (_hasBlock == false) return;
         if (!Input.GetMouseButtonDown(1)) return;
         //swingAnim再生
-       _animSwing = true;
+        _animSwing = true;
+        Invoke("InsSwingObj",0.4f);
+    }
+
+    void InsSwingObj()
+    {
+        _animSwing = false;
         Vector3 insPos = new Vector3((int)transform.position.x, (int)transform.position.y, -1.0f);
         Vector3 insBigPos = new Vector3((int)transform.position.x, (int)transform.position.y + 0.75f, -1.0f);
         GameObject insObj;
@@ -427,17 +437,16 @@ public class Player : MonoBehaviour
     // 時短につき良くない実装
     private void AnimSelecter()
     {
-        int i = 0;
         if (_animVDeat)
         {
-            _playerAnim.SetBool("_isVDeat", true);
-            _playerAnim.SetBool("_isHDeat", false);
+            _playerAnim.SetBool("_isVDeath", true);
+            _playerAnim.SetBool("_isHDeath", false);
             _playerAnim.SetBool("_isStan", false);
             _playerAnim.SetBool("_isSwing", false);
             _playerAnim.SetBool("_isJump", false);
+            _playerAnim.SetBool("_isBreak", false);
             _playerAnim.SetBool("_isIdole", false);
             _playerAnim.SetBool("_isWalk", false);
-            i = 1;
         }
         else if(_animHDeat)
         {
@@ -446,9 +455,9 @@ public class Player : MonoBehaviour
             _playerAnim.SetBool("_isStan", false);
             _playerAnim.SetBool("_isSwing", false);
             _playerAnim.SetBool("_isJump", false);
+            _playerAnim.SetBool("_isBreak", false);
             _playerAnim.SetBool("_isIdole", false);
             _playerAnim.SetBool("_isWalk", false);
-            i = 2;
         }
         else if(_animStan)
         {
@@ -457,9 +466,9 @@ public class Player : MonoBehaviour
             _playerAnim.SetBool("_isStan", true);
             _playerAnim.SetBool("_isSwing", false);
             _playerAnim.SetBool("_isJump", false);
+            _playerAnim.SetBool("_isBreak", false);
             _playerAnim.SetBool("_isIdole", false);
             _playerAnim.SetBool("_isWalk", false);
-            i = 3;
         }
         else if(_animSwing)
         {
@@ -468,9 +477,9 @@ public class Player : MonoBehaviour
             _playerAnim.SetBool("_isStan", false);
             _playerAnim.SetBool("_isSwing", true);
             _playerAnim.SetBool("_isJump", false);
+            _playerAnim.SetBool("_isBreak", false);
             _playerAnim.SetBool("_isIdole", false);
             _playerAnim.SetBool("_isWalk", false);
-            i = 4;
         }
         else if(_animJump)
         {
@@ -479,21 +488,36 @@ public class Player : MonoBehaviour
             _playerAnim.SetBool("_isStan", false);
             _playerAnim.SetBool("_isSwing", false);
             _playerAnim.SetBool("_isJump", true);
+            _playerAnim.SetBool("_isBreak", false);
             _playerAnim.SetBool("_isIdole", false);
             _playerAnim.SetBool("_isWalk", false);
-            i = 5;
         }
         else if(_animIdole)
         {
-            _playerAnim.SetBool("_isVDeath", false);
-            _playerAnim.SetBool("_isHDeath", false);
-            _playerAnim.SetBool("_isStan", false);
-            _playerAnim.SetBool("_isSwing", false);
-            _playerAnim.SetBool("_isJump", false);
-            _playerAnim.SetBool("_isIdole", true);
-            _playerAnim.SetBool("_isWalk", false);
-            _playerAnim.SetFloat("MoveSpeed", 0.0f);
-            i = 6;
+            if(_animBreak)
+            {
+                _playerAnim.SetBool("_isVDeath", false);
+                _playerAnim.SetBool("_isHDeath", false);
+                _playerAnim.SetBool("_isStan", false);
+                _playerAnim.SetBool("_isSwing", false);
+                _playerAnim.SetBool("_isJump", false);
+                _playerAnim.SetBool("_isBreak", true);
+                _playerAnim.SetBool("_isIdole", false);
+                _playerAnim.SetBool("_isWalk", false);
+                _playerAnim.SetFloat("MoveSpeed", 0.0f);
+            }
+            else
+            {
+                _playerAnim.SetBool("_isVDeath", false);
+                _playerAnim.SetBool("_isHDeath", false);
+                _playerAnim.SetBool("_isStan", false);
+                _playerAnim.SetBool("_isSwing", false);
+                _playerAnim.SetBool("_isJump", false);
+                _playerAnim.SetBool("_isBreak", false);
+                _playerAnim.SetBool("_isIdole", true);
+                _playerAnim.SetBool("_isWalk", false);
+                _playerAnim.SetFloat("MoveSpeed", 0.0f);
+            }
         }
         else if(_animWalk)
         {
@@ -502,12 +526,11 @@ public class Player : MonoBehaviour
             _playerAnim.SetBool("_isStan", false);
             _playerAnim.SetBool("_isSwing", false);
             _playerAnim.SetBool("_isJump", false);
+            _playerAnim.SetBool("_isBreak", false);
             _playerAnim.SetBool("_isIdole", false);
             _playerAnim.SetBool("_isWalk", true);
             _playerAnim.SetFloat("MoveSpeed", 1.0f);
-            i = 7;
         }
-        Debug.Log(i);
     }
 
 }
