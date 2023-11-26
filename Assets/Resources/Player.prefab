@@ -180,23 +180,23 @@ MonoBehaviour:
   _playerSpeed: 5
   _jumpPower: 30
   _jumprayrength: 0.78
-  _frontRayREngth: 0.51
+  _frontRayREngth: 0.61
   _destroyPower: 1
   _poolHandler: {fileID: 7454566972977520030, guid: c9c56267c0abf6843979b993354cb2d6, type: 3}
   _itemHandler: {fileID: 6708401690013825303}
   _herosPrefab:
   - {fileID: 1296549643261954888, guid: 36de42bbe2c4edd48af2924c3be698f7, type: 3}
-  - {fileID: 1296549643261954888, guid: ed6b56d9e5ef5004ba389acc99c3d453, type: 3}
+  - {fileID: 1664117124386851239, guid: 5a8e200b20ff90e4fb51279c198ef9a6, type: 3}
   _bigPrefab:
   - {fileID: 1664117124386851239, guid: f13175661c7ad164db194d01f13af153, type: 3}
-  - {fileID: 1664117124386851239, guid: 6a864630e84f9e045bcb3702969da6f5, type: 3}
+  - {fileID: 1296549643261954888, guid: 7627e6ec5ed56f74ca126dc30b17dee9, type: 3}
   _cPrefab:
   - {fileID: 933951156368605023, guid: c2f415d55aad22543bbe3319b71c4e36, type: 3}
-  - {fileID: 933951156368605023, guid: 1ab42984e06245a45ad2a25a6eba3837, type: 3}
-  _ambrasPrefab: {fileID: 6252427330716548040, guid: d87e00c8c3069f849b854fd0cb7f68ee, type: 3}
+  - {fileID: 933951156368605023, guid: c299c008d3393574cbe719c6b3af987a, type: 3}
   _playerAnim: {fileID: 0}
   _stanEffect: {fileID: 7016385704350394749}
   _staneffect: {fileID: 7016385704350394751}
+  _saiyaeffect: {fileID: 0}
   stanpos: 0
   _developMode: 0
   _playerReach: 0.6
@@ -369,8 +369,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88466d0d7003c344888e689bd362508c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bigBlock: {fileID: 1664117124386851239, guid: f13175661c7ad164db194d01f13af153, type: 3}
-  _itemCBlock: {fileID: 933951156368605023, guid: 11b8429ffa31fc947a005816e48d2322, type: 3}
 --- !u!1 &7016385704350394751
 GameObject:
   m_ObjectHideFlags: 0
