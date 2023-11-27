@@ -8,7 +8,7 @@ public class UIHandler : MonoBehaviour
     [SerializeField] private Text _BlockRateTeam1, _BlockRateTeam2;
     [SerializeField] Image[] _StackImage;
     //アンブラスとヘイロスのブロック画像、_objID1がヘイロス2がアンブラス
-    [SerializeField] Sprite _herosSprite, _ambrasSprite;
+    [SerializeField] Sprite _herosSprite, _ambrasSprite,_itemCSprite;
 
     [SerializeField] Text _nametext;
     [SerializeField] string name;
@@ -22,8 +22,13 @@ public class UIHandler : MonoBehaviour
     [SerializeField] GameObject itemeffect;
     Animator itemEffectAnimator;
     private Color toumei = new Color(1f, 1f, 1f, 0f);
+    //ItemB用のスケール変更
+     Vector3 currentScale;
+      float scaleFactor = 1.0f;
     void Start()
     {
+        currentScale = _BlockImage.transform.localScale;
+        _BlockImage.transform.localScale = new Vector3(currentScale.x * scaleFactor, currentScale.y * scaleFactor, currentScale.z);
         itemeffect.SetActive(false);
         itemEffectAnimator = itemeffect.GetComponent<Animator>();
         _resultPanel.SetActive(false);
@@ -72,7 +77,23 @@ public class UIHandler : MonoBehaviour
     {
         _LimitTimeText.text = _TimeLimit.ToString("f0") + "秒";
     }
-
+    //アイテムC使用時のUI変化
+    public void ItemUI(int ItemNum)
+     {
+        //  アイテムUI削除、所持ブロックをCに変更
+         ResetItemImage();
+         if(ItemNum == 2)
+         {
+            Debug.Log("2");
+              scaleFactor = 1.5f; // ブロックイメージ大きくする 
+         }        
+         //Imageをでかくする処理
+         else if(ItemNum == 3)
+         {
+            _BlockImage.sprite = _itemCSprite;
+            
+        }
+     }
     //アンブラスとヘイロスのスプライトを格納
     public void SetStackImage(int _objID)
     {

@@ -426,8 +426,18 @@ public class Player : MonoBehaviour
             _saiyaeffect.SetActive(true);
             _itemHandler.ItemEffectA(ref _useDestroyPower, ref _usePlayerSpeed);
             StartCoroutine(FinishItemA());
-
-
+        }
+        else if(_itemHandler._HasItemC == true&&_hasBlock)
+        {
+            //  アイテムUI削除、所持ブロックをCに変更
+            _uiHandler.ItemUI(3);
+        }
+        else if(_itemHandler._HasItemB == true&&_hasBlock)
+        {
+            //  アイテムUI削除、所持ブロックをBに変更
+            Debug.Log("1");
+            _uiHandler.ItemUI(2);
+            
         }
     }
 

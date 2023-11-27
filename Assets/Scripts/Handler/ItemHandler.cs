@@ -71,7 +71,7 @@ public class ItemHandler : MonoBehaviour
             _myBrockNum = CheckMyBrock();
             if(_myBrockNum == 0)
             {
-                //アイテムA
+                //アイテムAサイヤ人
                 _uiHandler.SetItemImage(0);
                 _uiHandler.ResetStackImage();
                 ResetBlock();
@@ -80,7 +80,7 @@ public class ItemHandler : MonoBehaviour
             }
             else if(_myBrockNum == 3)
             {
-                //アイテムB
+                //アイテムB巨大化
                  _uiHandler.SetItemImage(2);
                  _uiHandler.ResetStackImage();
                 ResetBlock();
@@ -135,6 +135,7 @@ public class ItemHandler : MonoBehaviour
          _uiHandler.ResetItemImage();
         _hasItemC = false;
      }
+  
 
     //アイテムCの効果抽選 Playerクラスで呼び出す
      public int ChoseEffectC()
