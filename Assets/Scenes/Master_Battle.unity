@@ -1529,9 +1529,9 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.000121593475
+    x: 0
     y: 0
-    width: 0.9997568
+    width: 1
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -3871,8 +3871,11 @@ MonoBehaviour:
   _herosSprite: {fileID: 21300000, guid: 4b0a94cb17584a94386d8ec030c8e8e7, type: 3}
   _ambrasSprite: {fileID: 21300000, guid: 93cb9192b5fadec44a1480831e6fe562, type: 3}
   _itemCSprite: {fileID: 21300000, guid: c303bcc406a0a2b419b60e2986f1ed52, type: 3}
-  _nametext: {fileID: 0}
-  name: 
+  _nameTexts:
+  - {fileID: 1217079730}
+  - {fileID: 1098025432}
+  - {fileID: 348979249}
+  - {fileID: 1244624611}
   _itemImage: {fileID: 178556829}
   _BlockImage: {fileID: 2117168560}
   _itemSprite:

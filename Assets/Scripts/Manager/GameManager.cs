@@ -213,6 +213,7 @@ public class GameManager : MonoBehaviour
     private void SendTeamInfo(string[] names, string[] IDs)
     {
         // UIハンドラーへ値を渡す処理
+        _uiHandler.SetNames(names, IDs);
     }
 
 

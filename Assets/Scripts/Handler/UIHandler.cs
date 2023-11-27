@@ -10,8 +10,8 @@ public class UIHandler : MonoBehaviour
     //アンブラスとヘイロスのブロック画像、_objID1がヘイロス2がアンブラス
     [SerializeField] Sprite _herosSprite, _ambrasSprite,_itemCSprite;
 
-    [SerializeField] Text _nametext;
-    [SerializeField] string name;
+    [SerializeField]
+    private Text[] _nameTexts = new Text[4];
     [SerializeField] Image _itemImage;
     [SerializeField] Image _BlockImage;
     [SerializeField] Sprite[] _itemSprite;
@@ -152,11 +152,6 @@ public class UIHandler : MonoBehaviour
         return false;
     }
 
-    //名前表示
-    public void ChangeName()
-    {
-        _nametext.text = name;
-    }
     //占有率表示
     public void ShowCalc(int shareTeam1, int shareTeam2)
     {
@@ -216,4 +211,28 @@ public class UIHandler : MonoBehaviour
         }
         _resultPanel.SetActive(true);
     }
+
+    // UIに名前とチームを描画する処理
+    public void SetNames(string[] names, string[] IDs)
+    {
+        int team0 = 0;
+        int team1 = 2;
+        for (int i = 0; i < names.Length; i++)
+        {
+            switch (IDs[i])
+            {
+                case "Team0":
+                    _nameTexts[team0].text = names[i];
+                    team0 ++;
+                    break;
+                case "Team1":
+                    _nameTexts[team1].text = names[i];
+                    team1 ++;
+                    break; 
+                default:
+                    break;
+            }
+        }
+    }
+
 }
