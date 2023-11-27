@@ -1643,7 +1643,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _myPV: {fileID: 194663890}
-  _player: {fileID: 0}
   _colorManager: {fileID: 0}
   _blockManagerPrefab: {fileID: 1692291927690342940, guid: e4abd95c9218d5f45aea2b7c765ff2cc, type: 3}
   _camManager: {fileID: 86803438}
@@ -1654,6 +1653,7 @@ MonoBehaviour:
   _calcInterval: 2.5
   _cubeParentTeam1: {fileID: 8716951255756122465}
   _cubeParentTeam2: {fileID: 1438134090218069681}
+  battleBGM: {fileID: 8300000, guid: 8560a7fc8611b8643addb4db8dd1e2ac, type: 3}
   countDown: {fileID: 8300000, guid: 41c4a7f01e6b411418f7cd12a60e66bd, type: 3}
   gameStart: {fileID: 8300000, guid: 3bee2cd39c9b65f46aa938b761d59a31, type: 3}
   gameEnd: {fileID: 8300000, guid: 58bbd745e36da034787a7db6c18df639, type: 3}
@@ -8586,22 +8586,26 @@ MonoBehaviour:
   - {fileID: 486676816}
   _herosSprite: {fileID: 21300000, guid: 06df68312dc0b5f44bbd6e1cc6349e3e, type: 3}
   _ambrasSprite: {fileID: 21300000, guid: 6d9368087a72f0a418692ca4c979ec66, type: 3}
-  _nametext: {fileID: 1407483249}
-  name: aiu
+  _itemCSprite: {fileID: 0}
+  _nameTexts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _itemImage: {fileID: 535516092}
-  _BlockImage: {fileID: 0}
+  _BlockImage: {fileID: 1668459365}
   _itemSprite:
   - {fileID: 21300000, guid: 8c01ee0916d26fd4b9bf3afdbeb7cb33, type: 3}
   - {fileID: 21300000, guid: 876f1afb4090025408b66b2031e45d04, type: 3}
   - {fileID: 21300000, guid: fe840b1bd2da9f6488065f9114511547, type: 3}
   _resultPanel: {fileID: 2089941504}
-  _winandlose: {fileID: 0}
-  _draw: {fileID: 0}
+  _winandlose: {fileID: 1925299021}
+  _draw: {fileID: 1309594538}
   _winBlockRate: {fileID: 599928313}
   _loseBlockRate: {fileID: 1579205964}
-  _drawBlockRate1: {fileID: 0}
+  _drawBlockRate1: {fileID: 599928313}
   _drawBlockRate2: {fileID: 0}
-  itemeffect: {fileID: 764213285}
+  itemeffect: {fileID: 1579205963}
 --- !u!114 &1207385906
 MonoBehaviour:
   m_ObjectHideFlags: 0
