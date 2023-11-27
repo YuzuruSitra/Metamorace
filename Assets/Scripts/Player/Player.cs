@@ -328,7 +328,7 @@ public class Player : MonoBehaviour
     {
         //ブロックを持ってれば処理を行う
         if (_hasBlock == false) return;
-        if (!Input.GetMouseButtonDown(1)) return;
+        if (!Input.GetMouseButtonDown(0)) return;
         //ブロック画像nullにする
         _uiHandler.ResetBlockImage();
         //swingAnim再生
@@ -419,7 +419,7 @@ public class Player : MonoBehaviour
     //アイテムを使う
     public void Item()
     {
-        if (!Input.GetMouseButtonDown(0)) return;
+        if (!Input.GetMouseButtonDown(1)) return;
 
         if (_itemHandler._HasItemA == true)
         {

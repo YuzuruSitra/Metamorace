@@ -1622,6 +1622,7 @@ GameObject:
   m_Component:
   - component: {fileID: 194663889}
   - component: {fileID: 194663888}
+  - component: {fileID: 194663890}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -1641,7 +1642,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3a93e193c4914068a58369c7a6a9af2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _myPV: {fileID: 0}
+  _myPV: {fileID: 194663890}
   _player: {fileID: 0}
   _colorManager: {fileID: 0}
   _blockManagerPrefab: {fileID: 1692291927690342940, guid: e4abd95c9218d5f45aea2b7c765ff2cc, type: 3}
@@ -1672,6 +1673,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &194663890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194663887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 1
+  instantiationId: 1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!1 &233557332
 GameObject:
   m_ObjectHideFlags: 0
@@ -8561,15 +8589,18 @@ MonoBehaviour:
   _nametext: {fileID: 1407483249}
   name: aiu
   _itemImage: {fileID: 535516092}
+  _BlockImage: {fileID: 0}
   _itemSprite:
   - {fileID: 21300000, guid: 8c01ee0916d26fd4b9bf3afdbeb7cb33, type: 3}
   - {fileID: 21300000, guid: 876f1afb4090025408b66b2031e45d04, type: 3}
   - {fileID: 21300000, guid: fe840b1bd2da9f6488065f9114511547, type: 3}
-  _button: {fileID: 2101232006}
   _resultPanel: {fileID: 2089941504}
-  _winnerPanel: {fileID: 1925299021}
+  _winandlose: {fileID: 0}
+  _draw: {fileID: 0}
   _winBlockRate: {fileID: 599928313}
   _loseBlockRate: {fileID: 1579205964}
+  _drawBlockRate1: {fileID: 0}
+  _drawBlockRate2: {fileID: 0}
   itemeffect: {fileID: 764213285}
 --- !u!114 &1207385906
 MonoBehaviour:
