@@ -97,7 +97,6 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(_itemHandler._HasItemB);
         //エフェクト移動させてる
         if (transform.position.z < 0 &&_saiyaeffect.activeSelf) _saiyaeffect.transform.position = transform.position + new Vector3(0, 0.5f, -stanpos);
         else _saiyaeffect.transform.position = transform.position + new Vector3(0, 0.5f, stanpos);
@@ -105,8 +104,6 @@ public class Player : MonoBehaviour
         if (!_isGame) return;
         BreakBlock();
         CreateBlock();
-        //アイテム生成
-        _itemHandler.CreateItem();
         Item();
         Jump();
         JudgeVerticalDeath();
@@ -294,7 +291,11 @@ public class Player : MonoBehaviour
             _soundHandler.PlaySE(breakBlock);
             _predictCubes.SetActive(true);
             _hasBlock = true;
-            if (!_itemHandler._HasItemA || !_itemHandler._HasItemB || !_itemHandler._HasItemC) _itemHandler.StackBlock(objID);
+            if (!_itemHandler._HasItemA || !_itemHandler._HasItemB || !_itemHandler._HasItemC) 
+            {
+                _itemHandler.StackBlock(objID);
+                _itemHandler.CreateItem();
+            }
         }
     }
 
