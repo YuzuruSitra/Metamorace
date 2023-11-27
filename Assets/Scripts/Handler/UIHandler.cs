@@ -15,13 +15,13 @@ public class UIHandler : MonoBehaviour
     [SerializeField] Image _itemImage;
     [SerializeField] Image _BlockImage;
     [SerializeField] Sprite[] _itemSprite;
-    [SerializeField] GameObject _button;
     //下記リザルト用
     [SerializeField] GameObject _resultPanel;
     [SerializeField] GameObject _winandlose, _draw;
     [SerializeField] Text _winBlockRate, _loseBlockRate, _drawBlockRate1, _drawBlockRate2;
     [SerializeField] GameObject itemeffect;
     Animator itemEffectAnimator;
+    private Color toumei = new Color(1f, 1f, 1f, 0f);
     void Start()
     {
         itemeffect.SetActive(false);
@@ -32,6 +32,7 @@ public class UIHandler : MonoBehaviour
         //GetItemEffect();
         //GetItemEffect();
         //DecreceGage();
+        _BlockImage.color = toumei;
     }
 
     //保持しているブロック画像表示
@@ -40,16 +41,19 @@ public class UIHandler : MonoBehaviour
         if(_objid == 1)
         {
             _BlockImage.sprite = _herosSprite;
+            _BlockImage.color = Color.white;
         }
         else
         {
             _BlockImage.sprite = _ambrasSprite;
+            _BlockImage.color = Color.white;
         }
     }
     //保持しているブロック画像null
     public void ResetBlockImage()
     {
         _BlockImage.sprite = null;
+        _BlockImage.color = toumei;
     }
 
     public void GetItemEffect()
@@ -79,10 +83,12 @@ public class UIHandler : MonoBehaviour
                 if (_objID == 1)
                 {
                     _StackImage[i].sprite = _herosSprite;
+                    _StackImage[i].color = Color.white;
                 }
                 else if (_objID == 2)
                 {
                     _StackImage[i].sprite = _ambrasSprite;
+                    _StackImage[i].color = Color.white;
                 }
                 else
                 {
@@ -98,6 +104,7 @@ public class UIHandler : MonoBehaviour
         for (int i = 0; i < _StackImage.Length; i++)
         {
             _StackImage[i].sprite = null;
+            _StackImage[i].color = toumei;
         }
 
     }
@@ -106,11 +113,13 @@ public class UIHandler : MonoBehaviour
     {
         if (_itemSprite[_itemnum] == null) return;
         _itemImage.sprite = _itemSprite[_itemnum];
+        _itemImage.color = Color.white;
     }
     //アイテムの画像をリセット
     public void ResetItemImage()
     {
         _itemImage.sprite = null;
+        _itemImage.color = toumei;
     }
     //開いている枠を調べる
     public bool IsEmpty(int _StackNum)
@@ -121,11 +130,7 @@ public class UIHandler : MonoBehaviour
         }
         return false;
     }
-    //カラーボタンを押した際の処理
-    public void ActiveFalseButton()
-    {
-        _button.SetActive(false);
-    }
+
     //名前表示
     public void ChangeName()
     {

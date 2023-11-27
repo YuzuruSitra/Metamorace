@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private PhotonView _myPV;
     [SerializeField]
+    private PhotonTransformView _myPTV;
+    [SerializeField]
     private float _playerSpeed;
     private float _usePlayerSpeed;
     [SerializeField]
@@ -66,7 +68,7 @@ public class Player : MonoBehaviour
     private bool _animStan = false;
     private bool _animIdole = false;
     private bool _animBreak = false;
-
+    private Vector3 _upPadding = new Vector3(0f,0.5f,0f);
     void Start()
     {
         _soundHandler = SoundHandler.InstanceSoundHandler;
@@ -157,7 +159,9 @@ public class Player : MonoBehaviour
         right.y = 0.0f;
         right.Normalize();
         _rb.MovePosition(transform.position + movement * _usePlayerSpeed * Time.deltaTime);
-
+        //スムーズな同期のためにPhotonTransformViewに速度値を渡す
+        Vector3 velocity = _rb.velocity;
+        _myPTV.SetSynchronizedValues(velocity, 0); 
     }
 
     private bool CheckFront(Ray ray)
@@ -257,9 +261,9 @@ public class Player : MonoBehaviour
         _animBreak = true;
         Vector3 direction = transform.forward;
         direction.Normalize();
-        Ray ray = new Ray(transform.position + Vector3.up, direction);
-
-        Debug.DrawRay(transform.position, ray.direction * 0.5f, Color.red, 1.0f);
+        Ray ray = new Ray(transform.position + _upPadding, direction);
+        
+        Debug.DrawRay(transform.position + _upPadding, direction, Color.red, 1.0f);
 
         if (!Physics.Raycast(ray, out RaycastHit hit, _playerReach) || !IsBlock(hit.collider)) return;
 
@@ -323,6 +327,7 @@ public class Player : MonoBehaviour
         _uiHandler.ResetBlockImage();
         //swingAnim再生
         _animSwing = true;
+        _hasBlock = false;
         Invoke("InsSwingObj",0.4f);
     }
 
@@ -377,8 +382,6 @@ public class Player : MonoBehaviour
             }
 
         }
-        // 仮置き
-        _hasBlock = false;
     }
 
     // ネットワーク上のキューブ生成

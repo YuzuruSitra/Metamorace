@@ -1449,7 +1449,7 @@ GameObject:
   - component: {fileID: 4877800243297777292}
   - component: {fileID: 4142409939843244246}
   m_Layer: 0
-  m_Name: Fox01UsePlayer
+  m_Name: BatleFox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2712,6 +2712,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _myPV: {fileID: 4222517243372188881}
+  _myPTV: {fileID: 4071951530283340385}
   _playerSpeed: 5
   _jumpPower: 40
   _jumprayrength: 0.15
