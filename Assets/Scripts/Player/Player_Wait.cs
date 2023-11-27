@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class Player_Wait : MonoBehaviour
 {
+    [SerializeField]
     private PhotonView _myPV;
     [SerializeField]
     private float _playerSpeed;
@@ -37,14 +38,19 @@ public class Player_Wait : MonoBehaviour
 
     void Start()
     {
-         _soundHandler = SoundHandler.InstanceSoundHandler;
+        _soundHandler = SoundHandler.InstanceSoundHandler;
         _rb = GetComponent<Rigidbody>();
-        _myPV = GetComponent<PhotonView>();
     }
-    //名前描画フォトンで呼び出し
-    public void SetName(string _name)
+
+    public void CallShreName()
     {
-        _nametext.text = _name;
+        _myPV.RPC(nameof(ShareName), PhotonTargets.All);
+    }
+
+    [PunRPC]
+    private void ShareName()
+    {
+        _nametext.text = PhotonNetwork.playerName;
     }
 
     public void SetID(int id)
@@ -144,11 +150,13 @@ public class Player_Wait : MonoBehaviour
         if(other.CompareTag("Team1Area"))
         {
             _selectTeam = 0;
+            SetTeamID("Team0");
             ChangeState(true);
         }
         if(other.CompareTag("Team2Area"))
         {
             _selectTeam = 1;
+            SetTeamID("Team1");
             ChangeState(true);
         }
     }
@@ -162,6 +170,17 @@ public class Player_Wait : MonoBehaviour
         if(other.CompareTag("Team2Area"))
         {
             ChangeState(false);
+        }
+    }
+
+    // チームIDを設定する関数
+    void SetTeamID(string teamID)
+    {
+        if (PhotonNetwork.player != null)
+        {
+            ExitGames.Client.Photon.Hashtable customProperties = new ExitGames.Client.Photon.Hashtable();
+            customProperties["TeamID"] = teamID;
+            PhotonNetwork.player.SetCustomProperties(customProperties);
         }
     }
 

@@ -58,4 +58,6 @@ MonoBehaviour:
   - FinishMasterGame
   - UpdateMemberList
   - CalleMemberList
+  - SendTeamInfo
+  - ShareName
   DisableAutoOpenWizard: 1

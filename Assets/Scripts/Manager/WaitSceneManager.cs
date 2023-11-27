@@ -113,6 +113,9 @@ public class WaitSceneManager : MonoBehaviour
             _memberList[i] = PhotonNetwork.playerList[i].NickName;
             _waitUIHandler.SetMemberText(_memberList);
         }
+
+        // それぞれの名前を描画
+        _playerWait.CallShreName();
     }
 
 }

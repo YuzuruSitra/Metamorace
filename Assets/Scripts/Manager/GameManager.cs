@@ -139,8 +139,6 @@ public class GameManager : MonoBehaviour
         _blockManager.SetParam(DevelopeMode, _cubeParentTeam1, _cubeParentTeam2);
     }
 
-
-
     void Update()
     {
 
@@ -154,6 +152,7 @@ public class GameManager : MonoBehaviour
                     if (_joinPlayerCount >= _currentPlayerCount)
                     {
                         _myPV.RPC(nameof(LaunchGame), PhotonTargets.All);
+                        FindTeamID();
                     }
                 }
             }
@@ -190,6 +189,41 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    // チームの振り分けをUIに描画する為の関数
+    void FindTeamID()
+    {
+        // PhotonNetwork.playerListからカスタムプロパティの値を取得して_memberListを更新
+        string[] _memberNames = new string[PhotonNetwork.playerList.Length];
+        string[] _memberTeamIDs = new string[PhotonNetwork.playerList.Length];
+
+        for (int i = 0; i < PhotonNetwork.playerList.Length; i++)
+        {
+            _memberNames[i] = PhotonNetwork.playerList[i].NickName;
+            _memberTeamIDs[i] = GetTeamIDFromPlayer(PhotonNetwork.playerList[i]);
+            Debug.Log("Name : "+ _memberNames[i] + "ID : "+_memberTeamIDs[i]);
+        }
+
+        // 情報を共有
+        _myPV.RPC(nameof(SendTeamInfo), PhotonTargets.All, _memberNames, _memberTeamIDs);
+    }
+
+    [PunRPC]
+    private void SendTeamInfo(string[] names, string[] IDs)
+    {
+        // UIハンドラーへ値を渡す処理
+    }
+
+
+    string GetTeamIDFromPlayer(PhotonPlayer player)
+    {
+        object teamID;
+        if (player.CustomProperties.TryGetValue("TeamID", out teamID))
+        {
+            return (string)teamID;
+        }
+        return "NoTeam"; // チームIDがない場合のデフォルト値など
     }
 
     // ゲーム開始処理
