@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -606,7 +606,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0fe1281fb3916da40a90cd696888a6a0, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -13123,6 +13123,7 @@ MonoBehaviour:
   _nametext: {fileID: 1455729167}
   name: aiu
   _itemImage: {fileID: 1435325681}
+  _BlockImage: {fileID: 62832897}
   _itemSprite:
   - {fileID: 21300000, guid: 8c01ee0916d26fd4b9bf3afdbeb7cb33, type: 3}
   - {fileID: 21300000, guid: 876f1afb4090025408b66b2031e45d04, type: 3}

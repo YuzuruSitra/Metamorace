@@ -13,6 +13,7 @@ public class UIHandler : MonoBehaviour
     [SerializeField] Text _nametext;
     [SerializeField] string name;
     [SerializeField] Image _itemImage;
+    [SerializeField] Image _BlockImage;
     [SerializeField] Sprite[] _itemSprite;
     [SerializeField] GameObject _button;
     //下記リザルト用
@@ -33,6 +34,23 @@ public class UIHandler : MonoBehaviour
         //DecreceGage();
     }
 
+    //保持しているブロック画像表示
+    public void BlockImage(int _objid)
+    {
+        if(_objid == 1)
+        {
+            _BlockImage.sprite = _herosSprite;
+        }
+        else
+        {
+            _BlockImage.sprite = _ambrasSprite;
+        }
+    }
+    //保持しているブロック画像null
+    public void ResetBlockImage()
+    {
+        _BlockImage.sprite = null;
+    }
 
     public void GetItemEffect()
     {

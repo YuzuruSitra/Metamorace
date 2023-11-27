@@ -272,6 +272,8 @@ public class Player : MonoBehaviour
 
         if (objID == 1 || objID == 2)
         {
+            //UIに保持しているブロックを表示する処理
+            _uiHandler.BlockImage(objID);
             if (hit.collider.CompareTag("ItemCBlock"))
             {
                 _itemC = hit.collider.GetComponent<ItemC>();
@@ -317,6 +319,8 @@ public class Player : MonoBehaviour
         //ブロックを持ってれば処理を行う
         if (_hasBlock == false) return;
         if (!Input.GetMouseButtonDown(1)) return;
+        //ブロック画像nullにする
+        _uiHandler.ResetBlockImage();
         //swingAnim再生
         _animSwing = true;
         Invoke("InsSwingObj",0.4f);

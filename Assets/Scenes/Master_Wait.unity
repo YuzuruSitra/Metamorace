@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1936,10 +1936,10 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0.24012882
-    width: 1
-    height: 0.51974237
+    x: 0.0016835034
+    y: 0
+    width: 0.996633
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 38.5
@@ -3885,3 +3885,82 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 95138fb154c23254cae3ab722ea4c630, type: 3}
+--- !u!1001 &7426270006376553441
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 2
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 422549517684626775, guid: 3df011169ea0b45d9af800c4608d6356, type: 3}
+      propertyPath: m_Name
+      value: WaitFox01Use
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051276193177440237, guid: 3df011169ea0b45d9af800c4608d6356, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051276193177440237, guid: 3df011169ea0b45d9af800c4608d6356, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051276193177440237, guid: 3df011169ea0b45d9af800c4608d6356, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051276193177440237, guid: 3df011169ea0b45d9af800c4608d6356, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051276193177440237, guid: 3df011169ea0b45d9af800c4608d6356, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051276193177440237, guid: 3df011169ea0b45d9af800c4608d6356, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051276193177440237, guid: 3df011169ea0b45d9af800c4608d6356, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051276193177440237, guid: 3df011169ea0b45d9af800c4608d6356, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051276193177440237, guid: 3df011169ea0b45d9af800c4608d6356, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051276193177440237, guid: 3df011169ea0b45d9af800c4608d6356, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051276193177440237, guid: 3df011169ea0b45d9af800c4608d6356, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1653220477293610742, guid: 3df011169ea0b45d9af800c4608d6356, type: 3}
+      propertyPath: _stanEffect
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1653220477293610742, guid: 3df011169ea0b45d9af800c4608d6356, type: 3}
+      propertyPath: _staneffect
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1653220477293610742, guid: 3df011169ea0b45d9af800c4608d6356, type: 3}
+      propertyPath: _saiyaeffect
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5024754584358921141, guid: 3df011169ea0b45d9af800c4608d6356, type: 3}
+      propertyPath: viewIdField
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5024754584358921141, guid: 3df011169ea0b45d9af800c4608d6356, type: 3}
+      propertyPath: instantiationId
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_AddedGameObjects: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3df011169ea0b45d9af800c4608d6356, type: 3}
