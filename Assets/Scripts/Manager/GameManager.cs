@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private PhotonView _myPV;
-    [SerializeField]
     private Player _player;
     [SerializeField] 
     private ColorManager _colorManager;
@@ -49,13 +48,17 @@ public class GameManager : MonoBehaviour
     private int _currentPlayerCount = 0;
     bool IsOnce = false;
     private SoundHandler _soundHandler;
-    [SerializeField] AudioClip countDown,gameStart,gameEnd,drumroll;
+    [SerializeField] 
+    private AudioClip battleBGM;
+    [SerializeField] 
+    private AudioClip countDown,gameStart,gameEnd,drumroll;
     void Start()
     {
         _soundHandler = SoundHandler.InstanceSoundHandler;
         _uiHandler = GameObject.FindWithTag("UIHandler").GetComponent<UIHandler>();
         _calcWaitTime = new WaitForSeconds(_calcInterval);
         SceneManager.sceneLoaded += OnLoadedScene;
+        _soundHandler.PlayBGM(battleBGM);
         if (DevelopeMode)
             HandleDevelopmentMode();
         else
