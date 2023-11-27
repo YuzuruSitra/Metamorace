@@ -40,12 +40,12 @@ public class UIHandler : MonoBehaviour
     {
         if(_objid == 1)
         {
-            _BlockImage.sprite = _herosSprite;
+            _BlockImage.sprite = _ambrasSprite;
             _BlockImage.color = Color.white;
         }
         else
         {
-            _BlockImage.sprite = _ambrasSprite;
+            _BlockImage.sprite = _herosSprite;
             _BlockImage.color = Color.white;
         }
     }
