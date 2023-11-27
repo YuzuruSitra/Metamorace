@@ -82,12 +82,12 @@ public class UIHandler : MonoBehaviour
             {
                 if (_objID == 1)
                 {
-                    _StackImage[i].sprite = _herosSprite;
+                    _StackImage[i].sprite = _ambrasSprite;
                     _StackImage[i].color = Color.white;
                 }
                 else if (_objID == 2)
                 {
-                    _StackImage[i].sprite = _ambrasSprite;
+                    _StackImage[i].sprite = _herosSprite;
                     _StackImage[i].color = Color.white;
                 }
                 else
