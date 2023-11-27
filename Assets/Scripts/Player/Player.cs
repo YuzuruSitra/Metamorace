@@ -96,6 +96,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(_useItem);
          //エフェクト移動させてる
         if (transform.position.z < 0 &&_saiyaeffect.activeSelf) _saiyaeffect.transform.position = transform.position + new Vector3(0, 0.5f, -stanpos);
         else _saiyaeffect.transform.position = transform.position + new Vector3(0, 0.5f, stanpos);
@@ -373,17 +374,19 @@ public class Player : MonoBehaviour
         else
         {
             //アイテムBを持っていたら巨大ブロック一回だけ生成
-            if (_itemHandler._HasItemB)
+            if (_itemHandler._HasItemB&& _useItem)
             {
                 //アイテムB微調整
                 _myPV.RPC(nameof(SyncCreateBig), PhotonTargets.All, _insBigPos, _mineTeam, _enemyTeam);
                 _itemHandler.ItemEffectB();
+                 _useItem = false;
             }
             //ItemCBlock生成
-            else if (_itemHandler._HasItemC)
+            else if (_itemHandler._HasItemC&& _useItem)
             {
                 _itemHandler.ItemEffectC();
                 _myPV.RPC(nameof(SyncCreateItemC), PhotonTargets.All, _insPos, _mineTeam, _enemyTeam);
+                 _useItem = false;
             }
             else
             {
@@ -422,7 +425,7 @@ public class Player : MonoBehaviour
     public void Item()
     {
         if (!Input.GetMouseButtonDown(1)) return;
-
+        
         if (_itemHandler._HasItemA == true)
         {
             //さいやエフェクト再生
