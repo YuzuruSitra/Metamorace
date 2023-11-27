@@ -16,6 +16,8 @@ public class WaitSceneManager : MonoBehaviour
     private WaitForSeconds _waitTime;
     public bool DebugMode;
     private string[] _memberList = new string[4];
+    [SerializeField]
+    private WaitUIHandler _waitUIHandler;
     
     // Start is called before the first frame update
     void Start()
@@ -36,6 +38,7 @@ public class WaitSceneManager : MonoBehaviour
         _playerWait = Player.GetComponent<Player_Wait>();
         _playerWait.OnReadyChanged += CheckIn;
         _playerWait.SetID(_playerCount);
+        UpdateMemberList();
     }
 
     // Update is called once per frame
@@ -87,22 +90,28 @@ public class WaitSceneManager : MonoBehaviour
     {
         if (!PhotonNetwork.isMasterClient) return;
         Debug.Log(player.NickName + " is joined.");
-        _myPV.RPC(nameof(UpdateMemberList), PhotonTargets.All);
+        _myPV.RPC(nameof(CalleMemberList), PhotonTargets.All);
     }
 
     public void OnPhotonPlayerDisconnected(PhotonPlayer player)
     {
         if (!PhotonNetwork.isMasterClient) return;
         Debug.Log(player.NickName + " is left.");
-        _myPV.RPC(nameof(UpdateMemberList), PhotonTargets.All);
+        _myPV.RPC(nameof(CalleMemberList), PhotonTargets.All);
     }
 
     [PunRPC]
-    public void UpdateMemberList()
+    public void CalleMemberList()
+    {
+        UpdateMemberList();
+    }
+
+    void UpdateMemberList()
     {
         for (int i = 0; i < PhotonNetwork.playerList.Length; i++)
         {
             _memberList[i] = PhotonNetwork.playerList[i].NickName;
+            _waitUIHandler.SetMemberText(_memberList);
         }
     }
 

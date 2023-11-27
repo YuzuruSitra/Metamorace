@@ -77,7 +77,6 @@ public class Player : MonoBehaviour
         _useDestroyPower = _destroyPower;
         _waitTime = new WaitForSeconds(_itemHandler._ItemAEffectTime);
         _uiHandler = GameObject.FindWithTag("UIHandler").GetComponent<UIHandler>();
-        _predictCubes.SetActive(true);
     }
 
     public void SetGameState(bool isGame)

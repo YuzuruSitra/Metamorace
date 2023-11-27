@@ -57,4 +57,5 @@ MonoBehaviour:
   - SyncCreateItemC
   - FinishMasterGame
   - UpdateMemberList
+  - CalleMemberList
   DisableAutoOpenWizard: 1
