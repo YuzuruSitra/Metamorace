@@ -15,6 +15,7 @@ public class WaitSceneManager : MonoBehaviour
     private float _transitionTime = 1.0f;
     private WaitForSeconds _waitTime;
     public bool DebugMode;
+    private string[] _memberList = new string[4];
     
     // Start is called before the first frame update
     void Start()
@@ -79,6 +80,30 @@ public class WaitSceneManager : MonoBehaviour
         if(i_scene.name != "Master_Battle") return;
         PhotonNetwork.isMessageQueueRunning = true;
         GameObject.FindWithTag("GameManager").GetComponent<GameManager>().SetInfo(_playerWait.SelectTeam, _playerWait.PlayerID, _playerCount);
+    }
+
+    // 名前の取得
+    public void OnPhotonPlayerConnected(PhotonPlayer player)
+    {
+        if (!PhotonNetwork.isMasterClient) return;
+        Debug.Log(player.NickName + " is joined.");
+        _myPV.RPC(nameof(UpdateMemberList), PhotonTargets.All);
+    }
+
+    public void OnPhotonPlayerDisconnected(PhotonPlayer player)
+    {
+        if (!PhotonNetwork.isMasterClient) return;
+        Debug.Log(player.NickName + " is left.");
+        _myPV.RPC(nameof(UpdateMemberList), PhotonTargets.All);
+    }
+
+    [PunRPC]
+    public void UpdateMemberList()
+    {
+        for (int i = 0; i < PhotonNetwork.playerList.Length; i++)
+        {
+            _memberList[i] = PhotonNetwork.playerList[i].NickName;
+        }
     }
 
 }

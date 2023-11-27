@@ -56,4 +56,5 @@ MonoBehaviour:
   - SyncCreateBig
   - SyncCreateItemC
   - FinishMasterGame
+  - UpdateMemberList
   DisableAutoOpenWizard: 1
