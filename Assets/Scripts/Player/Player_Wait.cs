@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public class Player_Wait : MonoBehaviour
 {
@@ -31,12 +32,19 @@ public class Player_Wait : MonoBehaviour
     private bool _animIdole = false;
    private SoundHandler _soundHandler;
    [SerializeField] AudioClip jump;
+   [SerializeField] Text _nametext;
+    private string _name;
 
     void Start()
     {
          _soundHandler = SoundHandler.InstanceSoundHandler;
         _rb = GetComponent<Rigidbody>();
         _myPV = GetComponent<PhotonView>();
+    }
+    //名前描画フォトンで呼び出し
+    public void SetName(string _name)
+    {
+        _nametext.text = _name;
     }
 
     public void SetID(int id)
