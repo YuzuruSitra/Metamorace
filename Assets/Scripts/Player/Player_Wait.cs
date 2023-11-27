@@ -24,6 +24,13 @@ public class Player_Wait : MonoBehaviour
     private int _playerID;
     public int PlayerID => _playerID;
 
+    [SerializeField]
+    Animator _playerAnim;
+    private bool _animJump = false;
+    private bool _animWalk = false;
+    private bool _animIdole = false;
+   
+
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -39,6 +46,7 @@ public class Player_Wait : MonoBehaviour
     {
         if (!_myPV.isMine) return;
         Jump();   
+        AnimSelect();
     }
     void FixedUpdate()
     {
@@ -117,6 +125,28 @@ public class Player_Wait : MonoBehaviour
         if(other.CompareTag("Team2Area"))
         {
             ChangeState(false);
+        }
+    }
+
+    private void AnimSelect()
+    {
+        if (_animIdole)
+        {
+           _playerAnim.SetBool("_isJump", false);
+            _playerAnim.SetBool("_isIdole", true);
+            _playerAnim.SetBool("_isWalk", false);
+        }
+        else if(_animJump)
+        {
+            _playerAnim.SetBool("_isJump", true);
+            _playerAnim.SetBool("_isIdole", false);
+            _playerAnim.SetBool("_isWalk", false);
+        }
+        else if(_animWalk)
+        {
+            _playerAnim.SetBool("_isStan", false);           
+            _playerAnim.SetBool("_isIdole", false);
+            _playerAnim.SetBool("_isWalk", true);
         }
     }
 
