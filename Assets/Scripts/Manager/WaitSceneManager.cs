@@ -35,7 +35,7 @@ public class WaitSceneManager : MonoBehaviour
         _playerNum = PhotonNetwork.playerList.Length - 1;
         if (_playerNum >= _playerPrefab.Length) _playerNum = 3;
         GameObject Player = PhotonNetwork.Instantiate(this._playerPrefab[_playerNum].name, new Vector3(24.0f, -15.0f, 84.0f), Quaternion.identity, 0);
-
+        
         _playerWait = Player.GetComponent<Player_Wait>();
         _playerWait.OnReadyChanged += CheckIn;
         _playerWait.SetID(PhotonNetwork.playerList.Length);

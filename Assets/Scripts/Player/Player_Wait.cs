@@ -44,13 +44,13 @@ public class Player_Wait : MonoBehaviour
 
     public void CallShreName()
     {
-        _myPV.RPC(nameof(ShareName), PhotonTargets.All);
+        _myPV.RPC(nameof(ShareName), PhotonTargets.All, PhotonNetwork.playerName);
     }
 
     [PunRPC]
-    private void ShareName()
+    private void ShareName(string name)
     {
-        _nametext.text = PhotonNetwork.playerName;
+        _nametext.text = name;
     }
 
     public void SetID(int id)

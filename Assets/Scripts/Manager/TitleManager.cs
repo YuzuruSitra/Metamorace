@@ -41,6 +41,7 @@ public class TitleManager : MonoBehaviour
             PhotonNetwork.ConnectUsingSettings(_gameVersion);   //Photonに接続する
             Debug.Log("Photonに接続しました。");
         }
+        Application.targetFrameRate = 60;
     }
 
     void Start()
