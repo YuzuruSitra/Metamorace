@@ -52,6 +52,7 @@ public class Player : MonoBehaviour
     private bool _isDead = false;
     public bool IsDead => _isDead;
     private bool _isGame = false;
+    private bool _useItem = false;
     [SerializeField] float _playerReach;
     [SerializeField] AudioClip jump, breakBlock, createBlock;
     private SoundHandler _soundHandler;
@@ -347,19 +348,21 @@ public class Player : MonoBehaviour
         if (_developMode)
         {
             //アイテムBを持っていたら巨大ブロック一回だけ生成
-            if (_itemHandler._HasItemB)
+            if (_itemHandler._HasItemB&& _useItem)
             {
                 //アイテムB微調整
                 insObj = Instantiate(_bigPrefab[_mineTeam], _insBigPos, _insQuaternion[_mineTeam]);
                 insObj.transform.parent = _cubeParentTeam[_enemyTeam];
                 _itemHandler.ItemEffectB();
+                 _useItem = false;
             }
             //ItemCBlock生成
-            else if (_itemHandler._HasItemC)
+            else if (_itemHandler._HasItemC&& _useItem)
             {
                 _itemHandler.ItemEffectC();
                 insObj = Instantiate(_cPrefab[_mineTeam], _insPos, _insQuaternion[_mineTeam]);
                 insObj.transform.parent = _cubeParentTeam[_enemyTeam];
+                 _useItem = false;
             }
             else
             {
@@ -431,12 +434,13 @@ public class Player : MonoBehaviour
         {
             //  アイテムUI削除、所持ブロックをCに変更
             _uiHandler.ItemUI(3);
+            _useItem = true;
         }
         else if(_itemHandler._HasItemB == true&&_hasBlock)
         {
             //  アイテムUI削除、所持ブロックをBに変更
-            Debug.Log("1");
             _uiHandler.ItemUI(2);
+             _useItem = true;
             
         }
     }
