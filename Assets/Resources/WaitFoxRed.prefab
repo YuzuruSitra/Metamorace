@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: 5161297745561388293}
   - component: {fileID: 4866694307341793379}
   m_Layer: 0
-  m_Name: WaitFox
+  m_Name: WaitFoxRed
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
