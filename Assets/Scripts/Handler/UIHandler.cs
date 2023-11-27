@@ -70,7 +70,7 @@ public class UIHandler : MonoBehaviour
     }
     public void ShowLimitTime(float _TimeLimit)
     {
-        _LimitTimeText.text = _TimeLimit.ToString("f1") + "秒";
+        _LimitTimeText.text = _TimeLimit.ToString("f0") + "秒";
     }
 
     //アンブラスとヘイロスのスプライトを格納
@@ -141,8 +141,8 @@ public class UIHandler : MonoBehaviour
     {
         string ShareTeam1 = shareTeam1.ToString();
         string ShareTeam2 = shareTeam2.ToString();
-        _BlockRateTeam1.text = ShareTeam1;
-        _BlockRateTeam2.text = ShareTeam2;
+        _BlockRateTeam1.text = ShareTeam1 + "%";
+        _BlockRateTeam2.text = ShareTeam2 + "%";
     }
 
     public void ShowResult(int shareTeam1, int shareTeam2, bool isDead, int winteam)
@@ -155,22 +155,22 @@ public class UIHandler : MonoBehaviour
             if (shareTeam2 > shareTeam1)
             {
                 _winandlose.SetActive(true);
-                _winBlockRate.text = shareTeam1.ToString();
-                _loseBlockRate.text = shareTeam2.ToString();
+                _winBlockRate.text = shareTeam1.ToString() + "%";
+                _loseBlockRate.text = shareTeam2.ToString() + "%";
             }
             //占有率でTeam2が勝ったとき
             else if (shareTeam1 > shareTeam2)
             {
                 _winandlose.SetActive(true);
-                _winBlockRate.text = shareTeam2.ToString();
-                _loseBlockRate.text = shareTeam1.ToString();
+                _winBlockRate.text = shareTeam2.ToString() + "%";
+                _loseBlockRate.text = shareTeam1.ToString() + "%";
             }
             //引き分けの時
             else;
             {
                 _draw.SetActive(true);
-                _drawBlockRate1.text = shareTeam1.ToString();
-                _drawBlockRate2.text = shareTeam2.ToString();
+                _drawBlockRate1.text = shareTeam1.ToString() + "%";
+                _drawBlockRate2.text = shareTeam2.ToString() + "%";
             }
         }
         //どちらかのチームで死者が出た時
