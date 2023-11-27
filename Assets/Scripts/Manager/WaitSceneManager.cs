@@ -9,15 +9,16 @@ public class WaitSceneManager : MonoBehaviour
     private PhotonView _myPV;
 
     [SerializeField]
-    private GameObject _playerPrefab;
+    private GameObject[] _playerPrefab = new GameObject[4];
     private Player_Wait _playerWait;
-    private int _playerCount = 0;
     private float _transitionTime = 1.0f;
     private WaitForSeconds _waitTime;
     public bool DebugMode;
     private string[] _memberList = new string[4];
     [SerializeField]
     private WaitUIHandler _waitUIHandler;
+    // 入室した番号
+    int _playerNum;
     
     // Start is called before the first frame update
     void Start()
@@ -31,13 +32,13 @@ public class WaitSceneManager : MonoBehaviour
         _waitTime = new WaitForSeconds(_transitionTime);
 
         //Photonに接続していれば自プレイヤーを生成
-        GameObject Player = PhotonNetwork.Instantiate(this._playerPrefab.name, new Vector3(24.0f, -15.0f, 84.0f), Quaternion.identity, 0);
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        _playerCount = players.Length;
+        _playerNum = PhotonNetwork.playerList.Length - 1;
+        if (_playerNum >= _playerPrefab.Length) _playerNum = 3;
+        GameObject Player = PhotonNetwork.Instantiate(this._playerPrefab[_playerNum].name, new Vector3(24.0f, -15.0f, 84.0f), Quaternion.identity, 0);
 
         _playerWait = Player.GetComponent<Player_Wait>();
         _playerWait.OnReadyChanged += CheckIn;
-        _playerWait.SetID(_playerCount);
+        _playerWait.SetID(PhotonNetwork.playerList.Length);
         UpdateMemberList();
     }
 
@@ -47,12 +48,11 @@ public class WaitSceneManager : MonoBehaviour
         if (!state) return;
 
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        _playerCount = players.Length;
 
         int team1 = 0;
         int team2 = 0;
 
-        for (int i = 0; i < _playerCount; i++)
+        for (int i = 0; i < PhotonNetwork.playerList.Length; i++)
         {
             Player_Wait playerWait = players[i].GetComponent<Player_Wait>();
             // エリア外の人がいたら処理を返す
@@ -63,16 +63,15 @@ public class WaitSceneManager : MonoBehaviour
         }
 
         if (DebugMode)
-            _myPV.RPC(nameof(SendScene), PhotonTargets.All, _playerCount);
+            _myPV.RPC(nameof(SendScene), PhotonTargets.All);
         else
             // プレイヤーが2人以上で、Team1とTeam2に均等に割り振られ、全員が準備完了ならシーン遷移
-            if (_playerCount >= 2 && team1 == team2 && team1 + team2 == _playerCount) _myPV.RPC(nameof(SendScene), PhotonTargets.All, _playerCount);
+            if (PhotonNetwork.playerList.Length >= 2 && team1 == team2 && team1 + team2 == PhotonNetwork.playerList.Length) _myPV.RPC(nameof(SendScene), PhotonTargets.All);
     }
 
     [PunRPC]
     private IEnumerator SendScene(int playerCount)
     {
-        _playerCount = playerCount;
         yield return _waitTime;
         PhotonNetwork.isMessageQueueRunning = false;
         PhotonNetwork.LoadLevel("Master_Battle");
@@ -82,7 +81,7 @@ public class WaitSceneManager : MonoBehaviour
     {
         if(i_scene.name != "Master_Battle") return;
         PhotonNetwork.isMessageQueueRunning = true;
-        GameObject.FindWithTag("GameManager").GetComponent<GameManager>().SetInfo(_playerWait.SelectTeam, _playerWait.PlayerID, _playerCount);
+        GameObject.FindWithTag("GameManager").GetComponent<GameManager>().SetInfo(_playerWait.SelectTeam, _playerWait.PlayerID, PhotonNetwork.playerList.Length);
     }
 
     // 名前の取得

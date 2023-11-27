@@ -479,8 +479,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _myPV: {fileID: 5024754584358921141}
-  _playerSpeed: 5
-  _jumpPower: 30
+  _playerSpeed: 10
+  _jumpPower: 50
   _jumprayrength: 0.78
   _selectTeam: 0
   _playerAnim: {fileID: 656500102993034482}
