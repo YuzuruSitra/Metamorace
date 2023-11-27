@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioClip countDown,gameStart,gameEnd,drumroll;
     void Start()
     {
-         _soundHandler = SoundHandler.InstanceSoundHandler;
+        _soundHandler = SoundHandler.InstanceSoundHandler;
         _uiHandler = GameObject.FindWithTag("UIHandler").GetComponent<UIHandler>();
         _calcWaitTime = new WaitForSeconds(_calcInterval);
         SceneManager.sceneLoaded += OnLoadedScene;
@@ -198,6 +198,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator StartGame()
     {
+        _uiHandler.ShowLimitTime(_TimeLimit);
+        _uiHandler.ShowCalc(0,0);
         _oneTime = false;
         // UIの更新
         yield return new WaitForSeconds(3.0f);
