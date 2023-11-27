@@ -70,7 +70,7 @@ public class WaitSceneManager : MonoBehaviour
     }
 
     [PunRPC]
-    private IEnumerator SendScene(int playerCount)
+    private IEnumerator SendScene()
     {
         yield return _waitTime;
         PhotonNetwork.isMessageQueueRunning = false;

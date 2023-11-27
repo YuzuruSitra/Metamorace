@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     public float _timeLimit => _TimeLimit;
     private UIHandler _uiHandler;
     [SerializeField] 
-    private GameObject _playerPrefab;
+    private GameObject[] _playerPrefab = new GameObject[4];
     private int _teamID;
     private int _playerID;
     public const float TEAM1_POS_Z = -3.0f;
@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour
     private void SetupPlayer(float myPosZ)
     {
         SetupBlockManager();
-        GameObject player = Instantiate(_playerPrefab, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity);
+        GameObject player = Instantiate(_playerPrefab[_playerID-1], new Vector3(0f, 1.25f, myPosZ), Quaternion.identity);
         _camManager.SetPlayer(player, _teamID);
         _player = player.transform.GetChild(0).gameObject.GetComponent<Player>();
         _player.SetParameter( _cubeParentTeam1, _cubeParentTeam2, _teamID, true);
@@ -109,7 +109,7 @@ public class GameManager : MonoBehaviour
     {
         if (PhotonNetwork.isMasterClient) SetupPhotonBlockManager();
 
-        GameObject player = PhotonNetwork.Instantiate(_playerPrefab.name, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity, 0);
+        GameObject player = PhotonNetwork.Instantiate(_playerPrefab[_playerID-1].name, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity, 0);
         _myPV.RPC(nameof(JoinPlayer), PhotonTargets.All);
         _camManager.SetPlayer(player, _teamID);
         _player = player.transform.GetChild(0).gameObject.GetComponent<Player>();

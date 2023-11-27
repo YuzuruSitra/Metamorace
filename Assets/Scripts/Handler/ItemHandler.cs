@@ -57,8 +57,7 @@ public class ItemHandler : MonoBehaviour
          for(int i = 0; i < _stackBlocks.Length; i++) 
         {
             //配列のi番目が空（０）だったら処理実行
-           
-                _stackBlocks[i] = 0;      
+            _stackBlocks[i] = 0;      
         }   
     }
 
@@ -73,8 +72,6 @@ public class ItemHandler : MonoBehaviour
             {
                 //アイテムAサイヤ人
                 _uiHandler.SetItemImage(0);
-                _uiHandler.ResetStackImage();
-                ResetBlock();
                 _uiHandler.GetItemEffect();
                 _hasItemA = true;
             }
@@ -82,8 +79,6 @@ public class ItemHandler : MonoBehaviour
             {
                 //アイテムB巨大化
                  _uiHandler.SetItemImage(2);
-                 _uiHandler.ResetStackImage();
-                ResetBlock();
                 _uiHandler.GetItemEffect();
                 _hasItemB = true;
             }
@@ -91,8 +86,6 @@ public class ItemHandler : MonoBehaviour
             {
                  //アイテムC
                  _uiHandler.SetItemImage(1);
-                 _uiHandler.ResetStackImage();
-                ResetBlock();
                 _uiHandler.GetItemEffect();
                 _hasItemC = true;
                 
@@ -121,18 +114,20 @@ public class ItemHandler : MonoBehaviour
         _uiHandler.ResetItemImage();   
         _destroyPower = _destroyPower*2;
         _playerSpeed = _playerSpeed*2;
-       
+        ResetBlock();
         _hasItemA = false;        
         //return _destroyPower;   
      }
      public void ItemEffectB()
-     { 
-            _uiHandler.ResetItemImage();         
-            _hasItemB = false;
+     {      
+        ResetBlock();
+        _uiHandler.ResetItemImage();   
+        _hasItemB = false;
      }
      public void ItemEffectC()
      {
-         _uiHandler.ResetItemImage();
+        ResetBlock();
+        _uiHandler.ResetItemImage();   
         _hasItemC = false;
      }
   

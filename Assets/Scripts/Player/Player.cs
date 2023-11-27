@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
     private bool _isDead = false;
     public bool IsDead => _isDead;
     private bool _isGame = false;
-    private bool _useItem = false;
+    private int _useItemState = -1;
     [SerializeField] float _playerReach;
     [SerializeField] AudioClip jump, breakBlock, createBlock;
     private SoundHandler _soundHandler;
@@ -64,6 +64,7 @@ public class Player : MonoBehaviour
     private bool _animStan = false;
     private bool _animIdole = false;
     private bool _animBreak = false;
+    private bool _hasItem = false;
     private Vector3 _upPadding = new Vector3(0f,0.5f,0f);
     Vector3 _insPos;
     Vector3 _insBigPos;
@@ -96,8 +97,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(_useItem);
-         //エフェクト移動させてる
+        Debug.Log(_itemHandler._HasItemB);
+        //エフェクト移動させてる
         if (transform.position.z < 0 &&_saiyaeffect.activeSelf) _saiyaeffect.transform.position = transform.position + new Vector3(0, 0.5f, -stanpos);
         else _saiyaeffect.transform.position = transform.position + new Vector3(0, 0.5f, stanpos);
         if (!_myPV.isMine && !_developMode) return;
@@ -199,9 +200,9 @@ public class Player : MonoBehaviour
     void JudgeHorizontalDeath()
     {
         Ray ray;
-        if (_mineTeam == 0) ray = new Ray(transform.position + Vector3.up, new Vector3(0f, 0f, -1f));
-        else ray = new Ray(transform.position, new Vector3(0f, 0f, 1f));
-        Debug.DrawRay(transform.position + Vector3.up, new Vector3(0f, 0f, 1f) * _jumprayrength, Color.blue, 1.0f);
+        if (_mineTeam == 0) ray = new Ray(transform.position + new Vector3(0f,0.5f,0f), new Vector3(0f, 0f, -1f));
+        else ray = new Ray(transform.position + new Vector3(0f,0.5f,0f), new Vector3(0f, 0f, 1f));
+        Debug.DrawRay(transform.position + new Vector3(0f,0.5f,0f), new Vector3(0f, 0f, 1f) * _jumprayrength, Color.blue, 1.0f);
 
         RaycastHit _hit;
         if (Physics.Raycast(ray, out _hit, _jumprayrength))
@@ -293,7 +294,7 @@ public class Player : MonoBehaviour
             _soundHandler.PlaySE(breakBlock);
             _predictCubes.SetActive(true);
             _hasBlock = true;
-            _itemHandler.StackBlock(objID);
+            if (!_itemHandler._HasItemA || !_itemHandler._HasItemB || !_itemHandler._HasItemC) _itemHandler.StackBlock(objID);
         }
     }
 
@@ -328,10 +329,9 @@ public class Player : MonoBehaviour
     public void CreateBlock()
     {
         //ブロックを持ってれば処理を行う
-        if (_hasBlock == false) return;
+        if (!_hasBlock) return;
+        if(_animSwing) return;
         if (!Input.GetMouseButtonDown(0)) return;
-        //ブロック画像nullにする
-        _uiHandler.ResetBlockImage();
         //swingAnim再生
         _animSwing = true;
         _hasBlock = false;
@@ -345,55 +345,27 @@ public class Player : MonoBehaviour
     void InsSwingObj()
     {
         _animSwing = false;
-        GameObject insObj;
-        if (_developMode)
+        //アイテムBを持っていたら巨大ブロック一回だけ生成
+        if (_itemHandler._HasItemB && _useItemState == 0)
         {
-            //アイテムBを持っていたら巨大ブロック一回だけ生成
-            if (_itemHandler._HasItemB&& _useItem)
-            {
-                //アイテムB微調整
-                insObj = Instantiate(_bigPrefab[_mineTeam], _insBigPos, _insQuaternion[_mineTeam]);
-                insObj.transform.parent = _cubeParentTeam[_enemyTeam];
-                _itemHandler.ItemEffectB();
-                 _useItem = false;
-            }
-            //ItemCBlock生成
-            else if (_itemHandler._HasItemC&& _useItem)
-            {
-                _itemHandler.ItemEffectC();
-                insObj = Instantiate(_cPrefab[_mineTeam], _insPos, _insQuaternion[_mineTeam]);
-                insObj.transform.parent = _cubeParentTeam[_enemyTeam];
-                 _useItem = false;
-            }
-            else
-            {
-                insObj = Instantiate(_herosPrefab[_mineTeam], _insPos, _insQuaternion[_mineTeam]);
-                insObj.transform.parent = _cubeParentTeam[_enemyTeam];
-            }
+            //アイテムB微調整
+            _myPV.RPC(nameof(SyncCreateBig), PhotonTargets.All, _insBigPos, _mineTeam, _enemyTeam);
+            _useItemState = -1;
+            _itemHandler.ItemEffectB();
+        }
+        //ItemCBlock生成
+        else if (_itemHandler._HasItemC && _useItemState == 1)
+        {
+            _myPV.RPC(nameof(SyncCreateItemC), PhotonTargets.All, _insPos, _mineTeam, _enemyTeam);
+            _useItemState = -1;
+            _itemHandler.ItemEffectC();
         }
         else
         {
-            //アイテムBを持っていたら巨大ブロック一回だけ生成
-            if (_itemHandler._HasItemB&& _useItem)
-            {
-                //アイテムB微調整
-                _myPV.RPC(nameof(SyncCreateBig), PhotonTargets.All, _insBigPos, _mineTeam, _enemyTeam);
-                _itemHandler.ItemEffectB();
-                 _useItem = false;
-            }
-            //ItemCBlock生成
-            else if (_itemHandler._HasItemC&& _useItem)
-            {
-                _itemHandler.ItemEffectC();
-                _myPV.RPC(nameof(SyncCreateItemC), PhotonTargets.All, _insPos, _mineTeam, _enemyTeam);
-                 _useItem = false;
-            }
-            else
-            {
-                _myPV.RPC(nameof(SyncCreateHeros), PhotonTargets.All, _insPos, _mineTeam, _enemyTeam);
-            }
-
+            _myPV.RPC(nameof(SyncCreateHeros), PhotonTargets.All, _insPos, _mineTeam, _enemyTeam);
         }
+        _uiHandler.ResetBlockImage();
+        
     }
 
     // ネットワーク上のキューブ生成
@@ -425,26 +397,32 @@ public class Player : MonoBehaviour
     public void Item()
     {
         if (!Input.GetMouseButtonDown(1)) return;
-        
         if (_itemHandler._HasItemA == true)
         {
             //さいやエフェクト再生
             _saiyaeffect.SetActive(true);
             _itemHandler.ItemEffectA(ref _useDestroyPower, ref _usePlayerSpeed);
+            //ブロック画像nullにする
+            _uiHandler.ResetStackImage();
             StartCoroutine(FinishItemA());
         }
-        else if(_itemHandler._HasItemC == true&&_hasBlock)
+        else if(_itemHandler._HasItemC == true && _hasBlock)
         {
             //  アイテムUI削除、所持ブロックをCに変更
             _uiHandler.ItemUI(3);
-            _useItem = true;
+            _uiHandler.ResetItemImage();    
+            //ブロック画像nullにする
+            _uiHandler.ResetStackImage();
+            _useItemState = 1;
         }
-        else if(_itemHandler._HasItemB == true&&_hasBlock)
+        else if(_itemHandler._HasItemB == true && _hasBlock)
         {
             //  アイテムUI削除、所持ブロックをBに変更
             _uiHandler.ItemUI(2);
-             _useItem = true;
-            
+            _uiHandler.ResetItemImage();    
+            //ブロック画像nullにする
+            _uiHandler.ResetStackImage();
+            _useItemState = 0;       
         }
     }
 
