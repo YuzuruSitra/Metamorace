@@ -308,7 +308,7 @@ Transform:
   - {fileID: 2468275018808334532}
   - {fileID: 4126651252039992490}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &656500102993034482
 Animator:
@@ -478,9 +478,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerSpeed: 5
-  _jumpPower: 5
+  _jumpPower: 30
   _jumprayrength: 0.78
   _selectTeam: 0
+  _playerAnim: {fileID: 656500102993034482}
+  jump: {fileID: 8300000, guid: 8435c23312ad2934a972e15f0a48c4f8, type: 3}
 --- !u!1 &487347163600762219
 GameObject:
   m_ObjectHideFlags: 0
