@@ -1311,6 +1311,103 @@ Transform:
   m_Father: {fileID: 3637074984480147431}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 54.162666, y: -14.840269, z: 38.834175}
+--- !u!1 &4142931056409329927
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8692937621188100739}
+  - component: {fileID: 6455880993493596611}
+  - component: {fileID: 8467630926092262047}
+  - component: {fileID: 6344001049811582516}
+  m_Layer: 0
+  m_Name: PredictCube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &8692937621188100739
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4142931056409329927}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalPosition: {x: 0.006149113, y: 0.52305907, z: -1.217}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4877800243297777292}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &6455880993493596611
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4142931056409329927}
+  m_Mesh: {fileID: 4300000, guid: 28b8b02927105984488cd24ba24d015d, type: 2}
+--- !u!23 &8467630926092262047
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4142931056409329927}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: ec15a6a405240ba4088785ed7dfa989c, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6344001049811582516
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4142931056409329927}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4293956635849972447
 GameObject:
   m_ObjectHideFlags: 0
@@ -1468,6 +1565,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8193178583824930953}
+  - {fileID: 8692937621188100739}
   - {fileID: 2587801957149257155}
   - {fileID: 4955215041919156889}
   m_Father: {fileID: 0}
@@ -2714,11 +2812,10 @@ MonoBehaviour:
   _myPV: {fileID: 4222517243372188881}
   _myPTV: {fileID: 4071951530283340385}
   _playerSpeed: 5
-  _jumpPower: 40
+  _jumpPower: 30
   _jumprayrength: 0.15
   _frontRayREngth: 0.5
   _destroyPower: 1
-  _poolHandler: {fileID: 7454566972977520030, guid: c9c56267c0abf6843979b993354cb2d6, type: 3}
   _itemHandler: {fileID: 126352862618281623}
   _herosPrefab:
   - {fileID: 1296549643261954888, guid: 36de42bbe2c4edd48af2924c3be698f7, type: 3}
@@ -2739,6 +2836,7 @@ MonoBehaviour:
   jump: {fileID: 8300000, guid: 8435c23312ad2934a972e15f0a48c4f8, type: 3}
   breakBlock: {fileID: 8300000, guid: a36f30c4df2344a4980a7e9965851ee8, type: 3}
   createBlock: {fileID: 8300000, guid: 3b21016f888eda14e9c4644263996cab, type: 3}
+  _predictCubes: {fileID: 4142931056409329927}
 --- !u!54 &5353145884009873201
 Rigidbody:
   m_ObjectHideFlags: 0

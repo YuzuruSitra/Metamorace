@@ -112,7 +112,7 @@ public class BlockBehaviour : MonoBehaviour
     {
         Ray _move = new Ray(transform.position, -transform.forward);
         RaycastHit _hitmove;
-        Debug.DrawRay(transform.position, _move.direction * _blocklength, Color.red, _blocklength);
+        Debug.DrawRay(transform.position, _move.direction * _blocklength, Color.red, 0.1f);
 
         if (Physics.Raycast(_move, out _hitmove, _blocklength))
         {
@@ -122,7 +122,9 @@ public class BlockBehaviour : MonoBehaviour
                 //当たったら移動
                 _rb.isKinematic = true;
                 _rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotation;
-                _rb.MovePosition(transform.position + transform.forward * _speed * Time.deltaTime);
+                //_rb.MovePosition(transform.position + transform.forward * _speed * Time.deltaTime);
+                Vector3 movePos = transform.position + transform.forward * _speed * Time.deltaTime;
+                transform.position = movePos;
             }
         }
     }
@@ -150,7 +152,12 @@ public class BlockBehaviour : MonoBehaviour
             if (IsBlock(hit.collider)) 
             {
                 //当たったら移動
-                _rb.MovePosition(transform.position + transform.forward * _speed * Time.deltaTime);
+                _rb.isKinematic = true;
+                _rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotation;
+                //当たったら移動
+                //_rb.MovePosition(transform.position + transform.forward * _speed * Time.deltaTime);
+                Vector3 movePos = transform.position + transform.forward * _speed * Time.deltaTime;
+                transform.position = movePos;
             }
         }
     }

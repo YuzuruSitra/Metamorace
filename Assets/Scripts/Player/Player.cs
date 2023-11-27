@@ -21,11 +21,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _destroyPower = 1.0f;
     private float _useDestroyPower;
-    //アイテムCブロックのプレハブ
-    private GameObject _itemCBlock;
-    [SerializeField]
-    PoolHandler _poolHandler;
-
     [SerializeField]
     ItemHandler _itemHandler;
     ItemC _itemC;
@@ -69,14 +64,20 @@ public class Player : MonoBehaviour
     private bool _animIdole = false;
     private bool _animBreak = false;
     private Vector3 _upPadding = new Vector3(0f,0.5f,0f);
+    Vector3 _insPos;
+    Vector3 _insBigPos;
+    [SerializeField]
+    private GameObject _predictCubes;
     void Start()
     {
+        if(!_myPV.isMine) return;
         _soundHandler = SoundHandler.InstanceSoundHandler;
         _rb = GetComponent<Rigidbody>();
         _usePlayerSpeed = _playerSpeed;
         _useDestroyPower = _destroyPower;
         _waitTime = new WaitForSeconds(_itemHandler._ItemAEffectTime);
         _uiHandler = GameObject.FindWithTag("UIHandler").GetComponent<UIHandler>();
+        _predictCubes.SetActive(true);
     }
 
     public void SetGameState(bool isGame)
@@ -86,7 +87,6 @@ public class Player : MonoBehaviour
 
     public void SetParameter(Transform parent1, Transform parent2, int thisTeam, bool isDevelop)
     {
-
         _cubeParentTeam[0] = parent1;
         _cubeParentTeam[1] = parent2;
         _mineTeam = thisTeam;
@@ -110,6 +110,11 @@ public class Player : MonoBehaviour
         JudgeVerticalDeath();
         JudgeHorizontalDeath();
         AnimSelecter();
+        if (_hasBlock) 
+        {
+            _insPos = new Vector3((int)transform.position.x, (int)transform.position.y + 0.25f, -1.0f);
+            _predictCubes.transform.position = _insPos;
+        }
     }
     void FixedUpdate()
     {
@@ -285,6 +290,7 @@ public class Player : MonoBehaviour
             }
             //ブロック破壊SE;
             _soundHandler.PlaySE(breakBlock);
+            _predictCubes.SetActive(true);
             _hasBlock = true;
             _itemHandler.StackBlock(objID);
         }
@@ -328,23 +334,24 @@ public class Player : MonoBehaviour
         //swingAnim再生
         _animSwing = true;
         _hasBlock = false;
+        _predictCubes.SetActive(false);
+        _insBigPos = _insPos;
+        _insBigPos.y += 1.0f;
+        _soundHandler.PlaySE(createBlock);
         Invoke("InsSwingObj",0.4f);
     }
 
     void InsSwingObj()
     {
         _animSwing = false;
-        Vector3 insPos = new Vector3((int)transform.position.x, (int)transform.position.y, -1.0f);
-        Vector3 insBigPos = new Vector3((int)transform.position.x, (int)transform.position.y + 0.75f, -1.0f);
         GameObject insObj;
         if (_developMode)
         {
-            _soundHandler.PlaySE(createBlock);
             //アイテムBを持っていたら巨大ブロック一回だけ生成
             if (_itemHandler._HasItemB)
             {
                 //アイテムB微調整
-                insObj = Instantiate(_bigPrefab[_mineTeam], insBigPos, _insQuaternion[_mineTeam]);
+                insObj = Instantiate(_bigPrefab[_mineTeam], _insBigPos, _insQuaternion[_mineTeam]);
                 insObj.transform.parent = _cubeParentTeam[_enemyTeam];
                 _itemHandler.ItemEffectB();
             }
@@ -352,12 +359,12 @@ public class Player : MonoBehaviour
             else if (_itemHandler._HasItemC)
             {
                 _itemHandler.ItemEffectC();
-                insObj = Instantiate(_cPrefab[_mineTeam], insPos, _insQuaternion[_mineTeam]);
+                insObj = Instantiate(_cPrefab[_mineTeam], _insPos, _insQuaternion[_mineTeam]);
                 insObj.transform.parent = _cubeParentTeam[_enemyTeam];
             }
             else
             {
-                insObj = Instantiate(_herosPrefab[_mineTeam], insPos, _insQuaternion[_mineTeam]);
+                insObj = Instantiate(_herosPrefab[_mineTeam], _insPos, _insQuaternion[_mineTeam]);
                 insObj.transform.parent = _cubeParentTeam[_enemyTeam];
             }
         }
@@ -367,18 +374,18 @@ public class Player : MonoBehaviour
             if (_itemHandler._HasItemB)
             {
                 //アイテムB微調整
-                _myPV.RPC(nameof(SyncCreateBig), PhotonTargets.All, insBigPos, _mineTeam, _enemyTeam);
+                _myPV.RPC(nameof(SyncCreateBig), PhotonTargets.All, _insBigPos, _mineTeam, _enemyTeam);
                 _itemHandler.ItemEffectB();
             }
             //ItemCBlock生成
             else if (_itemHandler._HasItemC)
             {
                 _itemHandler.ItemEffectC();
-                _myPV.RPC(nameof(SyncCreateItemC), PhotonTargets.All, insPos, _mineTeam, _enemyTeam);
+                _myPV.RPC(nameof(SyncCreateItemC), PhotonTargets.All, _insPos, _mineTeam, _enemyTeam);
             }
             else
             {
-                _myPV.RPC(nameof(SyncCreateHeros), PhotonTargets.All, insPos, _mineTeam, _enemyTeam);
+                _myPV.RPC(nameof(SyncCreateHeros), PhotonTargets.All, _insPos, _mineTeam, _enemyTeam);
             }
 
         }

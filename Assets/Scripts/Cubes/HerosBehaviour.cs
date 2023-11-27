@@ -6,7 +6,7 @@ public class HerosBehaviour : MonoBehaviour
 {
     private bool _oneTime = true;
     private float _targetPosZ = 0.0f;
-    private float _speed = 20.0f;
+    private float _speed = 16.0f;
     [SerializeField]
     private bool _isBigBlock;
     [SerializeField]

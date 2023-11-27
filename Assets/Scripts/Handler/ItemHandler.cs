@@ -72,7 +72,7 @@ public class ItemHandler : MonoBehaviour
             if(_myBrockNum == 0)
             {
                 //アイテムA
-                 _uiHandler.SetItemImage(0);
+                _uiHandler.SetItemImage(0);
                 _uiHandler.ResetStackImage();
                 ResetBlock();
                 _uiHandler.GetItemEffect();
