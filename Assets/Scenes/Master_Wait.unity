@@ -3384,6 +3384,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WaitManagernager
       objectReference: {fileID: 0}
+    - target: {fileID: 6744492503733019815, guid: 7aaca75416a04a94cabdd1aba39192b2, type: 3}
+      propertyPath: m_TagString
+      value: WaitManager
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 7aaca75416a04a94cabdd1aba39192b2, type: 3}
