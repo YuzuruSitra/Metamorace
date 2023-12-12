@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
         _uiHandler = GameObject.FindWithTag("UIHandler").GetComponent<UIHandler>();
         _calcWaitTime = new WaitForSeconds(_calcInterval);
         SceneManager.sceneLoaded += OnLoadedScene;
-        SceneManager.sceneLoaded += OnLoadedRoom;
+        // SceneManager.sceneLoaded += OnLoadedRoom;
         _soundHandler.PlayBGM(battleBGM);
         if (DevelopeMode)
             HandleDevelopmentMode();
@@ -289,12 +289,12 @@ public class GameManager : MonoBehaviour
         PhotonNetwork.LoadLevel("Master_Wait");
     }
 
-    private void OnLoadedRoom( Scene i_scene, LoadSceneMode i_mode )
-    {
-        if(i_scene.name != "Master_Wait") return;
-        PhotonNetwork.isMessageQueueRunning = true;
-        GameObject.FindWithTag("WaitManager").GetComponent<WaitSceneManager>().SetInfo(_playerID);
-    }
+    // private void OnLoadedRoom( Scene i_scene, LoadSceneMode i_mode )
+    // {
+    //     if(i_scene.name != "Master_Wait") return;
+    //     PhotonNetwork.isMessageQueueRunning = true;
+    //     GameObject.FindWithTag("WaitManager").GetComponent<WaitSceneManager>().SetInfo(_playerID);
+    // }
 
     private void OnLoadedScene( Scene i_scene, LoadSceneMode i_mode )
     {

@@ -18,7 +18,7 @@ public class WaitSceneManager : MonoBehaviour
     [SerializeField]
     private WaitUIHandler _waitUIHandler;
     // 入室した番号
-    int _playerNum;
+    public static int _playerNum = -1;
     
     // Start is called before the first frame update
     void Start()
@@ -32,7 +32,7 @@ public class WaitSceneManager : MonoBehaviour
         _waitTime = new WaitForSeconds(_transitionTime);
 
         //Photonに接続していれば自プレイヤーを生成
-        if(!(_playerNum >= 0)) _playerNum = PhotonNetwork.playerList.Length - 1;
+        if(_playerNum < 0) _playerNum = PhotonNetwork.playerList.Length - 1;
         if (_playerNum >= _playerPrefab.Length) _playerNum = 3;
         GameObject Player = PhotonNetwork.Instantiate(this._playerPrefab[_playerNum].name, new Vector3(24.0f, -15.0f, 84.0f), Quaternion.identity, 0);
         
@@ -40,11 +40,6 @@ public class WaitSceneManager : MonoBehaviour
         _playerWait.OnReadyChanged += CheckIn;
         _playerWait.SetID(_playerNum);
         UpdateMemberList();
-    }
-
-    public void SetInfo(int id)
-    {
-        _playerNum = id;
     }
 
     // Update is called once per frame
