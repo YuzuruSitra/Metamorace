@@ -14,17 +14,18 @@ public class UIHandler : MonoBehaviour
     private Text[] _nameTexts = new Text[4];
     [SerializeField] Image _itemImage;
     [SerializeField] Image _BlockImage;
+    [SerializeField] Image _BlockFrameImage;
     [SerializeField] Sprite[] _itemSprite;
     //下記リザルト用
     [SerializeField] GameObject _resultPanel;
     [SerializeField] GameObject _winandlose, _draw;
     [SerializeField] Text _winBlockRate, _loseBlockRate, _drawBlockRate1, _drawBlockRate2;
-    [SerializeField] GameObject itemeffect;
+    [SerializeField] GameObject itemeffect,cloudeffect;
     Animator itemEffectAnimator;
     private Color toumei = new Color(1f, 1f, 1f, 0f);
     //ItemB用のスケール変更
-     Vector3 initialScale,bigScale; // 初期スケール値
-    float _scalerate = 2.0f;
+     Vector3 initialScale,bigScale,frameinitialScale,framebigScale; // 初期スケール値
+    float _scalerate = 1.5f;
     //  アンブラスのID
     public const int _ambrassID = 1;
     //  ヒーロスのID
@@ -36,8 +37,13 @@ public class UIHandler : MonoBehaviour
     void Start()
     {
         initialScale = _BlockImage.transform.localScale; // 初期スケールを設定
+        frameinitialScale = _BlockFrameImage.transform.localScale; // フレーム初期スケールを設定
+
         bigScale =new Vector3(initialScale.x * _scalerate, initialScale.y * _scalerate, initialScale.z * _scalerate); // 初期スケールを1.5倍に設定
+        framebigScale =new Vector3(frameinitialScale.x * _scalerate, frameinitialScale.y * _scalerate, frameinitialScale.z * _scalerate); // 初期スケールを1.5倍に設定
          _BlockImage.transform.localScale = initialScale; // 初期スケールに設定
+          _BlockFrameImage.transform.localScale = frameinitialScale; // フレームを初期スケールに設定
+        cloudeffect.SetActive(false);
         itemeffect.SetActive(false);
         itemEffectAnimator = itemeffect.GetComponent<Animator>();
         _resultPanel.SetActive(false);
@@ -71,6 +77,7 @@ public class UIHandler : MonoBehaviour
         _BlockImage.sprite = null;
         _BlockImage.color = toumei;   
         _BlockImage.transform.localScale = initialScale;
+        _BlockFrameImage.transform.localScale = frameinitialScale;
     }
 
     public void GetItemEffect()
@@ -78,12 +85,9 @@ public class UIHandler : MonoBehaviour
         // itemEffectAnimator.SetBool("G",true);
         // itemEffectAnimator.SetBool("G",false);
         itemeffect.SetActive(true);
-        Invoke("Activefalse", 0.40f);
+        
     }
-    public void Activefalse()
-    {
-        itemeffect.SetActive(false);
-    }
+    
     public void ShowLimitTime(float _TimeLimit)
     {
         _LimitTimeText.text = _TimeLimit.ToString("f0") + "秒";
@@ -97,9 +101,11 @@ public class UIHandler : MonoBehaviour
         if (ItemNum == _itemBID)
         {
             //煙エフェクトを出す
-            
+            cloudeffect.SetActive(true);
+           
             // ブロックイメージ大きくする 
              _BlockImage.transform.localScale = bigScale;
+             _BlockFrameImage.transform.localScale = framebigScale;
         }
         //ItemC使った時
         else if (ItemNum == _itemCID)
@@ -250,5 +256,5 @@ public class UIHandler : MonoBehaviour
             }
         }
     }
-
+    
 }
