@@ -52,6 +52,11 @@ public class GameManager : MonoBehaviour
     private AudioClip battleBGM;
     [SerializeField] 
     private AudioClip countDown,gameStart,gameEnd,drumroll;
+    [SerializeField]
+    private string[] _memberNames = new string[4];
+    [SerializeField]
+    private int[] _memberTeamIDs = new int[4];
+
     void Start()
     {
         _soundHandler = SoundHandler.InstanceSoundHandler;
@@ -66,11 +71,13 @@ public class GameManager : MonoBehaviour
             HandleProductionMode();
     }
 
-    public void SetInfo(int team, int id, int maxPlayer)
+    public void SetInfo(int team, int id, int maxPlayer, string[] names, int[] teams)
     {
         _teamID = team;
         _playerID = id;
         _currentPlayerCount = maxPlayer;
+        _memberNames = names;
+        _memberTeamIDs = teams;
     }
 
     // 開発モードの初期化処理
@@ -153,7 +160,8 @@ public class GameManager : MonoBehaviour
                     if (_joinPlayerCount >= _currentPlayerCount)
                     {
                         _myPV.RPC(nameof(LaunchGame), PhotonTargets.All);
-                        FindTeamID();
+                        // 情報を共有
+                        _myPV.RPC(nameof(SendTeamInfo), PhotonTargets.All, _memberNames, _memberTeamIDs);
                     }
                 }
             }
@@ -192,26 +200,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // チームの振り分けをUIに描画する為の関数
-    void FindTeamID()
-    {
-        // PhotonNetwork.playerListからカスタムプロパティの値を取得して_memberListを更新
-        string[] _memberNames = new string[PhotonNetwork.playerList.Length];
-        string[] _memberTeamIDs = new string[PhotonNetwork.playerList.Length];
-
-        for (int i = 0; i < PhotonNetwork.playerList.Length; i++)
-        {
-            _memberNames[i] = PhotonNetwork.playerList[i].NickName;
-            _memberTeamIDs[i] = GetTeamIDFromPlayer(PhotonNetwork.playerList[i]);
-            Debug.Log("Name : "+ _memberNames[i] + "ID : "+_memberTeamIDs[i]);
-        }
-
-        // 情報を共有
-        _myPV.RPC(nameof(SendTeamInfo), PhotonTargets.All, _memberNames, _memberTeamIDs);
-    }
-
     [PunRPC]
-    private void SendTeamInfo(string[] names, string[] IDs)
+    private void SendTeamInfo(string[] names, int[] IDs)
     {
         // UIハンドラーへ値を渡す処理
         _uiHandler.SetNames(names, IDs);
@@ -243,7 +233,7 @@ public class GameManager : MonoBehaviour
         // UIの更新
         yield return new WaitForSeconds(3.0f);
         //ホイッスル
-         _soundHandler.PlaySE(gameStart);
+        _soundHandler.PlaySE(gameStart);
         _isGame = true;
         _player.SetGameState(_isGame);
         if (PhotonNetwork.isMasterClient) _blockManager.SetGameState(_isGame);

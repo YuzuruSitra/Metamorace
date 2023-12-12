@@ -60,4 +60,6 @@ MonoBehaviour:
   - CalleMemberList
   - SendTeamInfo
   - ShareName
+  - SetTeamID
+  - CheckIn
   DisableAutoOpenWizard: 1

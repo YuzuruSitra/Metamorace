@@ -19,6 +19,8 @@ public class WaitSceneManager : MonoBehaviour
     private WaitUIHandler _waitUIHandler;
     // 入室した番号
     public static int _playerNum = -1;
+    private string[] _memberNames = new string[4];
+    private int[] _memberTeamIDs = new int[4];
     
     // Start is called before the first frame update
     void Start()
@@ -37,16 +39,21 @@ public class WaitSceneManager : MonoBehaviour
         GameObject Player = PhotonNetwork.Instantiate(this._playerPrefab[_playerNum].name, new Vector3(24.0f, -15.0f, 84.0f), Quaternion.identity, 0);
         
         _playerWait = Player.GetComponent<Player_Wait>();
-        _playerWait.OnReadyChanged += CheckIn;
+        _playerWait.OnReadyChanged += Checking;
         _playerWait.SetID(_playerNum);
         UpdateMemberList();
     }
 
-    // Update is called once per frame
-    void CheckIn(bool state)
+    void Checking(bool state)
     {
         if (!state) return;
+        _myPV.RPC(nameof(CheckIn), PhotonTargets.MasterClient);
+    }
 
+    // Update is called once per frame
+    [PunRPC]
+    void CheckIn()
+    {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 
         int team1 = 0;
@@ -60,6 +67,9 @@ public class WaitSceneManager : MonoBehaviour
 
             if (playerWait.SelectTeam == 0) team1++;
             else if (playerWait.SelectTeam == 1) team2++;
+
+            _memberNames[i] = playerWait.MyName;
+            _memberTeamIDs[i] = playerWait.SelectTeam;
         }
 
         if (DebugMode)
@@ -81,7 +91,7 @@ public class WaitSceneManager : MonoBehaviour
     {
         if(i_scene.name != "Master_Battle") return;
         PhotonNetwork.isMessageQueueRunning = true;
-        GameObject.FindWithTag("GameManager").GetComponent<GameManager>().SetInfo(_playerWait.SelectTeam, _playerWait.PlayerID, PhotonNetwork.playerList.Length);
+        GameObject.FindWithTag("GameManager").GetComponent<GameManager>().SetInfo(_playerWait.SelectTeam, _playerWait.PlayerID, PhotonNetwork.playerList.Length, _memberNames, _memberTeamIDs);
     }
 
     // 名前の取得

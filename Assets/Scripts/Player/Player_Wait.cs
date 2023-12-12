@@ -19,9 +19,10 @@ public class Player_Wait : MonoBehaviour
     private bool _isJump,_isHead = false;
     private bool _isReady = false;
     public bool IsReady => _isReady;
-    [SerializeField]
     private int _selectTeam;
     public int SelectTeam => _selectTeam;
+    private string _myName;
+    public string MyName => _myName;
     public event Action<bool> OnReadyChanged;
     private int _playerID;
     public int PlayerID => _playerID;
@@ -35,7 +36,7 @@ public class Player_Wait : MonoBehaviour
    [SerializeField] AudioClip jump;
    [SerializeField] Text _nametext;
     private string _name;
-
+    
     void Start()
     {
         _soundHandler = SoundHandler.InstanceSoundHandler;
@@ -51,6 +52,7 @@ public class Player_Wait : MonoBehaviour
     private void ShareName(string name)
     {
         _nametext.text = name;
+        _myName = name;
     }
 
     public void SetID(int id)
@@ -85,7 +87,6 @@ public class Player_Wait : MonoBehaviour
         {
             _animIdole = true;
             _animWalk = false;
-            Debug.Log(_animIdole);
             return;
         }
         _animIdole = false;
@@ -150,13 +151,13 @@ public class Player_Wait : MonoBehaviour
         if(other.CompareTag("Team1Area"))
         {
             _selectTeam = 0;
-            SetTeamID("Team0");
+            //_myPV.RPC(nameof(SetTeamID), PhotonTargets.All, "Team0");
             ChangeState(true);
         }
         if(other.CompareTag("Team2Area"))
         {
             _selectTeam = 1;
-            SetTeamID("Team1");
+            //_myPV.RPC(nameof(SetTeamID), PhotonTargets.All, "Team1");
             ChangeState(true);
         }
     }
@@ -170,17 +171,6 @@ public class Player_Wait : MonoBehaviour
         if(other.CompareTag("Team2Area"))
         {
             ChangeState(false);
-        }
-    }
-
-    // チームIDを設定する関数
-    void SetTeamID(string teamID)
-    {
-        if (PhotonNetwork.player != null)
-        {
-            ExitGames.Client.Photon.Hashtable customProperties = new ExitGames.Client.Photon.Hashtable();
-            customProperties["TeamID"] = teamID;
-            PhotonNetwork.player.SetCustomProperties(customProperties);
         }
     }
 
