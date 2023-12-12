@@ -39,21 +39,15 @@ public class WaitSceneManager : MonoBehaviour
         GameObject Player = PhotonNetwork.Instantiate(this._playerPrefab[_playerNum].name, new Vector3(24.0f, -15.0f, 84.0f), Quaternion.identity, 0);
         
         _playerWait = Player.GetComponent<Player_Wait>();
-        _playerWait.OnReadyChanged += Checking;
+        _playerWait.OnReadyChanged += CheckIn;
         _playerWait.SetID(_playerNum);
         UpdateMemberList();
     }
 
-    void Checking(bool state)
+    // Update is called once per frame
+    void CheckIn(bool state)
     {
         if (!state) return;
-        _myPV.RPC(nameof(CheckIn), PhotonTargets.MasterClient);
-    }
-
-    // Update is called once per frame
-    [PunRPC]
-    void CheckIn()
-    {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 
         int team1 = 0;
