@@ -23,9 +23,8 @@ public class UIHandler : MonoBehaviour
     Animator itemEffectAnimator;
     private Color toumei = new Color(1f, 1f, 1f, 0f);
     //ItemB用のスケール変更
-    Vector3 currentScale;
-    float scaleFactor = 1.0f;
-
+     Vector3 initialScale,bigScale; // 初期スケール値
+    float _scalerate = 2.0f;
     //  アンブラスのID
     public const int _ambrassID = 1;
     //  ヒーロスのID
@@ -36,8 +35,9 @@ public class UIHandler : MonoBehaviour
     public const int _itemCID = 3;
     void Start()
     {
-        currentScale = _BlockImage.transform.localScale;
-        _BlockImage.transform.localScale = new Vector3(currentScale.x * scaleFactor, currentScale.y * scaleFactor, currentScale.z);
+        initialScale = _BlockImage.transform.localScale; // 初期スケールを設定
+        bigScale =new Vector3(initialScale.x * _scalerate, initialScale.y * _scalerate, initialScale.z * _scalerate); // 初期スケールを1.5倍に設定
+         _BlockImage.transform.localScale = initialScale; // 初期スケールに設定
         itemeffect.SetActive(false);
         itemEffectAnimator = itemeffect.GetComponent<Animator>();
         _resultPanel.SetActive(false);
@@ -48,6 +48,8 @@ public class UIHandler : MonoBehaviour
         //DecreceGage();
         _BlockImage.color = toumei;
     }
+
+
 
     //保持しているブロック画像表示
     public void BlockImage(int _objid)
@@ -67,7 +69,8 @@ public class UIHandler : MonoBehaviour
     public void ResetBlockImage()
     {
         _BlockImage.sprite = null;
-        _BlockImage.color = toumei;
+        _BlockImage.color = toumei;   
+        _BlockImage.transform.localScale = initialScale;
     }
 
     public void GetItemEffect()
@@ -90,12 +93,15 @@ public class UIHandler : MonoBehaviour
     {
         //  アイテムUI削除、所持ブロックをCに変更
         ResetItemImage();
+        //ItemB使った時
         if (ItemNum == _itemBID)
         {
-            Debug.Log("2");
-            scaleFactor = 1.5f; // ブロックイメージ大きくする 
+            //煙エフェクトを出す
+            
+            // ブロックイメージ大きくする 
+             _BlockImage.transform.localScale = bigScale;
         }
-        //Imageをでかくする処理
+        //ItemC使った時
         else if (ItemNum == _itemCID)
         {
             _BlockImage.sprite = _itemCSprite;
@@ -192,7 +198,7 @@ public class UIHandler : MonoBehaviour
                 _loseBlockRate.text = shareTeam1.ToString() + "%";
             }
             //引き分けの時
-            else;
+            else
             {
                 _draw.SetActive(true);
                 _drawBlockRate1.text = shareTeam1.ToString() + "%";

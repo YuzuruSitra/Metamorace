@@ -1536,9 +1536,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0
+    y: 0.00042116642
     width: 1
-    height: 1
+    height: 0.99915767
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 45
@@ -3892,8 +3892,8 @@ MonoBehaviour:
   _BlockImage: {fileID: 2117168560}
   _itemSprite:
   - {fileID: 21300000, guid: 4cc0d8b40bcc5fc468201e7aef9f6263, type: 3}
-  - {fileID: 21300000, guid: 2efc12b0f546bb646979e9f30a592557, type: 3}
   - {fileID: 21300000, guid: 1fa7bcdd1c9610f4da7040ceedc1cafb, type: 3}
+  - {fileID: 21300000, guid: 2efc12b0f546bb646979e9f30a592557, type: 3}
   _resultPanel: {fileID: 1647894664}
   _winandlose: {fileID: 831939133}
   _draw: {fileID: 1108473584}
