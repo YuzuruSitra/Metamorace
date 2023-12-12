@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
         _uiHandler = GameObject.FindWithTag("UIHandler").GetComponent<UIHandler>();
         _calcWaitTime = new WaitForSeconds(_calcInterval);
         SceneManager.sceneLoaded += OnLoadedScene;
+        // SceneManager.sceneLoaded += OnLoadedRoom;
         _soundHandler.PlayBGM(battleBGM);
         if (DevelopeMode)
             HandleDevelopmentMode();
@@ -98,7 +99,7 @@ public class GameManager : MonoBehaviour
     private void SetupPlayer(float myPosZ)
     {
         SetupBlockManager();
-        GameObject player = Instantiate(_playerPrefab[_playerID-1], new Vector3(0f, 1.25f, myPosZ), Quaternion.identity);
+        GameObject player = Instantiate(_playerPrefab[_playerID], new Vector3(0f, 1.25f, myPosZ), Quaternion.identity);
         _camManager.SetPlayer(player, _teamID);
         _player = player.transform.GetChild(0).gameObject.GetComponent<Player>();
         _player.SetParameter( _cubeParentTeam1, _cubeParentTeam2, _teamID, true);
@@ -109,7 +110,7 @@ public class GameManager : MonoBehaviour
     {
         if (PhotonNetwork.isMasterClient) SetupPhotonBlockManager();
 
-        GameObject player = PhotonNetwork.Instantiate(_playerPrefab[_playerID-1].name, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity, 0);
+        GameObject player = PhotonNetwork.Instantiate(_playerPrefab[_playerID].name, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity, 0);
         _myPV.RPC(nameof(JoinPlayer), PhotonTargets.All);
         _camManager.SetPlayer(player, _teamID);
         _player = player.transform.GetChild(0).gameObject.GetComponent<Player>();
@@ -287,6 +288,13 @@ public class GameManager : MonoBehaviour
         PhotonNetwork.isMessageQueueRunning = false;
         PhotonNetwork.LoadLevel("Master_Wait");
     }
+
+    // private void OnLoadedRoom( Scene i_scene, LoadSceneMode i_mode )
+    // {
+    //     if(i_scene.name != "Master_Wait") return;
+    //     PhotonNetwork.isMessageQueueRunning = true;
+    //     GameObject.FindWithTag("WaitManager").GetComponent<WaitSceneManager>().SetInfo(_playerID);
+    // }
 
     private void OnLoadedScene( Scene i_scene, LoadSceneMode i_mode )
     {

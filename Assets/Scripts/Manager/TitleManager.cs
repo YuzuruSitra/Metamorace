@@ -82,6 +82,10 @@ public class TitleManager : MonoBehaviour
                 _matchLuncher.OnJoinPrivateRoom(_roomPas);
                 break;
         }
+        //テキストにinputFieldの内容を反映
+        if(string.IsNullOrEmpty(_playerName.Trim())) _playerName = "Ham";
+        PlayerPrefs.SetString(playerNamePrefKey, _playerName);
+        PhotonNetwork.playerName = _playerName;
     }
 
     public void PushSE()
