@@ -52,10 +52,8 @@ public class GameManager : MonoBehaviour
     private AudioClip battleBGM;
     [SerializeField] 
     private AudioClip countDown,gameStart,gameEnd,drumroll;
-    [SerializeField]
-    private string[] _memberNames = new string[4];
-    [SerializeField]
-    private int[] _memberTeamIDs = new int[4];
+    private string[] _memberNames;
+    private int[] _memberTeamIDs;
 
     void Start()
     {
@@ -159,9 +157,11 @@ public class GameManager : MonoBehaviour
                 {
                     if (_joinPlayerCount >= _currentPlayerCount)
                     {
-                        _myPV.RPC(nameof(LaunchGame), PhotonTargets.All);
                         // 情報を共有
-                        _myPV.RPC(nameof(SendTeamInfo), PhotonTargets.All, _memberNames, _memberTeamIDs);
+                        _myPV.RPC(nameof(SendTeamInfo), PhotonTargets.All);
+
+                        // ゲーム開始
+                        _myPV.RPC(nameof(LaunchGame), PhotonTargets.All);
                     }
                 }
             }
@@ -201,21 +201,17 @@ public class GameManager : MonoBehaviour
     }
 
     [PunRPC]
-    private void SendTeamInfo(string[] names, int[] IDs)
+    private void SendTeamInfo()
     {
         // UIハンドラーへ値を渡す処理
-        _uiHandler.SetNames(names, IDs);
+        _uiHandler.SetNames(_memberNames, _memberTeamIDs);
     }
 
-
-    string GetTeamIDFromPlayer(PhotonPlayer player)
+    [PunRPC]
+    private void SendTeamInfo(List<string> names, List<int> IDs)
     {
-        object teamID;
-        if (player.CustomProperties.TryGetValue("TeamID", out teamID))
-        {
-            return (string)teamID;
-        }
-        return "NoTeam"; // チームIDがない場合のデフォルト値など
+        // UIハンドラーへ値を渡す処理
+        _uiHandler.SetNames(names.ToArray(), IDs.ToArray());
     }
 
     // ゲーム開始処理
@@ -278,13 +274,6 @@ public class GameManager : MonoBehaviour
         PhotonNetwork.isMessageQueueRunning = false;
         PhotonNetwork.LoadLevel("Master_Wait");
     }
-
-    // private void OnLoadedRoom( Scene i_scene, LoadSceneMode i_mode )
-    // {
-    //     if(i_scene.name != "Master_Wait") return;
-    //     PhotonNetwork.isMessageQueueRunning = true;
-    //     GameObject.FindWithTag("WaitManager").GetComponent<WaitSceneManager>().SetInfo(_playerID);
-    // }
 
     private void OnLoadedScene( Scene i_scene, LoadSceneMode i_mode )
     {
