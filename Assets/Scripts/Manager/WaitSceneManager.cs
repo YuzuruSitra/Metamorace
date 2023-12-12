@@ -39,15 +39,21 @@ public class WaitSceneManager : MonoBehaviour
         GameObject Player = PhotonNetwork.Instantiate(this._playerPrefab[_playerNum].name, new Vector3(24.0f, -15.0f, 84.0f), Quaternion.identity, 0);
         
         _playerWait = Player.GetComponent<Player_Wait>();
-        _playerWait.OnReadyChanged += CheckIn;
+        _playerWait.OnReadyChanged += Checking;
         _playerWait.SetID(_playerNum);
         UpdateMemberList();
     }
 
-    // Update is called once per frame
-    void CheckIn(bool state)
+    void Checking(bool state)
     {
         if (!state) return;
+        _myPV.RPC(nameof(CheckIn), PhotonTargets.MasterClient);
+    }
+
+    // Update is called once per frame
+    [PunRPC]
+    void CheckIn()
+    {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 
         int team1 = 0;
@@ -67,17 +73,29 @@ public class WaitSceneManager : MonoBehaviour
         }
 
         if (DebugMode)
-            _myPV.RPC(nameof(SendScene), PhotonTargets.All);
+            _myPV.RPC(nameof(SendScene), PhotonTargets.All, _memberNames[0], _memberTeamIDs[0], _memberNames[1], _memberTeamIDs[1], _memberNames[2], _memberTeamIDs[2], _memberNames[3], _memberTeamIDs[3]);
         else
             // プレイヤーが2人以上で、Team1とTeam2に均等に割り振られ、全員が準備完了ならシーン遷移
-            if (PhotonNetwork.playerList.Length >= 2 && team1 == team2 && team1 + team2 == PhotonNetwork.playerList.Length) _myPV.RPC(nameof(SendScene), PhotonTargets.All);
+            if (PhotonNetwork.playerList.Length >= 2 && team1 == team2 && team1 + team2 == PhotonNetwork.playerList.Length) 
+                _myPV.RPC(nameof(SendScene), PhotonTargets.All, _memberNames[0], _memberTeamIDs[0], _memberNames[1], _memberTeamIDs[1], _memberNames[2], _memberTeamIDs[2], _memberNames[3], _memberTeamIDs[3]);
     }
 
     [PunRPC]
-    private IEnumerator SendScene()
+    private IEnumerator SendScene(string namePlayer1, int idPlayer1,string namePlayer2, int idPlayer2,string namePlayer3, int idPlayer3,string namePlayer4, int idPlayer4)
     {
         yield return _waitTime;
         PhotonNetwork.isMessageQueueRunning = false;
+        if (!PhotonNetwork.isMasterClient)
+        {
+            _memberNames[0] = namePlayer1;
+            _memberTeamIDs[0] = idPlayer1;
+            _memberNames[1] = namePlayer2;
+            _memberTeamIDs[1] = idPlayer2;
+            _memberNames[2] = namePlayer3;
+            _memberTeamIDs[2] = idPlayer3;
+            _memberNames[3] = namePlayer4;
+            _memberTeamIDs[3] = idPlayer4;
+        }
         PhotonNetwork.LoadLevel("Master_Battle");
     }
 
