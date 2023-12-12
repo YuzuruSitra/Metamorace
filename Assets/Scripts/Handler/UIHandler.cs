@@ -235,19 +235,20 @@ public class UIHandler : MonoBehaviour
     }
 
     // UIに名前とチームを描画する処理
-    public void SetNames(string[] names, string[] IDs)
+    public void SetNames(string[] names, int[] IDs)
     {
         int team0 = 0;
         int team1 = 2;
         for (int i = 0; i < names.Length; i++)
         {
+            if(names[i] == null) continue;
             switch (IDs[i])
             {
-                case "Team0":
+                case 0:
                     _nameTexts[team0].text = names[i];
                     team0++;
                     break;
-                case "Team1":
+                case 1:
                     _nameTexts[team1].text = names[i];
                     team1++;
                     break;
