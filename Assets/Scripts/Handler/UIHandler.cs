@@ -8,7 +8,7 @@ public class UIHandler : MonoBehaviour
     [SerializeField] private Text _BlockRateTeam1, _BlockRateTeam2;
     [SerializeField] Image[] _StackImage;
     //アンブラスとヘイロスのブロック画像、_objID1がヘイロス2がアンブラス
-    [SerializeField] Sprite _herosSprite, _ambrasSprite,_itemCSprite;
+    [SerializeField] Sprite _herosSprite, _ambrasSprite, _itemCSprite;
 
     [SerializeField]
     private Text[] _nameTexts = new Text[4];
@@ -23,8 +23,17 @@ public class UIHandler : MonoBehaviour
     Animator itemEffectAnimator;
     private Color toumei = new Color(1f, 1f, 1f, 0f);
     //ItemB用のスケール変更
-     Vector3 currentScale;
-      float scaleFactor = 1.0f;
+    Vector3 currentScale;
+    float scaleFactor = 1.0f;
+
+    //  アンブラスのID
+    public const int _ambrassID = 1;
+    //  ヒーロスのID
+    public const int _herosID = 2;
+    //それぞれのアイテムのID
+    public const int _itemAID = 1;
+    public const int _itemBID = 2;
+    public const int _itemCID = 3;
     void Start()
     {
         currentScale = _BlockImage.transform.localScale;
@@ -43,7 +52,7 @@ public class UIHandler : MonoBehaviour
     //保持しているブロック画像表示
     public void BlockImage(int _objid)
     {
-        if(_objid == 1)
+        if (_objid == _ambrassID)
         {
             _BlockImage.sprite = _ambrasSprite;
             _BlockImage.color = Color.white;
@@ -67,7 +76,6 @@ public class UIHandler : MonoBehaviour
         // itemEffectAnimator.SetBool("G",false);
         itemeffect.SetActive(true);
         Invoke("Activefalse", 0.40f);
-        Debug.Log("a");
     }
     public void Activefalse()
     {
@@ -79,21 +87,21 @@ public class UIHandler : MonoBehaviour
     }
     //アイテムC使用時のUI変化
     public void ItemUI(int ItemNum)
-     {
+    {
         //  アイテムUI削除、所持ブロックをCに変更
-         ResetItemImage();
-         if(ItemNum == 2)
-         {
+        ResetItemImage();
+        if (ItemNum == _itemBID)
+        {
             Debug.Log("2");
-              scaleFactor = 1.5f; // ブロックイメージ大きくする 
-         }        
-         //Imageをでかくする処理
-         else if(ItemNum == 3)
-         {
-            _BlockImage.sprite = _itemCSprite;
-            
+            scaleFactor = 1.5f; // ブロックイメージ大きくする 
         }
-     }
+        //Imageをでかくする処理
+        else if (ItemNum == _itemCID)
+        {
+            _BlockImage.sprite = _itemCSprite;
+
+        }
+    }
     //アンブラスとヘイロスのスプライトを格納
     public void SetStackImage(int _objID)
     {
@@ -101,12 +109,12 @@ public class UIHandler : MonoBehaviour
         {
             if (IsEmpty(i))
             {
-                if (_objID == 1)
+                if (_objID == _ambrassID)
                 {
                     _StackImage[i].sprite = _ambrasSprite;
                     _StackImage[i].color = Color.white;
                 }
-                else if (_objID == 2)
+                else if (_objID == _herosID)
                 {
                     _StackImage[i].sprite = _herosSprite;
                     _StackImage[i].color = Color.white;
@@ -115,7 +123,7 @@ public class UIHandler : MonoBehaviour
                 {
 
                 }
-                 break;
+                break;
             }
         }
     }
@@ -132,6 +140,8 @@ public class UIHandler : MonoBehaviour
     //アイテムの画像を格納
     public void SetItemImage(int _itemnum)
     {
+        //配列に辻褄数合わせのー１
+        _itemnum = _itemnum - 1;
         if (_itemSprite[_itemnum] == null) return;
         _itemImage.sprite = _itemSprite[_itemnum];
         _itemImage.color = Color.white;
@@ -223,12 +233,12 @@ public class UIHandler : MonoBehaviour
             {
                 case "Team0":
                     _nameTexts[team0].text = names[i];
-                    team0 ++;
+                    team0++;
                     break;
                 case "Team1":
                     _nameTexts[team1].text = names[i];
-                    team1 ++;
-                    break; 
+                    team1++;
+                    break;
                 default:
                     break;
             }

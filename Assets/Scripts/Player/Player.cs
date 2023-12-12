@@ -278,7 +278,7 @@ public class Player : MonoBehaviour
 
         int objID = _currentBlock.DestroyBlock(_useDestroyPower);
 
-        if (objID == 1 || objID == 2)
+        if (objID == UIHandler._ambrassID || objID == UIHandler._herosID)
         {
             //UIに保持しているブロックを表示する処理
             _uiHandler.BlockImage(objID);
@@ -410,7 +410,7 @@ public class Player : MonoBehaviour
         else if(_itemHandler._HasItemC == true && _hasBlock)
         {
             //  アイテムUI削除、所持ブロックをCに変更
-            _uiHandler.ItemUI(3);
+            _uiHandler.ItemUI(UIHandler._itemCID);
             _uiHandler.ResetItemImage();    
             //ブロック画像nullにする
             _uiHandler.ResetStackImage();
@@ -419,7 +419,7 @@ public class Player : MonoBehaviour
         else if(_itemHandler._HasItemB == true && _hasBlock)
         {
             //  アイテムUI削除、所持ブロックをBに変更
-            _uiHandler.ItemUI(2);
+            _uiHandler.ItemUI(UIHandler._itemBID);
             _uiHandler.ResetItemImage();    
             //ブロック画像nullにする
             _uiHandler.ResetStackImage();

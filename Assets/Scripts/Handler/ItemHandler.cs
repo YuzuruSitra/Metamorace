@@ -64,28 +64,28 @@ public class ItemHandler : MonoBehaviour
     //所持しているブロックによって生成されるアイテム変化
     public void CreateItem()
     {   
-        //スタックイメージが満杯だったら    
-        if(_stackBlocks[2] == 1 || _stackBlocks[2] == 2)
+        //スタックイメージが満杯だったら(配列の最後が埋まっていたら)
+        if(_stackBlocks[2] == UIHandler._ambrassID || _stackBlocks[2] == UIHandler._herosID)
         {
             _myBrockNum = CheckMyBrock();
             if(_myBrockNum == 0)
             {
                 //アイテムAサイヤ人
-                _uiHandler.SetItemImage(0);
+                _uiHandler.SetItemImage(UIHandler._itemAID);
                 _uiHandler.GetItemEffect();
                 _hasItemA = true;
             }
             else if(_myBrockNum == 3)
             {
                 //アイテムB巨大化
-                 _uiHandler.SetItemImage(2);
+                 _uiHandler.SetItemImage(UIHandler._itemBID);
                 _uiHandler.GetItemEffect();
                 _hasItemB = true;
             }
             else
             {
                  //アイテムC
-                 _uiHandler.SetItemImage(1);
+                 _uiHandler.SetItemImage(UIHandler._itemCID);
                 _uiHandler.GetItemEffect();
                 _hasItemC = true;
                 
@@ -101,7 +101,7 @@ public class ItemHandler : MonoBehaviour
         for(int i = 0; i < _stackBlocks.Length; i++) 
         {
             //配列のi番目が空（０）だったら処理実行
-            if(_stackBlocks[i] == 1)
+            if(_stackBlocks[i] == UIHandler._ambrassID)
             {
                _myBrockNum += 1;
             }
@@ -141,12 +141,5 @@ public class ItemHandler : MonoBehaviour
        
          return _effectid; 
      }
-    // public void ItemEffectC(ref float _playerSpeed)
-    // {
-      
-            
-    //        _playerSpeed = _playerSpeed*0;       
-          
-    // }
           
 }
