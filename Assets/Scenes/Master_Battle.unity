@@ -649,7 +649,7 @@ MonoBehaviour:
   _colorManager: {fileID: 0}
   _blockManagerPrefab: {fileID: 1692291927690342940, guid: e4abd95c9218d5f45aea2b7c765ff2cc, type: 3}
   _camManager: {fileID: 1973404693}
-  _TimeLimit: 3
+  _TimeLimit: 90
   _playerPrefab:
   - {fileID: 4877800243297777295, guid: 2a3cf850266e7314f9c57709ac0f5b75, type: 3}
   - {fileID: 4877800243297777295, guid: 0446389027cef004abad6b45fbbce173, type: 3}
@@ -1709,10 +1709,10 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0.0008278489
-    width: 1
-    height: 0.9983443
+    x: 0.000305593
+    y: 0
+    width: 0.9993888
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 45
