@@ -158,6 +158,7 @@ public class Player_Wait : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (!_myPV.isMine) return;
         if(other.CompareTag("Team1Area"))
         {
             _selectTeam = 0;
