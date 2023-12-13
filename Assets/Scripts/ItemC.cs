@@ -13,9 +13,10 @@ public class ItemC : MonoBehaviour
    public bool _Used => _used;
    BlockBehaviour _currentBlock;
    //スタン　ID Number1
-   public void EffectStan(ref float _usePlayerSpeed)
+   public void EffectStan(ref float _usePlayerSpeed, ref float _useJumpPower)
    {
       _usePlayerSpeed = 0;
+      _useJumpPower = 0;
       //Debug.Log("すたん");
       // _uiHandler.ResetItemImage();
       // Debug.Log("スタン");

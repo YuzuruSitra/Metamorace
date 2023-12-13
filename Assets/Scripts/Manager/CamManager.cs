@@ -26,14 +26,15 @@ public class CamManager : MonoBehaviour
     // Start is called before the first frame update
     public void SetPlayer(GameObject player, int teamID)
     {
-        _targetPlayer = player;
+        _targetPlayer = player.transform.GetChild(0).gameObject;
         _teamID = teamID;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(_targetPlayer.transform.position.y <= 6.0f)
+        Debug.Log(_targetPlayer.transform.position.y);
+        if(_targetPlayer.transform.position.y <= 4.0f)
         {
             if (_targetPlayer.transform.position.x <= -3.5f)
                 ActivateCam(_bottomLeftCams[_teamID]);

@@ -257,5 +257,10 @@ public class UIHandler : MonoBehaviour
             }
         }
     }
+    //リザルトUIに名前とチームを描画
+    public void ResultInfo()
+    {
+        
+    }
     
 }

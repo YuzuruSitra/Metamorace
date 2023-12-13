@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     private float _usePlayerSpeed;
     [SerializeField]
     private float _jumpPower;
+    private float _useJumpPower;
     [SerializeField]
     private float _jumprayrength;
     [SerializeField]
@@ -76,6 +77,7 @@ public class Player : MonoBehaviour
         _soundHandler = SoundHandler.InstanceSoundHandler;
         _rb = GetComponent<Rigidbody>();
         _usePlayerSpeed = _playerSpeed;
+        _useJumpPower = _jumpPower;
         _useDestroyPower = _destroyPower;
         _waitTime = new WaitForSeconds(_itemHandler._ItemAEffectTime);
         _uiHandler = GameObject.FindWithTag("UIHandler").GetComponent<UIHandler>();
@@ -233,7 +235,7 @@ public class Player : MonoBehaviour
         {
             //ジャンプSE鳴らす
             _soundHandler.PlaySE(jump);
-            _rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
+            _rb.AddForce(Vector3.up * _useJumpPower, ForceMode.Impulse);
         }
     }
 
@@ -310,7 +312,7 @@ public class Player : MonoBehaviour
         switch (effectID)
         {
             case 1:
-                _itemC.EffectStan(ref _usePlayerSpeed);
+                _itemC.EffectStan(ref _usePlayerSpeed,ref _useJumpPower);
                 //スタンエフェクト再生
                 if (transform.position.z < 0) _staneffect.transform.position = transform.position + new Vector3(0, 0, -stanpos);
                 else _staneffect.transform.position = transform.position + new Vector3(0, 0, stanpos);
@@ -438,6 +440,7 @@ public class Player : MonoBehaviour
     void FinishItemC()
     {
         _usePlayerSpeed = _playerSpeed;
+        _useJumpPower = _jumpPower;
         //スタンエフェクト停止
         _stanEffect.SetBool("Stan", false);
         _animStan = false;
