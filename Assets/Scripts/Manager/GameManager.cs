@@ -195,6 +195,7 @@ public class GameManager : MonoBehaviour
                     int shareTeam2 = _blockManager.CalcCubeShare2(FIELD_SIZE);
                     _uiHandler.ShowCalc(shareTeam1,shareTeam2);
                     _uiHandler.ShowResult(shareTeam1,shareTeam2,_player.IsDead,_teamID);
+                    //_uiHandler.ResultInfo(_memberNames);
                 }
             }
         }

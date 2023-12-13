@@ -21,6 +21,9 @@ public class UIHandler : MonoBehaviour
     [SerializeField] GameObject _winandlose, _draw;
     [SerializeField] Text _winBlockRate, _loseBlockRate, _drawBlockRate1, _drawBlockRate2;
     [SerializeField] GameObject itemeffect,cloudeffect;
+    //リザルトのテキスト
+    [SerializeField] Text[] _winName = new Text[2];
+    [SerializeField] Text[] _loseName = new Text[2];
     Animator itemEffectAnimator;
     private Color toumei = new Color(1f, 1f, 1f, 0f);
     //ItemB用のスケール変更
@@ -258,8 +261,31 @@ public class UIHandler : MonoBehaviour
         }
     }
     //リザルトUIに名前とチームを描画
-    public void ResultInfo()
+    public void ResultInfo(string[] names,int winteam)
     {
+        if(winteam == 1)
+        {
+            for(int i = 0; i < _winName.Length; i++)
+            {
+                _winName[i].text = names[i];
+            }
+            for(int i = 0; i < _loseName.Length; i++)
+            {
+                _loseName[i + 2].text = names[i + 2];
+            }
+    
+        }
+        else if(winteam == 2)
+        {
+            for(int i = 0; i < _winName.Length; i++)
+            {
+                _winName[i + 2].text = names[i + 2];
+            }
+            for(int i = 0; i < _loseName.Length; i++)
+            {
+                _loseName[i].text = names[i];
+            }
+        }
         
     }
     
