@@ -1549,10 +1549,10 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0.00042116642
-    width: 1
-    height: 0.99915767
+    x: 0.00032871962
+    y: 0
+    width: 0.99934256
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 45
@@ -1933,7 +1933,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &831939134
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4733,7 +4733,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1647894665
 RectTransform:
   m_ObjectHideFlags: 0
