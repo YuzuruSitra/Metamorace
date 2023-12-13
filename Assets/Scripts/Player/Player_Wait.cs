@@ -37,10 +37,13 @@ public class Player_Wait : MonoBehaviour
    [SerializeField] Text _nametext;
     private string _name;
     
+    private WaitUIHandler _waitUIHandler;
+
     void Start()
     {
         _soundHandler = SoundHandler.InstanceSoundHandler;
         _rb = GetComponent<Rigidbody>();
+        _waitUIHandler = GameObject.FindWithTag("UIHandler").GetComponent<WaitUIHandler>();
     }
 
     public void CallShreName()
@@ -63,12 +66,19 @@ public class Player_Wait : MonoBehaviour
     void Update()
     {
         if (!_myPV.isMine) return;
-        Jump();   
         AnimSelect();
+        if (_waitUIHandler.IsOpenPanel) 
+        {
+            _animIdole = true;
+            return;
+        }
+        Jump();   
+        
     }
     void FixedUpdate()
     {
         if (!_myPV.isMine) return;
+        if (_waitUIHandler.IsOpenPanel) return;
         PlayerCtrl();
     }
 
@@ -151,14 +161,17 @@ public class Player_Wait : MonoBehaviour
         if(other.CompareTag("Team1Area"))
         {
             _selectTeam = 0;
-            //_myPV.RPC(nameof(SetTeamID), PhotonTargets.All, "Team0");
             ChangeState(true);
         }
         if(other.CompareTag("Team2Area"))
         {
             _selectTeam = 1;
-            //_myPV.RPC(nameof(SetTeamID), PhotonTargets.All, "Team1");
             ChangeState(true);
+        }
+
+        if(other.CompareTag("OutArea"))
+        {
+            _waitUIHandler.ChangeStateExitPanel();
         }
     }
 

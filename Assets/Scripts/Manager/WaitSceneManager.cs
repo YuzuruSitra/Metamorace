@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class WaitSceneManager : MonoBehaviour
 {
@@ -21,7 +22,16 @@ public class WaitSceneManager : MonoBehaviour
     public static int _playerNum = -1;
     private string[] _memberNames = new string[4];
     private int[] _memberTeamIDs = new int[4];
-    
+
+    private SoundHandler _soundHandler;
+
+    [SerializeField]
+    private AudioClip _buttonSE;
+    [SerializeField]
+    private Slider _sliderBGM;
+    [SerializeField]
+    private Slider _sliderSE;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +42,9 @@ public class WaitSceneManager : MonoBehaviour
         }
         SceneManager.sceneLoaded += OnLoadedScene;
         _waitTime = new WaitForSeconds(_transitionTime);
+
+        _soundHandler = SoundHandler.InstanceSoundHandler;
+        _soundHandler.ChangeSliderValue(_sliderBGM, _sliderSE);
 
         //Photonに接続していれば自プレイヤーを生成
         if(_playerNum < 0) _playerNum = PhotonNetwork.playerList.Length - 1;
@@ -137,6 +150,26 @@ public class WaitSceneManager : MonoBehaviour
 
         // それぞれの名前を描画
         _playerWait.CallShreName();
+    }
+
+    public void ExitWaitRoom()
+    {
+        PhotonNetwork.Disconnect();
+        SceneManager.LoadScene("Master_Title");
+    }
+
+    public void PushSE()
+    {
+        _soundHandler.PlaySE(_buttonSE);
+    }
+
+    public void ChangeBGMValue()
+    {
+        _soundHandler.SetNewValueBGM(_sliderBGM.value);
+    }
+    public void ChangeSEValue()
+    {
+        _soundHandler.SetNewValueSE(_sliderSE.value);
     }
 
 }

@@ -53,6 +53,7 @@ public class TitleManager : MonoBehaviour
         }
         _soundHandler = SoundHandler.InstanceSoundHandler;
         _soundHandler.PlayBGM(_titleBGM);
+        _soundHandler.ChangeSliderValue(_sliderBGM, _sliderSE);
     }
     
     public void InputPlayerName()
