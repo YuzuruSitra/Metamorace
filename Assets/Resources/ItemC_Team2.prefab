@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd778bd21e1e7894dabf939a6a37c495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NotUseBillboard: 0
 --- !u!1 &6634286862068246577
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,7 +459,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isBigBlock: 0
-  _teamID: 1
+  _teamID: 0
   _rb: {fileID: 2910339165191738683}
 --- !u!54 &2910339165191738683
 Rigidbody:

@@ -62,4 +62,5 @@ MonoBehaviour:
   - ShareName
   - SetTeamID
   - CheckIn
+  - AnimSelecter
   DisableAutoOpenWizard: 1
