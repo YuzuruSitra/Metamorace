@@ -2825,13 +2825,14 @@ MonoBehaviour:
   - {fileID: 1664117124386851239, guid: f13175661c7ad164db194d01f13af153, type: 3}
   - {fileID: 1664117124386851239, guid: 5a8e200b20ff90e4fb51279c198ef9a6, type: 3}
   _cPrefab:
-  - {fileID: 933951156368605023, guid: c2f415d55aad22543bbe3319b71c4e36, type: 3}
+  - {fileID: 933951156368605023, guid: 4c029e3fa0c60ae4581b5bac10c0c254, type: 3}
   - {fileID: 933951156368605023, guid: c299c008d3393574cbe719c6b3af987a, type: 3}
   _playerAnim: {fileID: 8520456443667393430}
   _stanEffect: {fileID: 2587801957149257156}
   _staneffect: {fileID: 2587801957149257158}
   _saiyaeffect: {fileID: 4955215041919156892}
   stanpos: 0.3
+  _rb: {fileID: 5353145884009873201}
   _developMode: 0
   _playerReach: 1
   jump: {fileID: 8300000, guid: 8435c23312ad2934a972e15f0a48c4f8, type: 3}

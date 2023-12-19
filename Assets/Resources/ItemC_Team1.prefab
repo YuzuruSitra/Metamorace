@@ -11,11 +11,7 @@ GameObject:
   - component: {fileID: 7379414304278866445}
   - component: {fileID: 2874768690144058947}
   m_Layer: 0
-<<<<<<<< HEAD:Assets/Resources/ItemC_Team1.prefab
   m_Name: ItemC_Team1
-========
-  m_Name: ItemCBlock1 1
->>>>>>>> 31366887 (プレファブの修正):Assets/Resources/ItemCBlock1 1.prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,7 +31,6 @@ Transform:
   m_Children:
   - {fileID: 2082341875891665531}
   - {fileID: 7430094026966327143}
-  - {fileID: 8852857924214133534}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -288,11 +283,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-<<<<<<<< HEAD:Assets/Resources/ItemC_Team1.prefab
   m_Father: {fileID: 7430094026966327143}
-========
-  m_Father: {fileID: 7379414304278866445}
->>>>>>>> 31366887 (プレファブの修正):Assets/Resources/ItemCBlock1 1.prefab
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6615310461573922448
@@ -400,10 +391,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8269188457450891799}
-<<<<<<<< HEAD:Assets/Resources/ItemC_Team1.prefab
   - {fileID: 8852857924214133534}
-========
->>>>>>>> 31366887 (プレファブの修正):Assets/Resources/ItemCBlock1 1.prefab
   m_Father: {fileID: 7379414304278866445}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

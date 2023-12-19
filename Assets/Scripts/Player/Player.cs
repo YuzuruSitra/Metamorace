@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
 
     BlockBehaviour _currentBlock;
     HerosBehaviour _herosBehaviour, _bigBehaviour, _cBehaviour;
+    [SerializeField]
     private Rigidbody _rb;
     private bool _isJump, _isHead = false;
     private bool _hasBlock = false;
@@ -73,9 +74,13 @@ public class Player : MonoBehaviour
     private GameObject _predictCubes;
     void Start()
     {
-        if(!_myPV.isMine) return;
+        if(!_myPV.isMine) 
+        {
+            _rb.useGravity = false;
+            _rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+            return;
+        }
         _soundHandler = SoundHandler.InstanceSoundHandler;
-        _rb = GetComponent<Rigidbody>();
         _usePlayerSpeed = _playerSpeed;
         _useJumpPower = _jumpPower;
         _useDestroyPower = _destroyPower;
@@ -116,6 +121,8 @@ public class Player : MonoBehaviour
             _insPos = new Vector3((int)transform.position.x, (int)transform.position.y + 0.25f, -1.0f);
             _predictCubes.transform.position = _insPos;
         }
+        //スムーズな同期のためにPhotonTransformViewに速度値を渡す
+        //_myPTV.SetSynchronizedValues(_rb.velocity, 0); 
     }
     void FixedUpdate()
     {
@@ -165,9 +172,6 @@ public class Player : MonoBehaviour
         right.y = 0.0f;
         right.Normalize();
         _rb.MovePosition(transform.position + movement * _usePlayerSpeed * Time.deltaTime);
-        //スムーズな同期のためにPhotonTransformViewに速度値を渡す
-        Vector3 velocity = _rb.velocity;
-        _myPTV.SetSynchronizedValues(velocity, 0); 
     }
 
     private bool CheckFront(Ray ray)
@@ -449,65 +453,102 @@ public class Player : MonoBehaviour
     // 時短につき良くない実装
     private void AnimSelecter()
     {
+        int animCase = 0;
         if (_animVDeat)
         {
-            _playerAnim.SetBool("_isVDeath", true);
-            _playerAnim.SetBool("_isHDeath", false);
-            _playerAnim.SetBool("_isStan", false);
-            _playerAnim.SetBool("_isSwing", false);
-            _playerAnim.SetBool("_isJump", false);
-            _playerAnim.SetBool("_isBreak", false);
-            _playerAnim.SetBool("_isIdole", false);
-            _playerAnim.SetBool("_isWalk", false);
+            animCase = 0;
         }
         else if(_animHDeat)
         {
-            _playerAnim.SetBool("_isVDeath", false);
-            _playerAnim.SetBool("_isHDeath", true);
-            _playerAnim.SetBool("_isStan", false);
-            _playerAnim.SetBool("_isSwing", false);
-            _playerAnim.SetBool("_isJump", false);
-            _playerAnim.SetBool("_isBreak", false);
-            _playerAnim.SetBool("_isIdole", false);
-            _playerAnim.SetBool("_isWalk", false);
+            animCase = 1;
         }
         else if(_animStan)
         {
-            _playerAnim.SetBool("_isVDeath", false);
-            _playerAnim.SetBool("_isHDeath", false);
-            _playerAnim.SetBool("_isStan", true);
-            _playerAnim.SetBool("_isSwing", false);
-            _playerAnim.SetBool("_isJump", false);
-            _playerAnim.SetBool("_isBreak", false);
-            _playerAnim.SetBool("_isIdole", false);
-            _playerAnim.SetBool("_isWalk", false);
+            animCase = 2;
         }
         else if(_animSwing)
         {
-            _playerAnim.SetBool("_isVDeath", false);
-            _playerAnim.SetBool("_isHDeath", false);
-            _playerAnim.SetBool("_isStan", false);
-            _playerAnim.SetBool("_isSwing", true);
-            _playerAnim.SetBool("_isJump", false);
-            _playerAnim.SetBool("_isBreak", false);
-            _playerAnim.SetBool("_isIdole", false);
-            _playerAnim.SetBool("_isWalk", false);
+            animCase = 3;
         }
         else if(_animJump)
         {
-            _playerAnim.SetBool("_isVDeath", false);
-            _playerAnim.SetBool("_isHDeath", false);
-            _playerAnim.SetBool("_isStan", false);
-            _playerAnim.SetBool("_isSwing", false);
-            _playerAnim.SetBool("_isJump", true);
-            _playerAnim.SetBool("_isBreak", false);
-            _playerAnim.SetBool("_isIdole", false);
-            _playerAnim.SetBool("_isWalk", false);
+            animCase = 4;
         }
         else if(_animIdole)
         {
             if(_animBreak)
             {
+                animCase = 5;
+            }
+            else
+            {
+                animCase = 6;
+            }
+        }
+        else if(_animWalk)
+        {
+            animCase = 7;
+        }
+
+        _myPV.RPC(nameof(ShareAnimBool), PhotonTargets.All, animCase);
+    }
+
+    [PunRPC]
+    private void ShareAnimBool(int animCase)
+    {
+        switch (animCase)
+        {
+            case 0:
+                _playerAnim.SetBool("_isVDeath", true);
+                _playerAnim.SetBool("_isHDeath", false);
+                _playerAnim.SetBool("_isStan", false);
+                _playerAnim.SetBool("_isSwing", false);
+                _playerAnim.SetBool("_isJump", false);
+                _playerAnim.SetBool("_isBreak", false);
+                _playerAnim.SetBool("_isIdole", false);
+                _playerAnim.SetBool("_isWalk", false);
+                break;
+            case 1:
+                _playerAnim.SetBool("_isVDeath", false);
+                _playerAnim.SetBool("_isHDeath", true);
+                _playerAnim.SetBool("_isStan", false);
+                _playerAnim.SetBool("_isSwing", false);
+                _playerAnim.SetBool("_isJump", false);
+                _playerAnim.SetBool("_isBreak", false);
+                _playerAnim.SetBool("_isIdole", false);
+                _playerAnim.SetBool("_isWalk", false);
+                break;
+            case 2:
+                _playerAnim.SetBool("_isVDeath", false);
+                _playerAnim.SetBool("_isHDeath", false);
+                _playerAnim.SetBool("_isStan", true);
+                _playerAnim.SetBool("_isSwing", false);
+                _playerAnim.SetBool("_isJump", false);
+                _playerAnim.SetBool("_isBreak", false);
+                _playerAnim.SetBool("_isIdole", false);
+                _playerAnim.SetBool("_isWalk", false);
+                break;
+            case 3:
+                _playerAnim.SetBool("_isVDeath", false);
+                _playerAnim.SetBool("_isHDeath", false);
+                _playerAnim.SetBool("_isStan", false);
+                _playerAnim.SetBool("_isSwing", true);
+                _playerAnim.SetBool("_isJump", false);
+                _playerAnim.SetBool("_isBreak", false);
+                _playerAnim.SetBool("_isIdole", false);
+                _playerAnim.SetBool("_isWalk", false);
+                break;
+            case 4:
+                _playerAnim.SetBool("_isVDeath", false);
+                _playerAnim.SetBool("_isHDeath", false);
+                _playerAnim.SetBool("_isStan", false);
+                _playerAnim.SetBool("_isSwing", false);
+                _playerAnim.SetBool("_isJump", true);
+                _playerAnim.SetBool("_isBreak", false);
+                _playerAnim.SetBool("_isIdole", false);
+                _playerAnim.SetBool("_isWalk", false);
+                break;
+            case 5:
                 _playerAnim.SetBool("_isVDeath", false);
                 _playerAnim.SetBool("_isHDeath", false);
                 _playerAnim.SetBool("_isStan", false);
@@ -517,9 +558,8 @@ public class Player : MonoBehaviour
                 _playerAnim.SetBool("_isIdole", false);
                 _playerAnim.SetBool("_isWalk", false);
                 _playerAnim.SetFloat("MoveSpeed", 0.0f);
-            }
-            else
-            {
+                break;
+            case 6:
                 _playerAnim.SetBool("_isVDeath", false);
                 _playerAnim.SetBool("_isHDeath", false);
                 _playerAnim.SetBool("_isStan", false);
@@ -529,20 +569,20 @@ public class Player : MonoBehaviour
                 _playerAnim.SetBool("_isIdole", true);
                 _playerAnim.SetBool("_isWalk", false);
                 _playerAnim.SetFloat("MoveSpeed", 0.0f);
-            }
+                break;
+            case 7:
+                _playerAnim.SetBool("_isVDeath", false);
+                _playerAnim.SetBool("_isHDeath", false);
+                _playerAnim.SetBool("_isStan", false);
+                _playerAnim.SetBool("_isSwing", false);
+                _playerAnim.SetBool("_isJump", false);
+                _playerAnim.SetBool("_isBreak", false);
+                _playerAnim.SetBool("_isIdole", false);
+                _playerAnim.SetBool("_isWalk", true);
+                _playerAnim.SetFloat("MoveSpeed", 1.0f);
+                break;
         }
-        else if(_animWalk)
-        {
-            _playerAnim.SetBool("_isVDeath", false);
-            _playerAnim.SetBool("_isHDeath", false);
-            _playerAnim.SetBool("_isStan", false);
-            _playerAnim.SetBool("_isSwing", false);
-            _playerAnim.SetBool("_isJump", false);
-            _playerAnim.SetBool("_isBreak", false);
-            _playerAnim.SetBool("_isIdole", false);
-            _playerAnim.SetBool("_isWalk", true);
-            _playerAnim.SetFloat("MoveSpeed", 1.0f);
-        }
+
     }
 
 }
