@@ -40,8 +40,8 @@ public class NPCPlayer : MonoBehaviour
     BlockBehaviour _currentBlock;
     HerosBehaviour _herosBehaviour, _bigBehaviour, _cBehaviour;
     private Rigidbody _rb;
-    private bool _isJump, _isHead = false;
-    private bool _hasBlock = false;
+    public bool _isJump, _isHead = false;
+    public bool _hasBlock = false;
     private int _mineTeam, _enemyTeam;
     [SerializeField]
     private bool _developMode = false;
@@ -71,18 +71,9 @@ public class NPCPlayer : MonoBehaviour
     Vector3 _insBigPos;
     [SerializeField]
     private GameObject _predictCubes;
-    bool tset = true;
-    bool Block = false;
-    public enum NPCState
-    {
-        WAIT,			//行動を一旦停止
-        MOVE,			//移動
-        CREATE,		//生成
-        BREAK,	//破壊
-        IDLE,			//待機
-        AVOID,		//回避
-    }
-    public NPCState npcState = NPCState.MOVE;
+    public bool tset = true;
+    public bool _hitBlock = false;
+    
     void Start()
     {
         // if(!_myPV.isMine) return;
@@ -111,26 +102,16 @@ public class NPCPlayer : MonoBehaviour
 
     void Update()
     {
+        RayCheck();
         //NPC
-       
         //Debug.Log(npcState);
-        switch (npcState)
-        {
-            case NPCState.MOVE:
-                PlayerCtrl();
-                break;
-            case NPCState.BREAK:
-                BreakBlock();
-                break;
-            case NPCState.CREATE:
-                CreateBlock();
-                break;
-        }
+        
+        
         //エフェクト移動させてる
         if (transform.position.z < 0 && _saiyaeffect.activeSelf) _saiyaeffect.transform.position = transform.position + new Vector3(0, 0.5f, -stanpos);
         else _saiyaeffect.transform.position = transform.position + new Vector3(0, 0.5f, stanpos);
         //  PlayerCtrl();
-         // BreakBlock();
+        // BreakBlock();
         // if (!_myPV.isMine && !_developMode) return;
         //if (!_isGame) return;
         //BreakBlock();
@@ -154,20 +135,15 @@ public class NPCPlayer : MonoBehaviour
     }
 
     //プレイヤーの移動
-    void PlayerCtrl()
+    public void PlayerCtrl()
     {
         if (_animSwing) return;
         //inputX = 0.0f;
-        
+
         if (tset)
         {
             StartCoroutine(TestCoroutine());
         }
-        if(Block)
-        {
-            npcState = NPCState.BREAK;
-        }
-
         if (inputX == 0)
         {
             _animIdole = true;
@@ -265,20 +241,20 @@ public class NPCPlayer : MonoBehaviour
         _isDead = true;
     }
 
-    void Jump()
+    public void Jump()
     {
         if (_animSwing) return;
         float raypos = 0.45f;
         float rayheight = 0.1f;
         // Jump handling
-        bool _isJump = CheckAndJump(new Ray(transform.position + new Vector3(raypos, rayheight, raypos), Vector3.down)) ||
+        _isJump = CheckAndJump(new Ray(transform.position + new Vector3(raypos, rayheight, raypos), Vector3.down)) ||
                         CheckAndJump(new Ray(transform.position + new Vector3(-raypos, rayheight, -raypos), Vector3.down)) ||
                         CheckAndJump(new Ray(transform.position + new Vector3(raypos, rayheight, -raypos), Vector3.down)) ||
                         CheckAndJump(new Ray(transform.position + new Vector3(-raypos, rayheight, raypos), Vector3.down));
-        if (Input.GetKeyDown(KeyCode.Space) && _isJump)
+        if ( _isJump)
         {
             //ジャンプSE鳴らす
-            _soundHandler.PlaySE(jump);
+           //_soundHandler.PlaySE(jump);
             _rb.AddForce(Vector3.up * _useJumpPower, ForceMode.Impulse);
         }
     }
@@ -302,6 +278,16 @@ public class NPCPlayer : MonoBehaviour
         }
     }
 
+    public void RayCheck()
+    {
+        Vector3 direction = transform.forward;
+        direction.Normalize();
+        Ray ray = new Ray(transform.position + _upPadding, direction);
+
+        Debug.DrawRay(transform.position + _upPadding, direction, Color.green, 0.3f);
+        if(!Physics.Raycast(ray, out RaycastHit hit, _playerReach))return;
+        if(hit.collider.CompareTag("Ambras")) _hitBlock = true;
+    }
 
     //オブジェクト破壊
     public void BreakBlock()
@@ -314,9 +300,7 @@ public class NPCPlayer : MonoBehaviour
         Ray ray = new Ray(transform.position + _upPadding, direction);
 
         Debug.DrawRay(transform.position + _upPadding, direction, Color.red, 0.3f);
-         Debug.Log("b");
         if (!Physics.Raycast(ray, out RaycastHit hit, _playerReach)) return;
-        Debug.Log("c");
         _currentBlock = hit.collider.GetComponent<BlockBehaviour>();
         //対象ブロックの体力参照
         //float _objHealth = _currentBlock._ObjHealth;
@@ -343,6 +327,7 @@ public class NPCPlayer : MonoBehaviour
                 _itemHandler.CreateItem();
             }
         }
+        _hitBlock = false;
     }
 
     private bool IsBlock(Collider collider)
@@ -378,14 +363,13 @@ public class NPCPlayer : MonoBehaviour
         //ブロックを持ってれば処理を行う
         if (!_hasBlock) return;
         if (_animSwing) return;
-        if (!Input.GetMouseButtonDown(0)) return;
         //swingAnim再生
         _animSwing = true;
         _hasBlock = false;
         _predictCubes.SetActive(false);
         _insBigPos = _insPos;
         _insBigPos.y += 1.0f;
-        _soundHandler.PlaySE(createBlock);
+        //_soundHandler.PlaySE(createBlock);
         Invoke("InsSwingObj", 0.4f);
     }
 

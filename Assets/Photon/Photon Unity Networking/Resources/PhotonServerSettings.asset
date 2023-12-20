@@ -63,4 +63,5 @@ MonoBehaviour:
   - SetTeamID
   - CheckIn
   - AnimSelecter
+  - ShareAnimBool
   DisableAutoOpenWizard: 1
