@@ -652,9 +652,9 @@ MonoBehaviour:
   _TimeLimit: 90
   _playerPrefab:
   - {fileID: 4877800243297777295, guid: 2a3cf850266e7314f9c57709ac0f5b75, type: 3}
-  - {fileID: 4877800243297777295, guid: 0446389027cef004abad6b45fbbce173, type: 3}
-  - {fileID: 4877800243297777295, guid: 6eb9008b70a560b458cb4877728d44fc, type: 3}
-  - {fileID: 4877800243297777295, guid: 8c83f7427f4f1604c93065be75ec46bf, type: 3}
+  - {fileID: 4877800243297777295, guid: fecf3209729bb7744b16f6c41ed75227, type: 3}
+  - {fileID: 4877800243297777295, guid: b78a380a31dcb1c469eec9b0548d0035, type: 3}
+  - {fileID: 4877800243297777295, guid: 8df6929eaa436d443a474e597c1dea93, type: 3}
   DevelopeMode: 0
   DevelopeTeamID: 0
   _calcInterval: 2.5
@@ -1709,9 +1709,9 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.000305593
+    x: 0
     y: 0
-    width: 0.9993888
+    width: 1
     height: 1
   near clip plane: 0.3
   far clip plane: 1000

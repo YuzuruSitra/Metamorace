@@ -108,12 +108,10 @@ public class ItemHandler : MonoBehaviour
         }  
         return _myBrockNum;
     }
-    public void ItemEffectA(ref float _destroyPower, ref float _playerSpeed)
+    public void ItemEffectA()
      {
         //if (!_hasItemC) return;        
         _uiHandler.ResetItemImage();   
-        _destroyPower = _destroyPower*2;
-        _playerSpeed = _playerSpeed*2;
         ResetBlock();
         _hasItemA = false;        
         //return _destroyPower;   

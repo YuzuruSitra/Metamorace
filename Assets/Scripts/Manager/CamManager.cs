@@ -33,7 +33,6 @@ public class CamManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(_targetPlayer.transform.position.y);
         if(_targetPlayer.transform.position.y <= 4.0f)
         {
             if (_targetPlayer.transform.position.x <= -3.5f)

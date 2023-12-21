@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Resources/BatleFoxBlue.prefab.meta
-guid: 0446389027cef004abad6b45fbbce173
-========
-guid: c299c008d3393574cbe719c6b3af987a
->>>>>>>> 31366887 (プレファブの修正):Assets/Resources/ItemCBlock1 1.prefab.meta
+guid: fecf3209729bb7744b16f6c41ed75227
 PrefabImporter:
   externalObjects: {}
   userData: 

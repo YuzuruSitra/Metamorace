@@ -7,7 +7,8 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private PhotonView _myPV;
-    private Player _player;
+    private PlayerDataReceiver _playerDataReceiver;
+    private PlayerDeathDetector _playerDeathDetector;
     [SerializeField] 
     private ColorManager _colorManager;
     [SerializeField] 
@@ -106,8 +107,10 @@ public class GameManager : MonoBehaviour
         SetupBlockManager();
         GameObject player = Instantiate(_playerPrefab[_playerID], new Vector3(0f, 1.25f, myPosZ), Quaternion.identity);
         _camManager.SetPlayer(player, _teamID);
-        _player = player.transform.GetChild(0).gameObject.GetComponent<Player>();
-        _player.SetParameter( _cubeParentTeam1, _cubeParentTeam2, _teamID, true);
+        _playerDataReceiver = player.transform.GetChild(0).gameObject.GetComponent<PlayerDataReceiver>();
+        _playerDeathDetector = player.transform.GetChild(0).gameObject.GetComponent<PlayerDeathDetector>();
+        _playerDataReceiver.SetTeamID(_teamID);
+        _playerDataReceiver.SetInsCubeParent(_cubeParentTeam1, _cubeParentTeam2);
     }
 
     // ネットワークプレイヤーのセットアップ
@@ -118,8 +121,10 @@ public class GameManager : MonoBehaviour
         GameObject player = PhotonNetwork.Instantiate(_playerPrefab[_playerID].name, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity, 0);
         _myPV.RPC(nameof(JoinPlayer), PhotonTargets.All);
         _camManager.SetPlayer(player, _teamID);
-        _player = player.transform.GetChild(0).gameObject.GetComponent<Player>();
-        _player.SetParameter( _cubeParentTeam1, _cubeParentTeam2, _teamID, false);
+        _playerDataReceiver = player.transform.GetChild(0).gameObject.GetComponent<PlayerDataReceiver>();
+        _playerDeathDetector = player.transform.GetChild(0).gameObject.GetComponent<PlayerDeathDetector>();
+        _playerDataReceiver.SetTeamID(_teamID);
+        _playerDataReceiver.SetInsCubeParent(_cubeParentTeam1, _cubeParentTeam2);
     }
 
     // プレイヤーの参加数
@@ -175,18 +180,18 @@ public class GameManager : MonoBehaviour
             ReduceTimeLimit();
 
             // ゲーム終了処理
-            if (_timeLimit <= 0 || _player.IsDead)
+            if (_timeLimit <= 0 || _playerDeathDetector.IsPlayerDeath)
             {
                 _soundHandler.PlaySE(gameEnd); 
                 if(!DevelopeMode) 
                 {            
                     _isGame = false;
-                    _myPV.RPC(nameof(FinishMasterGame), PhotonTargets.MasterClient, _player.IsDead, _teamID);
+                    _myPV.RPC(nameof(FinishMasterGame), PhotonTargets.MasterClient,  _playerDeathDetector.IsPlayerDeath, _teamID);
                 }
                 else
                 {
                     _isGame = false;
-                    _player.SetGameState(_isGame);
+                    _playerDataReceiver.SetGameState(_isGame);
                     _blockManager.SetGameState(_isGame);
                     // 死んだプレイヤーのチームを取得して勝敗を判定
                     int winTeam = 1 - _teamID;
@@ -194,7 +199,7 @@ public class GameManager : MonoBehaviour
                     int shareTeam1 = _blockManager.CalcCubeShare1(FIELD_SIZE);
                     int shareTeam2 = _blockManager.CalcCubeShare2(FIELD_SIZE);
                     _uiHandler.ShowCalc(shareTeam1,shareTeam2);
-                    _uiHandler.ShowResult(shareTeam1,shareTeam2,_player.IsDead,_teamID);
+                    _uiHandler.ShowResult(shareTeam1,shareTeam2, _playerDeathDetector.IsPlayerDeath,_teamID);
                     //_uiHandler.ResultInfo(_memberNames);
                 }
             }
@@ -232,7 +237,7 @@ public class GameManager : MonoBehaviour
         //ホイッスル
         _soundHandler.PlaySE(gameStart);
         _isGame = true;
-        _player.SetGameState(_isGame);
+        _playerDataReceiver.SetGameState(_isGame);
         if (PhotonNetwork.isMasterClient) _blockManager.SetGameState(_isGame);
     }
 
@@ -252,8 +257,14 @@ public class GameManager : MonoBehaviour
     private void FinishGame(bool isDead, int team, int shareTeam1, int shareTeam2)
     {
         _isGame = false;
-        _player.SetGameState(_isGame);
+        _playerDataReceiver.SetGameState(_isGame);
         // 死んだプレイヤーのチームを取得して勝敗を判定
+        StartCoroutine(ShowResultUI(isDead, team, shareTeam1, shareTeam2));
+    }
+
+    IEnumerator ShowResultUI(bool isDead, int team, int shareTeam1, int shareTeam2)
+    {
+        yield return new WaitForSeconds(2.0f);
         int winTeam = 1 - team;
         // UIの更新
         _uiHandler.ShowCalc(shareTeam1,shareTeam2);

@@ -2748,7 +2748,14 @@ GameObject:
   m_Component:
   - component: {fileID: 8193178583824930953}
   - component: {fileID: 8520456443667393430}
-  - component: {fileID: 7625594588848148882}
+  - component: {fileID: 5333687986489128819}
+  - component: {fileID: 8435881848925920795}
+  - component: {fileID: 5822621515958398410}
+  - component: {fileID: 4986528296631408970}
+  - component: {fileID: 3691346538088949327}
+  - component: {fileID: 6960793516193478571}
+  - component: {fileID: 5993565045750204425}
+  - component: {fileID: 320965255071117031}
   - component: {fileID: 5353145884009873201}
   - component: {fileID: 4853459554889714961}
   - component: {fileID: 4222517243372188881}
@@ -2798,7 +2805,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &7625594588848148882
+--- !u!114 &5333687986489128819
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2807,17 +2814,103 @@ MonoBehaviour:
   m_GameObject: {fileID: 8863035892777435699}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f5d279e75f114e9185f98491d80a0c2, type: 3}
+  m_Script: {fileID: 11500000, guid: ed1d8cdd7afe63744a5754fa8ae0edc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerAnim: {fileID: 8520456443667393430}
+  _myPV: {fileID: 4222517243372188881}
+  _playerMover: {fileID: 3691346538088949327}
+  _playerObjectManipulator: {fileID: 6960793516193478571}
+  _playerEffectHangler: {fileID: 4986528296631408970}
+  _playerDataReceiver: {fileID: 8435881848925920795}
+  _playerDeathDetector: {fileID: 5822621515958398410}
+--- !u!114 &8435881848925920795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8863035892777435699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb148990f3b596b4c9192d472e2f1242, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5822621515958398410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8863035892777435699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db9f5c093b46849408a07135dbfcf42a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _myPV: {fileID: 4222517243372188881}
-  _myPTV: {fileID: 4071951530283340385}
-  _playerSpeed: 5
-  _jumpPower: 30
+  _playerDataReceiver: {fileID: 8435881848925920795}
+  _deathDecisionRayRange: 0.15
+  _verticalRayOffset: 2
+  _horizontalRayOffset: 0.5
+  _playerMover: {fileID: 3691346538088949327}
+--- !u!114 &4986528296631408970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8863035892777435699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: defe2d4f4024f2f46990f8a75542ecef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerDataReceiver: {fileID: 8435881848925920795}
+  _staneffect: {fileID: 2587801957149257158}
+  _saiyaeffect: {fileID: 4955215041919156892}
+  _stanEffect: {fileID: 2587801957149257156}
+  _stanpos: 0.3
+--- !u!114 &3691346538088949327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8863035892777435699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8c8def250f4a1941852b1dbe850051a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerDataReceiver: {fileID: 8435881848925920795}
+  _playerSoundHandler: {fileID: 320965255071117031}
+  _myPV: {fileID: 4222517243372188881}
+  _rb: {fileID: 5353145884009873201}
+  _initialSpeed: 5
+  _frontRayRength: 0.51
+  _initialjumpPower: 30
   _jumprayrength: 0.15
-  _frontRayREngth: 0.5
-  _destroyPower: 1
+--- !u!114 &6960793516193478571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8863035892777435699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eb5ee737fec6e744bdce4a26fc9090f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerMover: {fileID: 3691346538088949327}
+  _myPV: {fileID: 4222517243372188881}
+  _playerSoundHandler: {fileID: 320965255071117031}
+  _playerDataReceiver: {fileID: 8435881848925920795}
+  _playerEffectHangler: {fileID: 4986528296631408970}
   _itemHandler: {fileID: 126352862618281623}
+  _initialDestroyPower: 1
+  _predictCubes: {fileID: 4142931056409329927}
   _herosPrefab:
   - {fileID: 1296549643261954888, guid: 36de42bbe2c4edd48af2924c3be698f7, type: 3}
   - {fileID: 1296549643261954888, guid: 7627e6ec5ed56f74ca126dc30b17dee9, type: 3}
@@ -2827,18 +2920,41 @@ MonoBehaviour:
   _cPrefab:
   - {fileID: 933951156368605023, guid: 4c029e3fa0c60ae4581b5bac10c0c254, type: 3}
   - {fileID: 933951156368605023, guid: c299c008d3393574cbe719c6b3af987a, type: 3}
-  _playerAnim: {fileID: 8520456443667393430}
-  _stanEffect: {fileID: 2587801957149257156}
-  _staneffect: {fileID: 2587801957149257158}
-  _saiyaeffect: {fileID: 4955215041919156892}
-  stanpos: 0.3
-  _rb: {fileID: 5353145884009873201}
-  _developMode: 0
   _playerReach: 1
-  jump: {fileID: 8300000, guid: 8435c23312ad2934a972e15f0a48c4f8, type: 3}
+  _playerItemHandler: {fileID: 5993565045750204425}
+--- !u!114 &5993565045750204425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8863035892777435699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93acdb230337e224ba5603d890616a65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myPV: {fileID: 4222517243372188881}
+  _playerMover: {fileID: 3691346538088949327}
+  _playerObjectManipulator: {fileID: 6960793516193478571}
+  _playerEffectHangler: {fileID: 4986528296631408970}
+  _itemHandler: {fileID: 126352862618281623}
+  _playerDataReceiver: {fileID: 8435881848925920795}
+--- !u!114 &320965255071117031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8863035892777435699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 559858185701ca44cbe57378c4b46fd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jump: {fileID: 8300000, guid: 868ec5b0f20290c4398b0a9415939157, type: 3}
   breakBlock: {fileID: 8300000, guid: a36f30c4df2344a4980a7e9965851ee8, type: 3}
   createBlock: {fileID: 8300000, guid: 3b21016f888eda14e9c4644263996cab, type: 3}
-  _predictCubes: {fileID: 4142931056409329927}
 --- !u!54 &5353145884009873201
 Rigidbody:
   m_ObjectHideFlags: 0
