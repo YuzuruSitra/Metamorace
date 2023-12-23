@@ -9,6 +9,8 @@ public class PlayerMover : MonoBehaviour
     [SerializeField]
     private PlayerSoundHandler _playerSoundHandler;
     [SerializeField]
+    private PlayerObjectManipulator _playerObjectManipulator;
+    [SerializeField]
     private PhotonView _myPV;
     [SerializeField]
     private Rigidbody _rb;
@@ -67,7 +69,7 @@ public class PlayerMover : MonoBehaviour
     //プレイヤーの移動
     void PlayerCtrl()
     {   
-        //if(_animSwing) return;
+        if (_playerObjectManipulator.AnimBreak) return;
         float inputX = 0.0f;
         //チーム1とチーム2で操作反転
         if (_playerDataReceiver.MineTeamID == 0)

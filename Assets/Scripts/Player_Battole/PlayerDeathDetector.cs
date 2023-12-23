@@ -22,6 +22,10 @@ public class PlayerDeathDetector : MonoBehaviour
     public bool HorizontalDeath => _horizontalDeath; 
     private bool _isPlayerDeath = false;
     public bool IsPlayerDeath => _isPlayerDeath;
+    [SerializeField]
+    private Rigidbody _rb;
+    [SerializeField]
+    private BoxCollider _col;
 
     private void Update()
     {
@@ -41,6 +45,7 @@ public class PlayerDeathDetector : MonoBehaviour
         {
             _verticalDeath = true;
             _isPlayerDeath = true;
+            StartCoroutine(ChangePhysics());
         }
     }
 
@@ -56,7 +61,15 @@ public class PlayerDeathDetector : MonoBehaviour
         {
             _horizontalDeath = true;
             _isPlayerDeath = true;
+            StartCoroutine(ChangePhysics());
         }
+    }
+
+    private IEnumerator ChangePhysics()
+    {
+        yield return new WaitForSeconds(0.5f);
+        _rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+        _col.isTrigger = true;
     }
 
 }

@@ -2854,6 +2854,8 @@ MonoBehaviour:
   _verticalRayOffset: 2
   _horizontalRayOffset: 0.5
   _playerMover: {fileID: 3691346538088949327}
+  _rb: {fileID: 5353145884009873201}
+  _col: {fileID: 4853459554889714961}
 --- !u!114 &4986528296631408970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2885,6 +2887,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerDataReceiver: {fileID: 8435881848925920795}
   _playerSoundHandler: {fileID: 320965255071117031}
+  _playerObjectManipulator: {fileID: 6960793516193478571}
   _myPV: {fileID: 4222517243372188881}
   _rb: {fileID: 5353145884009873201}
   _initialSpeed: 5
