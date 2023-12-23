@@ -24,6 +24,7 @@ public class UIHandler : MonoBehaviour
     //リザルトのテキスト
     [SerializeField] Text[] _winName = new Text[2];
     [SerializeField] Text[] _loseName = new Text[2];
+    [SerializeField] Text[] _drawName = new Text[4];
     Animator itemEffectAnimator;
     private Color toumei = new Color(1f, 1f, 1f, 0f);
     //ItemB用のスケール変更
@@ -261,32 +262,41 @@ public class UIHandler : MonoBehaviour
         }
     }
     //リザルトUIに名前とチームを描画
-    public void ResultInfo(string[] names,int winteam)
+    public void ResultInfo(string[] names, int[] memberTeamIDs, int winTeam)
     {
-        if(winteam == 1)
+        int team0 = 0;
+        int team1 = 0;
+        for (int i = 0; i < names.Length; i++)
         {
-            for(int i = 0; i < _winName.Length; i++)
+            if(names[i] == null) continue;
+            // 引き分け
+            if (winTeam == -1)
             {
-                _winName[i].text = names[i];
+                if (memberTeamIDs[i] == 0)
+                {
+                    _drawName[team0].text = names[i];
+                    team0 ++;
+                }
+                else
+                {
+                    _drawName[team1].text = names[i];
+                    team1 ++;
+                }
             }
-            for(int i = 0; i < _loseName.Length; i++)
+            else
             {
-                _loseName[i + 2].text = names[i + 2];
+                if (memberTeamIDs[i] == winTeam)
+                {
+                    _winName[team0].text = names[i];
+                    team0 ++;
+                }
+                else
+                {
+                    _loseName[team1].text = names[i];
+                    team1 ++;
+                }
             }
-    
         }
-        else if(winteam == 2)
-        {
-            for(int i = 0; i < _winName.Length; i++)
-            {
-                _winName[i + 2].text = names[i + 2];
-            }
-            for(int i = 0; i < _loseName.Length; i++)
-            {
-                _loseName[i].text = names[i];
-            }
-        }
-        
     }
     
 }
