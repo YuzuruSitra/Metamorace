@@ -432,7 +432,7 @@ public class NPCPlayer : MonoBehaviour
         {
             //さいやエフェクト再生
             _saiyaeffect.SetActive(true);
-            _itemHandler.ItemEffectA(ref _useDestroyPower, ref _usePlayerSpeed);
+           //_itemHandler.ItemEffectA(ref _useDestroyPower, ref _usePlayerSpeed);
             //ブロック画像nullにする
             //_uiHandler.ResetStackImage();
             StartCoroutine(FinishItemA());
