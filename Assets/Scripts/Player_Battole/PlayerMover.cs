@@ -69,7 +69,7 @@ public class PlayerMover : MonoBehaviour
     //プレイヤーの移動
     void PlayerCtrl()
     {   
-        if (_playerObjectManipulator.AnimBreak) return;
+        if (_playerObjectManipulator.AnimBreak && _onGround) return;
         float inputX = 0.0f;
         //チーム1とチーム2で操作反転
         if (_playerDataReceiver.MineTeamID == 0)
