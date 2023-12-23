@@ -38,6 +38,7 @@ public class PlayerMover : MonoBehaviour
         }
         _playerSpeed = _initialSpeed;
         _JumpPower = _initialjumpPower;
+        _onGround = true;
     }
 
     void Update()

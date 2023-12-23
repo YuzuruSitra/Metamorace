@@ -213,13 +213,6 @@ public class GameManager : MonoBehaviour
         _uiHandler.SetNames(_memberNames, _memberTeamIDs);
     }
 
-    [PunRPC]
-    private void SendTeamInfo(List<string> names, List<int> IDs)
-    {
-        // UIハンドラーへ値を渡す処理
-        _uiHandler.SetNames(names.ToArray(), IDs.ToArray());
-    }
-
     // ゲーム開始処理
     [PunRPC]
     private void LaunchGame()
@@ -265,10 +258,13 @@ public class GameManager : MonoBehaviour
     IEnumerator ShowResultUI(bool isDead, int team, int shareTeam1, int shareTeam2)
     {
         yield return new WaitForSeconds(2.0f);
-        int winTeam = 1 - team;
+        int winTeam;
+        if (isDead) winTeam = 1 - team;
+        else winTeam = CalcWinTeam(shareTeam1, shareTeam2);
         // UIの更新
         _uiHandler.ShowCalc(shareTeam1,shareTeam2);
-        _uiHandler.ShowResult(shareTeam1, shareTeam2, isDead, team);
+        _uiHandler.ResultInfo(_memberNames, _memberTeamIDs, winTeam);
+        _uiHandler.ShowResult(shareTeam1, shareTeam2, isDead, winTeam);
     }
 
     // ルームへ戻る処理
@@ -315,6 +311,14 @@ public class GameManager : MonoBehaviour
 
             _uiHandler.ShowCalc(shareTeam1,shareTeam2);
         }
+    }
+
+    int CalcWinTeam(int shareTeam1, int shareTeam2)
+    {
+        int winTeam = -1;
+        if (shareTeam1 < shareTeam2) winTeam = 0;
+        if (shareTeam1 > shareTeam2) winTeam = 1;
+        return winTeam;
     }
 
 }

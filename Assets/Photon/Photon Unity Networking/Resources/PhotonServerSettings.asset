@@ -64,4 +64,5 @@ MonoBehaviour:
   - CheckIn
   - AnimSelecter
   - ShareAnimBool
+  - CallInsBlock
   DisableAutoOpenWizard: 1

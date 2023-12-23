@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class BlockManager : MonoBehaviour
 {
+    [SerializeField]
+    private PhotonView _myPV;
     private AmbrasPoolHandler _ambrasPoolHandler;
     // キューブの親
-    private Transform _cubeParentTeam1, _cubeParentTeam2;
+    private Transform[] _cubeParentTeams = new Transform[2];
     [SerializeField] 
     private GameObject _blockAmbras;
     [Header("生成間隔")]
@@ -18,6 +20,11 @@ public class BlockManager : MonoBehaviour
     private bool _developMode = false;
     private const float RAY_DISTANCE = 1.0f;
     private bool _isGame = false;
+    private const int MAX_GENERATE = 3;
+    [SerializeField]
+    private GameObject predictPrefab;
+    private GameObject[] predictObjs = new GameObject[MAX_GENERATE * 2];
+    private const float PREDICT_POS_Y = 5.8f;
 
     void Awake()
     {
@@ -28,15 +35,14 @@ public class BlockManager : MonoBehaviour
     public void SetParam(bool isDevelop, Transform parent1, Transform parent2)
     {
         _developMode = isDevelop;
-        _cubeParentTeam1 = parent1;
-        _cubeParentTeam2 = parent2;
+        _cubeParentTeams[0] = parent1;
+        _cubeParentTeams[1] = parent2;
     }
 
     public void SetGameState(bool isGame)
     {
         _isGame = isGame;
     }
-
 
     void Start()
     {
@@ -48,18 +54,23 @@ public class BlockManager : MonoBehaviour
         _insPosTeam2.z = GameManager.TEAM2_POS_Z;
         _waitTime = new WaitForSeconds(_insInterval);
 
-        _coroutineTeam1 = StartCoroutine(SetParamForTeam(_cubeParentTeam1, _insPosTeam1, Quaternion.Euler(0, 180, 0)));
-        _coroutineTeam2 = StartCoroutine(SetParamForTeam(_cubeParentTeam2, _insPosTeam2, Quaternion.Euler(0, 0, 0)));
+        _coroutineTeam1 = StartCoroutine(SetParamForTeam1(0, _insPosTeam1, Quaternion.Euler(0, 180, 0)));
+        _coroutineTeam2 = StartCoroutine(SetParamForTeam2(1, _insPosTeam2, Quaternion.Euler(0, 0, 0)));
+
+        for (int i = 0; i < MAX_GENERATE * 2; i++)
+        {
+            predictObjs[i] = PhotonNetwork.Instantiate(predictPrefab.name, Vector3.zero, Quaternion.identity, 0);
+        }
     }
 
-    IEnumerator SetParamForTeam(Transform cubeParent, Vector3 insPos, Quaternion rot)
+    IEnumerator SetParamForTeam1(int cubeParentNum, Vector3 insPos, Quaternion rot)
     {
         while (true)
         {
             while (!_isGame) yield return null;
 
             yield return _waitTime;
-            int insCount = Random.Range(1, 3);
+            int insCount = Random.Range(1, MAX_GENERATE + 1);
 
             int insPosX;
             for (int i = 0; i < insCount; i++)
@@ -70,29 +81,62 @@ public class BlockManager : MonoBehaviour
                 } while (insPosX == insPos.x || ObjectExistsInRaycast(insPos, insPosX));
 
                 insPos.x = insPosX;
-                GenerateBlock(insPos, cubeParent, rot);
+                _myPV.RPC(nameof(CallInsBlock), PhotonTargets.All, insPos, cubeParentNum, rot, i);
             }
         }
     }
 
-    private void GenerateBlock(Vector3 insPos, Transform parent, Quaternion rot)
+    IEnumerator SetParamForTeam2(int cubeParentNum, Vector3 insPos, Quaternion rot)
     {
-        GameObject insObj;
-        if (_developMode) 
-            insObj = Instantiate(_blockAmbras, insPos, rot);
-        else 
-            insObj = PhotonNetwork.Instantiate(_blockAmbras.name, insPos, rot, 0);
-        insObj.transform.parent = parent;
+        while (true)
+        {
+            while (!_isGame) yield return null;
+
+            yield return _waitTime;
+            int insCount = Random.Range(1, MAX_GENERATE + 1);
+
+            int insPosX;
+            for (int i = 0; i < insCount; i++)
+            {
+                do
+                {
+                    insPosX = Random.Range(GameManager.MinPosX, GameManager.MaxPosX);
+                } while (insPosX == insPos.x || ObjectExistsInRaycast(insPos, insPosX));
+
+                insPos.x = insPosX;
+                _myPV.RPC(nameof(CallInsBlock), PhotonTargets.All, insPos, cubeParentNum, rot, i + MAX_GENERATE / 2);
+            }
+        }
+    }
+
+    [PunRPC]
+    private void CallInsBlock(Vector3 insPos, int parentNum, Quaternion insRot, int predictNum)
+    {
+        StartCoroutine(InsAmbras(insPos, parentNum, insRot, predictNum));
+    }
+
+    private IEnumerator InsAmbras(Vector3 insPos, int parentNum, Quaternion insRot, int predictNum)
+    {
+        predictObjs[predictNum].transform.position = new Vector3(insPos.x , PREDICT_POS_Y, insPos.z);
+        for (int i = 0; i < 4; i++)
+        {
+            predictObjs[predictNum].SetActive(true);
+            yield return new WaitForSeconds(0.2f);
+            predictObjs[predictNum].SetActive(false);
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        Instantiate(_blockAmbras, insPos, insRot, _cubeParentTeams[parentNum]);
     }
 
     public int CalcCubeShare1(int fieldSize)
     {
-        return CalcCubeShare(_cubeParentTeam1, fieldSize);
+        return CalcCubeShare(_cubeParentTeams[0], fieldSize);
     }
 
     public int CalcCubeShare2(int fieldSize)
     {
-        return CalcCubeShare(_cubeParentTeam2, fieldSize);
+        return CalcCubeShare(_cubeParentTeams[1], fieldSize);
     }
 
     private int CalcCubeShare(Transform cubeParent, int fieldSize)

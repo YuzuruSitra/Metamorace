@@ -23,17 +23,14 @@ public class PlayerAnimationHandler : MonoBehaviour
     void Update()
     {
         if (!_myPV.isMine) return;
-        //if(!_playerDataReceiver.IsActiveGame) return;
         AnimSelecter();
     }
 
-    // 時短につき良くない実装
     private void AnimSelecter()
     {
         int animCase = 0;
         if (_playerDeathDetector.VerticalDeath)
         {
-            Debug.Log("aaa");
             animCase = 0;
         }
         else if(_playerDeathDetector.HorizontalDeath)
