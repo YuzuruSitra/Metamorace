@@ -129,28 +129,28 @@ public class NPCMover : MonoBehaviour
         }
         else
         {
-                switch (BlockDirection)
-                {
-                    case "Right":
-                        inputX = 1.0f;
-                        //Debug.Log(BlockDirection);
-                        break;
-                    case "Left":
-                        inputX = -1.0f;
-                       // Debug.Log(BlockDirection);
-                        break;
-                    case "Null":
-                        //ランダム左右移動
-                      // Debug.Log(BlockDirection);
-                        if (SwitchDirectInterval < 0)
-                        {
-                           // Debug.Log(BlockDirection);
-                            inputX = -inputX;
-                            SwitchDirectInterval = Random.Range(MinRandomTime, MaxRandomTime);
-                        }
-                        break;
-                }
-            
+            switch (BlockDirection)
+            {
+                case "Right":
+                    inputX = 1.0f;
+                    //Debug.Log(BlockDirection);
+                    break;
+                case "Left":
+                    inputX = -1.0f;
+                    // Debug.Log(BlockDirection);
+                    break;
+                case "Null":
+                    //ランダム左右移動
+                    // Debug.Log(BlockDirection);
+                    if (SwitchDirectInterval < 0)
+                    {
+                        // Debug.Log(BlockDirection);
+                        inputX = -inputX;
+                        SwitchDirectInterval = Random.Range(MinRandomTime, MaxRandomTime);
+                    }
+                    break;
+            }
+
 
         }
     }
@@ -229,10 +229,8 @@ public class NPCMover : MonoBehaviour
 
     public void AvoidBlock()
     {
-
-        {
-            //Debug.Log("Avoid");
-        }
+        // _overBlock = _npcCheckAround.CheckVerticalDeathBlock();
+        // if(_overBlock)
 
     }
 }

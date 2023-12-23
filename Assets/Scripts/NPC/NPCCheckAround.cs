@@ -104,4 +104,27 @@ public class NPCCheckAround : MonoBehaviour
         }
         return _overBlock;
     }
+
+    //奥行きの圧死を回避するレイ
+    public bool CheckHorizontalDeathBlock()
+    {
+        bool _overBlock = false;
+        //頭上検出Ray
+        //頭上にブロックがあればよける、両方がブロックで挟まれている場合はジャンプ
+        Vector3 rayOrigin = transform.position + Vector3.up * _verticalRayOffset;
+        Ray rayover = new Ray(rayOrigin, Vector3.up);
+        Debug.DrawRay(rayover.origin, rayover.direction * _vericalAvoidRay, Color.green);
+
+        if (Physics.Raycast(rayover, out RaycastHit hitblock, _vericalAvoidRay) )
+        {
+            if (hitblock.collider.CompareTag("Ambras"))
+            {
+                _overBlock = true;
+                Debug.Log("Avoid");
+            }
+            else _overBlock = false;
+        }
+        return _overBlock;
+    }
+
 }

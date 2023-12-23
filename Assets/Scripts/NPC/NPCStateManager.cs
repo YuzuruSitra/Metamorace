@@ -8,6 +8,8 @@ public class NPCStateManager : MonoBehaviour
     bool isNPCStateRunning = false;
     [SerializeField] NPCMover _npcMover;
     [SerializeField] NPCObjectManipulator _npcObjectManipulator;
+    [SerializeField]
+    private NPCCheckAround _npcCheckAround;
     public enum NPCState
     {
         WAIT,	//行動を一旦停止
@@ -67,7 +69,11 @@ public class NPCStateManager : MonoBehaviour
         //思考止める
         if (isNPCStateRunning) return;
 
-       
+       bool _overBlock = _npcCheckAround.CheckVerticalDeathBlock();
+       if(_overBlock)
+       {
+         npcState = NPCState.JUMP;
+       }
         if (_npcObjectManipulator._hitBlock)
         {
             //確率でどれか
@@ -120,21 +126,4 @@ public class NPCStateManager : MonoBehaviour
         //     npcState = NPCState.MOVE;
         // }
     }
-
-    //各ステートで一定時間固定
-    // IEnumerator NPCInterval()
-    // {
-    //     isNPCStateRunning = true;
-
-    //     // Set the interval duration (replace 3.0f with your desired interval duration)
-    //     float intervalDuration = 0.01f;
-
-    //     // Wait for the specified interval duration
-    //     yield return new WaitForSeconds(intervalDuration);
-
-    //     // Reset the flag after the interval has passed
-    //     isNPCStateRunning = false;
-    // }
-
-
 }

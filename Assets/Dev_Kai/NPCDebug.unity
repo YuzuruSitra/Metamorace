@@ -1390,6 +1390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _npcMover: {fileID: 473386807}
   _npcObjectManipulator: {fileID: 473386808}
+  _npcCheckAround: {fileID: 473386815}
   npcState: 0
 --- !u!114 &473386802
 MonoBehaviour:
@@ -4037,6 +4038,11 @@ MonoBehaviour:
   _loseName:
   - {fileID: 2074618932}
   - {fileID: 1519279859}
+  _drawName:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!4 &1542473840
 Transform:
   m_ObjectHideFlags: 0
@@ -4672,7 +4678,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3582348743291709874, guid: d87e00c8c3069f849b854fd0cb7f68ee, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.66
+      value: -1.63
       objectReference: {fileID: 0}
     - target: {fileID: 3582348743291709874, guid: d87e00c8c3069f849b854fd0cb7f68ee, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4724,7 +4730,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6252427330716548040, guid: d87e00c8c3069f849b854fd0cb7f68ee, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2374573697013641907, guid: d87e00c8c3069f849b854fd0cb7f68ee, type: 3}
