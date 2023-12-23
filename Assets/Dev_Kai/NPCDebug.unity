@@ -1359,6 +1359,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ambrass1 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6252427330716548040, guid: d87e00c8c3069f849b854fd0cb7f68ee, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: d87e00c8c3069f849b854fd0cb7f68ee, type: 3}
@@ -1482,12 +1486,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _npcDataReceiver: {fileID: 473386803}
   _npcSoundHandler: {fileID: 473386810}
+  _npcCheckAround: {fileID: 473386815}
   _rb: {fileID: 473386812}
   _initialSpeed: 15
   _frontRayRength: 0.51
   _initialjumpPower: 30
   _jumprayrength: 0.15
-  _npcWallReach: 0.65
+  MinRandomTime: 2
+  MaxRandomTime: 4
 --- !u!114 &473386808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1551,6 +1557,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27e1e1b448ca01c48bcd1daf4e61e106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxBlockRayDist: 8
+  _npcWallReach: 1
 --- !u!1 &529309591
 GameObject:
   m_ObjectHideFlags: 0
@@ -3455,7 +3463,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3582348743291709874, guid: d87e00c8c3069f849b854fd0cb7f68ee, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.14
+      value: -4.13
       objectReference: {fileID: 0}
     - target: {fileID: 3582348743291709874, guid: d87e00c8c3069f849b854fd0cb7f68ee, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3504,6 +3512,10 @@ PrefabInstance:
     - target: {fileID: 6252427330716548040, guid: d87e00c8c3069f849b854fd0cb7f68ee, type: 3}
       propertyPath: m_Name
       value: Ambrass1 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6252427330716548040, guid: d87e00c8c3069f849b854fd0cb7f68ee, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -4056,13 +4068,17 @@ PrefabInstance:
       propertyPath: instantiationId
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 2752334942250380796, guid: d87e00c8c3069f849b854fd0cb7f68ee, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3582348743291709874, guid: d87e00c8c3069f849b854fd0cb7f68ee, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3582348743291709874, guid: d87e00c8c3069f849b854fd0cb7f68ee, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.21
+      value: 2.54
       objectReference: {fileID: 0}
     - target: {fileID: 3582348743291709874, guid: d87e00c8c3069f849b854fd0cb7f68ee, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4705,6 +4721,10 @@ PrefabInstance:
     - target: {fileID: 6252427330716548040, guid: d87e00c8c3069f849b854fd0cb7f68ee, type: 3}
       propertyPath: m_Name
       value: Ambrass1 (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6252427330716548040, guid: d87e00c8c3069f849b854fd0cb7f68ee, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2374573697013641907, guid: d87e00c8c3069f849b854fd0cb7f68ee, type: 3}
@@ -5488,6 +5508,10 @@ PrefabInstance:
     - target: {fileID: 6252427330716548040, guid: d87e00c8c3069f849b854fd0cb7f68ee, type: 3}
       propertyPath: m_Name
       value: Ambrass1 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6252427330716548040, guid: d87e00c8c3069f849b854fd0cb7f68ee, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

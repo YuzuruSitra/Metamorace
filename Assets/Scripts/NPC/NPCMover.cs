@@ -8,6 +8,8 @@ public class NPCMover : MonoBehaviour
     private NPCDataReceiver _npcDataReceiver;
     [SerializeField]
     private NPCSoundHandler _npcSoundHandler;
+    [SerializeField]
+    private NPCCheckAround _npcCheckAround;
     // [SerializeField]
     // private PhotonView _myPV;
     [SerializeField]
@@ -28,8 +30,6 @@ public class NPCMover : MonoBehaviour
     private bool _onGround;
     public bool OnGround => _onGround;
     private Vector3 _upPadding = new Vector3(0f, 0.5f, 0f);
-    [SerializeField]
-    private float _npcWallReach = 1.0f;
     bool Istest = true;
     float inputX = 0.0f;
 
@@ -40,7 +40,11 @@ public class NPCMover : MonoBehaviour
 
     bool _overBlock = false;
     public bool _OverBlock => _overBlock;
-     float _wallInterval = 0;
+    float _wallInterval = 0;
+    float _directionfixingtime = 0;
+    float SwitchDirectInterval;
+    [SerializeField]
+    float MinRandomTime = 3.0f, MaxRandomTime = 6.0f;
 
     void Start()
     {
@@ -76,23 +80,19 @@ public class NPCMover : MonoBehaviour
         //PlayerCtrl();
     }
 
+    public void NPCIdle()
+    {
+        inputX = 0;
+    }
 
     //プレイヤーの移動
-    public void PlayerCtrl()
+    public void NPCCtrl()
     {
         //if(_animSwing) return;
+        TestCoroutine();
 
-        if (Istest)
-        {
-            StartCoroutine(TestCoroutine());
-        }
         _isMoving = true;
-
-        if (inputX == 0)
-        {
-            _isMoving = false;
-            return;
-        }
+        //Debug.Log(inputX);
 
         Vector3 movement = new Vector3(inputX, 0, 0);
         // プレイヤーの向きを移動ベクトルに向ける
@@ -110,56 +110,84 @@ public class NPCMover : MonoBehaviour
         _rb.MovePosition(transform.position + movement * _npcSpeed * Time.deltaTime);
     }
 
+    void TestCoroutine()
+    {
+        //ブロックのある方向
+        string BlockDirection = _npcCheckAround.CheckArroundBlock();
+        //プルプル防止
+
+
+        SwitchDirectInterval -= Time.deltaTime;
+        _wallInterval -= Time.deltaTime;
+        _directionfixingtime -= Time.deltaTime;
+        bool IsWall = _npcCheckAround.CheckWall();
+        if (IsWall && _wallInterval < 0)
+        {
+            //Debug.Log("IsWall");
+            inputX = -inputX;
+            _wallInterval = 1.0f;
+        }
+        else
+        {
+                switch (BlockDirection)
+                {
+                    case "Right":
+                        inputX = 1.0f;
+                        //Debug.Log(BlockDirection);
+                        break;
+                    case "Left":
+                        inputX = -1.0f;
+                       // Debug.Log(BlockDirection);
+                        break;
+                    case "Null":
+                        //ランダム左右移動
+                      // Debug.Log(BlockDirection);
+                        if (SwitchDirectInterval < 0)
+                        {
+                           // Debug.Log(BlockDirection);
+                            inputX = -inputX;
+                            SwitchDirectInterval = Random.Range(MinRandomTime, MaxRandomTime);
+                        }
+                        break;
+                }
+            
+
+        }
+    }
+
     public void RayCheck()
     {
         //壁検出Ray
-        Vector3 direction = transform.forward;
-        direction.Normalize();
-        _wallInterval -= Time.deltaTime;
-        Ray ray = new Ray(transform.position + _upPadding, direction);
-        Debug.DrawRay(transform.position + _upPadding, direction, Color.green, 0.3f);
-        if (Physics.Raycast(ray, out RaycastHit hit, _npcWallReach))
-        {
-            if (hit.collider.CompareTag("Wall") && _wallInterval <= 0)
-            {
-                inputX = -inputX;
-                _wallInterval = 1.0f;
-            }
-        }
+        // Vector3 direction = transform.forward;
+        // direction.Normalize();
+        // _wallInterval -= Time.deltaTime;
+        // Ray ray = new Ray(transform.position + _upPadding, direction);
+        // Debug.DrawRay(transform.position + _upPadding, direction, Color.green, 0.3f);
+        // if (Physics.Raycast(ray, out RaycastHit hit, _npcWallReach))
+        // {
+        //     if (hit.collider.CompareTag("Wall") && _wallInterval <= 0)
+        //     {
+        //         inputX = -inputX;
+        //         _wallInterval = 1.0f;
+        //     }
+        // }
         //頭上検出Ray
         //頭上にブロックがあればよける、両方がブロックで挟まれている場合はジャンプ
-        Vector3 rayOrigin = transform.position + Vector3.up * _verticalRayOffset;
-        Ray rayover = new Ray(rayOrigin, Vector3.up);
-        Debug.DrawRay(rayover.origin, rayover.direction * _vericalAvoidRay, Color.green);
+        // Vector3 rayOrigin = transform.position + Vector3.up * _verticalRayOffset;
+        // Ray rayover = new Ray(rayOrigin, Vector3.up);
+        // Debug.DrawRay(rayover.origin, rayover.direction * _vericalAvoidRay, Color.green);
 
-        if (Physics.Raycast(rayover, out RaycastHit hitblock, _vericalAvoidRay) && OnGround)
-        {
-            if (hitblock.collider.CompareTag("Ambras"))
-            {
-                _overBlock = true;
-                Debug.Log("Avoid");
-            }
-            else _overBlock = false;
-        }
+        // if (Physics.Raycast(rayover, out RaycastHit hitblock, _vericalAvoidRay) && OnGround)
+        // {
+        //     if (hitblock.collider.CompareTag("Ambras"))
+        //     {
+        //         _overBlock = true;
+        //         Debug.Log("Avoid");
+        //     }
+        //     else _overBlock = false;
+        // }
     }
 
-    IEnumerator TestCoroutine()
-    {
-        if (Istest)
-        {
-            Istest = false;
-            if (inputX == 1.0f)
-            {
-                inputX = -1.0f;
-            }
-            else
-            {
-                inputX = 1.0f;
-            }
-            yield return new WaitForSeconds(Random.Range(0.5f, 6.0f));// 適宜範囲を調整してください  
-            Istest = true;
-        }
-    }
 
     private bool CheckFront(Ray ray)
     {
@@ -203,7 +231,7 @@ public class NPCMover : MonoBehaviour
     {
 
         {
-            Debug.Log("Avoid");
+            //Debug.Log("Avoid");
         }
 
     }

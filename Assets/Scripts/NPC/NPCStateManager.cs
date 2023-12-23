@@ -5,7 +5,7 @@ using UnityEngine;
 public class NPCStateManager : MonoBehaviour
 {
     float _interval = 0;
-    bool _isInterval = false;
+    bool isNPCStateRunning = false;
     [SerializeField] NPCMover _npcMover;
     [SerializeField] NPCObjectManipulator _npcObjectManipulator;
     public enum NPCState
@@ -32,33 +32,42 @@ public class NPCStateManager : MonoBehaviour
         switch (npcState)
         {
             case NPCState.MOVE:
-                _npcMover.PlayerCtrl();
-                Debug.Log("1");
+                _npcMover.NPCCtrl();
+                //Debug.Log("1");
                 break;
             case NPCState.BREAK:
                 _npcObjectManipulator.BreakBlock();
-                Debug.Log("2");
+                //Debug.Log("2");
                 break;
             case NPCState.CREATE:
                 _npcObjectManipulator.CreateBlock();
                 break;
             case NPCState.JUMP:
                 _npcMover.Jump();
-                Debug.Log("4");
+                //Debug.Log("3");
                 break;
             case NPCState.AVOID:
                 _npcMover.AvoidBlock();
-                Debug.Log("4");
+                //Debug.Log("4");
+                break;
+            case NPCState.IDLE:
+                _npcMover.NPCIdle();
+                //Debug.Log("5");
                 break;
         }
     }
 
     void NPCRoutine()
     {
+         Debug.Log(npcState);
         // if(_npcMover._OverBlock)
         // {
         //     npcState = NPCState.AVOID;
         // }
+        //思考止める
+        if (isNPCStateRunning) return;
+
+       
         if (_npcObjectManipulator._hitBlock)
         {
             //確率でどれか
@@ -69,7 +78,8 @@ public class NPCStateManager : MonoBehaviour
                     npcState = NPCState.BREAK;
                     break;
                 case 2:
-                    npcState = NPCState.JUMP;
+                    npcState = NPCState.BREAK;
+                    //npcState = NPCState.JUMP;
                     break;
             }
         }
@@ -92,6 +102,8 @@ public class NPCStateManager : MonoBehaviour
 
 
         }
+        //StartCoroutine("NPCInterval");
+
         // if (_npcObjectManipulator.HasBlock)
         // {
         //     npcState = NPCState.CREATE;
@@ -110,15 +122,19 @@ public class NPCStateManager : MonoBehaviour
     }
 
     //各ステートで一定時間固定
-    void IntervalTime()
-    {
-        if (_isInterval) return;
-        _interval = Random.Range(1.0f, 3.0f);
-        _interval -= Time.deltaTime;
-        if (_interval <= 0)
-        {
-            _isInterval = false;
-        }
-    }
+    // IEnumerator NPCInterval()
+    // {
+    //     isNPCStateRunning = true;
+
+    //     // Set the interval duration (replace 3.0f with your desired interval duration)
+    //     float intervalDuration = 0.01f;
+
+    //     // Wait for the specified interval duration
+    //     yield return new WaitForSeconds(intervalDuration);
+
+    //     // Reset the flag after the interval has passed
+    //     isNPCStateRunning = false;
+    // }
+
 
 }
