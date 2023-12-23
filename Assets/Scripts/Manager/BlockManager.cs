@@ -46,6 +46,11 @@ public class BlockManager : MonoBehaviour
 
     void Start()
     {
+        for (int i = 0; i < MAX_GENERATE * 2; i++)
+        {
+            predictObjs[i] = Instantiate(predictPrefab, Vector3.zero, Quaternion.identity);
+        }
+        
         if (!PhotonNetwork.isMasterClient && !_developMode) return;
         
         _insPosTeam1.y = GameManager.INS_POS_Y;
@@ -56,11 +61,6 @@ public class BlockManager : MonoBehaviour
 
         _coroutineTeam1 = StartCoroutine(SetParamForTeam1(0, _insPosTeam1, Quaternion.Euler(0, 180, 0)));
         _coroutineTeam2 = StartCoroutine(SetParamForTeam2(1, _insPosTeam2, Quaternion.Euler(0, 0, 0)));
-
-        for (int i = 0; i < MAX_GENERATE * 2; i++)
-        {
-            predictObjs[i] = PhotonNetwork.Instantiate(predictPrefab.name, Vector3.zero, Quaternion.identity, 0);
-        }
     }
 
     IEnumerator SetParamForTeam1(int cubeParentNum, Vector3 insPos, Quaternion rot)
