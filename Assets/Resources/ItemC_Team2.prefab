@@ -459,7 +459,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isBigBlock: 0
-  _teamID: 0
+  _teamID: 1
   _rb: {fileID: 2910339165191738683}
 --- !u!54 &2910339165191738683
 Rigidbody:
