@@ -18,8 +18,6 @@ public class WaitSceneManager : MonoBehaviour
     private string[] _memberList = new string[4];
     [SerializeField]
     private WaitUIHandler _waitUIHandler;
-    // 入室した番号
-    public static int _playerNum = -1;
     private string[] _memberNames = new string[4];
     private int[] _memberTeamIDs = new int[4];
 
@@ -47,13 +45,13 @@ public class WaitSceneManager : MonoBehaviour
         _soundHandler.ChangeSliderValue(_sliderBGM, _sliderSE);
 
         //Photonに接続していれば自プレイヤーを生成
-        if(_playerNum < 0) _playerNum = PhotonNetwork.playerList.Length - 1;
-        if (_playerNum >= _playerPrefab.Length) _playerNum = 3;
-        GameObject Player = PhotonNetwork.Instantiate(this._playerPrefab[_playerNum].name, new Vector3(24.0f, -15.0f, 84.0f), Quaternion.identity, 0);
+        if(TitleManager.PlayerNum < 0) TitleManager.PlayerNum = PhotonNetwork.playerList.Length - 1;
+        if (TitleManager.PlayerNum >= _playerPrefab.Length) TitleManager.PlayerNum = 3;
+        GameObject Player = PhotonNetwork.Instantiate(this._playerPrefab[TitleManager.PlayerNum].name, new Vector3(24.0f, -15.0f, 84.0f), Quaternion.identity, 0);
         
         _playerWait = Player.GetComponent<Player_Wait>();
         _playerWait.OnReadyChanged += Checking;
-        _playerWait.SetID(_playerNum);
+        _playerWait.SetID(TitleManager.PlayerNum);
         UpdateMemberList();
     }
 

@@ -33,6 +33,10 @@ public class TitleManager : MonoBehaviour
     private Slider _sliderBGM;
     [SerializeField]
     private Slider _sliderSE;
+
+    // 入室番号
+    public static int PlayerNum;
+
     
     // Start is called before the first frame update
     public void Awake()   
@@ -54,6 +58,7 @@ public class TitleManager : MonoBehaviour
         _soundHandler = SoundHandler.InstanceSoundHandler;
         _soundHandler.PlayBGM(_titleBGM);
         _soundHandler.ChangeSliderValue(_sliderBGM, _sliderSE);
+        PlayerNum = -1;
     }
     
     public void InputPlayerName()

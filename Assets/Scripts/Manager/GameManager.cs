@@ -62,7 +62,6 @@ public class GameManager : MonoBehaviour
         _uiHandler = GameObject.FindWithTag("UIHandler").GetComponent<UIHandler>();
         _calcWaitTime = new WaitForSeconds(_calcInterval);
         SceneManager.sceneLoaded += OnLoadedScene;
-        // SceneManager.sceneLoaded += OnLoadedRoom;
         _soundHandler.PlayBGM(battleBGM);
         if (DevelopeMode)
             HandleDevelopmentMode();
