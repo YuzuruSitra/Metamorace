@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd778bd21e1e7894dabf939a6a37c495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NotUseBillboard: 0
 --- !u!1 &3546209691249396712
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,7 +183,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 1664988303652524748}
+  m_Father: {fileID: 8946731305145559307}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5032953962374864686
@@ -289,7 +290,6 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2685103795318243636}
-  - {fileID: 1270857246766340071}
   m_Father: {fileID: 8946731305145559307}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -330,7 +330,7 @@ Rigidbody:
   m_GameObject: {fileID: 3687221546081121725}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 5.5
+  m_Drag: 7.5
   m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
