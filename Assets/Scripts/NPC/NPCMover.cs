@@ -40,6 +40,8 @@ public class NPCMover : MonoBehaviour
 
     bool _overBlock = false;
     public bool _OverBlock => _overBlock;
+     bool _depthBlock = false;
+    public bool _DepthBlock => _depthBlock;
     float _wallInterval = 0;
     float _directionfixingtime = 0;
     float SwitchDirectInterval;
@@ -63,7 +65,7 @@ public class NPCMover : MonoBehaviour
         // if (!_myPV.isMine) return;
         // if(!_npcDataReceiver.IsActiveGame) return;
         //AvoidBlock();
-        RayCheck();
+        //RayCheck();
         float raypos = 0.45f;
         float rayheight = 0.1f;
         // Jump handling
@@ -155,40 +157,6 @@ public class NPCMover : MonoBehaviour
         }
     }
 
-    public void RayCheck()
-    {
-        //壁検出Ray
-        // Vector3 direction = transform.forward;
-        // direction.Normalize();
-        // _wallInterval -= Time.deltaTime;
-        // Ray ray = new Ray(transform.position + _upPadding, direction);
-        // Debug.DrawRay(transform.position + _upPadding, direction, Color.green, 0.3f);
-        // if (Physics.Raycast(ray, out RaycastHit hit, _npcWallReach))
-        // {
-        //     if (hit.collider.CompareTag("Wall") && _wallInterval <= 0)
-        //     {
-        //         inputX = -inputX;
-        //         _wallInterval = 1.0f;
-        //     }
-        // }
-        //頭上検出Ray
-        //頭上にブロックがあればよける、両方がブロックで挟まれている場合はジャンプ
-        // Vector3 rayOrigin = transform.position + Vector3.up * _verticalRayOffset;
-        // Ray rayover = new Ray(rayOrigin, Vector3.up);
-        // Debug.DrawRay(rayover.origin, rayover.direction * _vericalAvoidRay, Color.green);
-
-        // if (Physics.Raycast(rayover, out RaycastHit hitblock, _vericalAvoidRay) && OnGround)
-        // {
-        //     if (hitblock.collider.CompareTag("Ambras"))
-        //     {
-        //         _overBlock = true;
-        //         Debug.Log("Avoid");
-        //     }
-        //     else _overBlock = false;
-        // }
-    }
-
-
     private bool CheckFront(Ray ray)
     {
         RaycastHit hit;
@@ -205,7 +173,7 @@ public class NPCMover : MonoBehaviour
         // if(_animSwing) return;
         if (_onGround && JumpInterval < 0)
         {
-            JumpInterval = 2.0f;
+            JumpInterval = 1.0f;
             //ジャンプSE鳴らす
             _npcSoundHandler.PlayJumpSE();
             _rb.AddForce(Vector3.up * _JumpPower, ForceMode.Impulse);
@@ -229,8 +197,6 @@ public class NPCMover : MonoBehaviour
 
     public void AvoidBlock()
     {
-        // _overBlock = _npcCheckAround.CheckVerticalDeathBlock();
-        // if(_overBlock)
-
+       
     }
 }

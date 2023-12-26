@@ -30,9 +30,8 @@ public class NPCItemHandler : MonoBehaviour
     void Update()
     {
         //if (!_myPV.isMine) return;
-        if(!_npcDataReceiver.IsActiveGame) return;
         UseItem();
-        Debug.Log(_itemHandler._HasItemB);
+        //Debug.Log(_itemHandler._HasItemB);
     }
 
 

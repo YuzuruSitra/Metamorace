@@ -46,7 +46,7 @@ public class NPCObjectManipulator : MonoBehaviour
     [SerializeField]
     private NPCItemHandler _npcItemHandler;
     private ItemC _itemC;
-     public bool _hitBlock = false;
+     //public bool _hitBlock = false;
     void Start()
     {
         _destroyPower = _initialDestroyPower;
@@ -57,7 +57,7 @@ public class NPCObjectManipulator : MonoBehaviour
     {
         // if (!_myPV.isMine) return;
         // if(!_npcDataReceiver.IsActiveGame) return;
-        RayCheck();
+      
         // BreakBlock();
         // CreateBlock();
         if (_hasBlock) 
@@ -67,25 +67,6 @@ public class NPCObjectManipulator : MonoBehaviour
         }
     }
 
-     public void RayCheck()
-    {
-        Vector3 direction = transform.forward;
-        direction.Normalize();
-        Ray ray = new Ray(transform.position + _upPadding, direction);
-
-        Debug.DrawRay(transform.position + _upPadding, direction, Color.green, 0.3f);
-        if(Physics.Raycast(ray, out RaycastHit hit, _npcReach))
-        {
-             if(hit.collider.CompareTag("Ambras")) 
-             {
-                _hitBlock = true;
-             }
-        }
-        else 
-        {
-            _hitBlock = false;
-        }
-    }
 
     //オブジェクト生成
     public void CreateBlock()
