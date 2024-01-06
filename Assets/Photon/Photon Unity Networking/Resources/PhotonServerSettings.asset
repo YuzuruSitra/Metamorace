@@ -65,4 +65,5 @@ MonoBehaviour:
   - AnimSelecter
   - ShareAnimBool
   - CallInsBlock
+  - SyncDestroy
   DisableAutoOpenWizard: 1

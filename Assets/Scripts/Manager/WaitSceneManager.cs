@@ -38,6 +38,8 @@ public class WaitSceneManager : MonoBehaviour
             SceneManager.LoadScene("Launcher");
             return; 
         }
+        
+        if (PhotonNetwork.isMasterClient) PhotonNetwork.room.IsOpen = true;
         SceneManager.sceneLoaded += OnLoadedScene;
         _waitTime = new WaitForSeconds(_transitionTime);
 
@@ -95,6 +97,7 @@ public class WaitSceneManager : MonoBehaviour
     private IEnumerator SendScene(string namePlayer1, int idPlayer1,string namePlayer2, int idPlayer2,string namePlayer3, int idPlayer3,string namePlayer4, int idPlayer4)
     {
         yield return _waitTime;
+        if (PhotonNetwork.isMasterClient) PhotonNetwork.room.IsOpen = false;
         PhotonNetwork.isMessageQueueRunning = false;
         if (!PhotonNetwork.isMasterClient)
         {

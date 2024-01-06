@@ -67,20 +67,12 @@ public class BlockBehaviour : MonoBehaviour
     {
         _objHealth -= power * Time.deltaTime;
         // 同期処理
-        if (!_developMode) 
+        _myPV.RPC(nameof(SyncHealth), PhotonTargets.All, _objHealth);
+        if (_objHealth <= 0)
         {
-            _myPV.RPC(nameof(SyncHealth), PhotonTargets.All, _objHealth);
+            _myPV.RPC(nameof(SyncDestroy), PhotonTargets.All);
         }
-        else
-        {
-            if (_objHealth <= 0)
-            {
-                this.gameObject.SetActive(false);
-                _cloudeffect.transform.position = transform.position;
-                _cloudeffect.SetActive(true);
-                Destroy(_parentBlock,2.0f);
-            }
-        }
+        
         if (_objHealth >= 0) return -1;
         
         return _objID;
@@ -97,6 +89,15 @@ public class BlockBehaviour : MonoBehaviour
             _cloudeffect.SetActive(true);
             Destroy(_parentBlock,2.0f);
         }
+    }
+
+    [PunRPC]
+    private void SyncDestroy()
+    {
+        this.gameObject.SetActive(false);
+        _cloudeffect.transform.position = transform.position;
+        _cloudeffect.SetActive(true);
+        Destroy(_parentBlock,2.0f);
     }
 
     void OnTriggerEnter(Collider other)
