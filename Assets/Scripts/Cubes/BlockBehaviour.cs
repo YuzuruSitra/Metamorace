@@ -56,6 +56,12 @@ public class BlockBehaviour : MonoBehaviour
             _anim.SetBool("IsTouch", false);
             _isAnim = false;
         }    
+
+        if (_objHealth <= 0)
+        {
+            _myPV.RPC(nameof(SyncDestroy), PhotonTargets.All);
+        }
+        
     }
     public void DevModeSet(bool developMode)
     {
@@ -68,10 +74,6 @@ public class BlockBehaviour : MonoBehaviour
         _objHealth -= power * Time.deltaTime;
         // 同期処理
         _myPV.RPC(nameof(SyncHealth), PhotonTargets.All, _objHealth);
-        if (_objHealth <= 0)
-        {
-            _myPV.RPC(nameof(SyncDestroy), PhotonTargets.All);
-        }
         
         if (_objHealth >= 0) return -1;
         
@@ -82,13 +84,6 @@ public class BlockBehaviour : MonoBehaviour
     private void SyncHealth(float currentHealth)
     {
         _objHealth = currentHealth;
-        if (_objHealth <= 0)
-        {
-            this.gameObject.SetActive(false);
-            _cloudeffect.transform.position = transform.position;
-            _cloudeffect.SetActive(true);
-            Destroy(_parentBlock,2.0f);
-        }
     }
 
     [PunRPC]
