@@ -59,10 +59,14 @@ public class BlockBehaviour : MonoBehaviour
 
         if (_objHealth <= 0)
         {
-            _myPV.RPC(nameof(SyncDestroy), PhotonTargets.All);
+            this.gameObject.SetActive(false);
+            _cloudeffect.transform.position = transform.position;
+            _cloudeffect.SetActive(true);
+            Destroy(_parentBlock,2.0f);
         }
 
     }
+
     public void DevModeSet(bool developMode)
     {
         _developMode = developMode;
@@ -84,20 +88,6 @@ public class BlockBehaviour : MonoBehaviour
     private void SyncHealth(float currentHealth)
     {
         _objHealth = currentHealth;
-    }
-
-    [PunRPC]
-    private void SyncDestroy()
-    {
-        DestAnim();
-    }
-
-    void DestAnim()
-    {
-        this.gameObject.SetActive(false);
-        _cloudeffect.transform.position = transform.position;
-        _cloudeffect.SetActive(true);
-        Destroy(_parentBlock,2.0f);
     }
 
     void OnTriggerEnter(Collider other)
