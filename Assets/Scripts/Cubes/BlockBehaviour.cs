@@ -79,7 +79,6 @@ public class BlockBehaviour : MonoBehaviour
         // 同期処理
         _myPV.RPC(nameof(SyncHealth), PhotonTargets.All, _objHealth);
         
-        if (_objHealth <= 0) _myPV.RPC(nameof(SyncHealth), PhotonTargets.All, 0);
         if (_objHealth >= 0) return -1;
         
         return _objID;
@@ -88,6 +87,7 @@ public class BlockBehaviour : MonoBehaviour
     [PunRPC]
     private void SyncHealth(float currentHealth)
     {
+        Debug.Log(currentHealth);
         _objHealth = currentHealth;
     }
 
