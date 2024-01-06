@@ -72,7 +72,7 @@ public class WaitSceneManager : MonoBehaviour
         int team1 = 0;
         int team2 = 0;
 
-        for (int i = 0; i < PhotonNetwork.playerList.Length; i++)
+        for (int i = 0; i < players.Length; i++)
         {
             Player_Wait playerWait = players[i].GetComponent<Player_Wait>();
             // エリア外の人がいたら処理を返す

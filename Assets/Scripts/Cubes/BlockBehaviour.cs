@@ -61,7 +61,7 @@ public class BlockBehaviour : MonoBehaviour
         {
             _myPV.RPC(nameof(SyncDestroy), PhotonTargets.All);
         }
-        
+
     }
     public void DevModeSet(bool developMode)
     {
@@ -88,6 +88,11 @@ public class BlockBehaviour : MonoBehaviour
 
     [PunRPC]
     private void SyncDestroy()
+    {
+        DestAnim();
+    }
+
+    void DestAnim()
     {
         this.gameObject.SetActive(false);
         _cloudeffect.transform.position = transform.position;
