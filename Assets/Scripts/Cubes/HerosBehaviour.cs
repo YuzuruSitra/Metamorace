@@ -6,7 +6,9 @@ public class HerosBehaviour : MonoBehaviour
 {
     private bool _oneTime = true;
     private float _targetPosZ = 0.0f;
-    private float _speed = 5.0f;
+    private float _initspeed = 5.0f;
+    private float _velocity;
+    private float _acceleration = 15.0f;
     [SerializeField]
     private bool _isBigBlock;
     [SerializeField]
@@ -42,7 +44,8 @@ public class HerosBehaviour : MonoBehaviour
     void AddPosZ()
     {
         Vector3 direction = new Vector3(0.0f, 0.0f, 1.0f);
-        _rb.MovePosition(transform.position + direction * _speed * Time.deltaTime);
+        _velocity = _initspeed + _acceleration * Time.deltaTime;
+        _rb.MovePosition(transform.position + direction * _velocity * Time.deltaTime);
         
         if (_targetPosZ > transform.position.z) return;
         Vector3 tmp = transform.position;
@@ -57,7 +60,8 @@ public class HerosBehaviour : MonoBehaviour
     void DecreasePosZ()
     {
         Vector3 direction = new Vector3(0.0f, 0.0f, -1.0f);
-        _rb.MovePosition(transform.position + direction * _speed * Time.deltaTime);
+        _velocity = _initspeed + _acceleration * Time.deltaTime;
+        _rb.MovePosition(transform.position + direction * _velocity * Time.deltaTime);
         
         if (_targetPosZ < transform.position.z) return;
         Vector3 tmp = transform.position;
