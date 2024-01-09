@@ -79,7 +79,7 @@ public class BlockBehaviour : MonoBehaviour
         _objHealth -= power * Time.deltaTime;
         if (_objHealth <= 0) _objHealth = 0;
         // 同期処理
-        if (_myPV.isMine) _myPV.RPC(nameof(SyncHealth), PhotonTargets.All, _objHealth);
+        _myPV.RPC(nameof(SyncHealth), PhotonTargets.Others, _objHealth);
         
         if (_objHealth >= 0) return -1;
         
@@ -89,7 +89,6 @@ public class BlockBehaviour : MonoBehaviour
     [PunRPC]
     private void SyncHealth(float value)
     {
-        if (_myPV.isMine) return;
         _objHealth = value;
     }
 
@@ -97,7 +96,7 @@ public class BlockBehaviour : MonoBehaviour
     {
         if (other.CompareTag("BreakCol"))
         {
-            if (!_developMode) _myPV.RPC(nameof(SyncHealth), PhotonTargets.All, 100.0f);
+            if (!_developMode) _myPV.RPC(nameof(SyncHealth), PhotonTargets.Others, 0);
             else Destroy(this.gameObject);
         }
     }
