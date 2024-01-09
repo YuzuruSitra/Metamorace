@@ -51,7 +51,7 @@ public class BlockManager : MonoBehaviour
             predictObjs[i] = Instantiate(predictPrefab, Vector3.zero, Quaternion.identity);
         }
         
-        if (!PhotonNetwork.isMasterClient && !_developMode) return;
+        if (!PhotonNetwork.isMasterClient) return;
         
         _insPosTeam1.y = GameManager.INS_POS_Y;
         _insPosTeam2.y = GameManager.INS_POS_Y;
@@ -125,8 +125,11 @@ public class BlockManager : MonoBehaviour
             predictObjs[predictNum].SetActive(false);
             yield return new WaitForSeconds(0.2f);
         }
-
-        Instantiate(_blockAmbras, insPos, insRot, _cubeParentTeams[parentNum]);
+        if (PhotonNetwork.isMasterClient)
+        {
+            GameObject insObj = PhotonNetwork.Instantiate(_blockAmbras.name, insPos, insRot, 0);
+            insObj.transform.SetParent(_cubeParentTeams[parentNum].transform);
+        }
     }
 
     public int CalcCubeShare1(int fieldSize)

@@ -14,7 +14,6 @@ public class BlockBehaviour : MonoBehaviour
     
     [SerializeField]
     private float _objHealth;
-    public float _ObjHealth => _objHealth;
     private float _maxobjHealth;
     public float _MaxobjHealth => _maxobjHealth;
     [SerializeField]
@@ -36,6 +35,7 @@ public class BlockBehaviour : MonoBehaviour
     {
         _maxobjHealth = _objHealth;
         _cloudeffect.SetActive(false);
+        Debug.Log(_maxobjHealth);
     }
     void Update()
     {
@@ -59,6 +59,7 @@ public class BlockBehaviour : MonoBehaviour
 
         if (_objHealth <= 0)
         {
+            Debug.Log("aaaa");
             this.gameObject.SetActive(false);
             _cloudeffect.transform.position = transform.position;
             _cloudeffect.SetActive(true);
@@ -76,8 +77,9 @@ public class BlockBehaviour : MonoBehaviour
     public int DestroyBlock(float power)
     {
         _objHealth -= power * Time.deltaTime;
+        if (_objHealth <= 0) _objHealth = 0;
         // 同期処理
-        _myPV.RPC(nameof(SyncHealth), PhotonTargets.All, _objHealth);
+        if (_myPV.isMine) _myPV.RPC(nameof(SyncHealth), PhotonTargets.All, _objHealth);
         
         if (_objHealth >= 0) return -1;
         
@@ -85,17 +87,17 @@ public class BlockBehaviour : MonoBehaviour
     }
 
     [PunRPC]
-    private void SyncHealth(float currentHealth)
+    private void SyncHealth(float value)
     {
-        Debug.Log(currentHealth);
-        _objHealth = currentHealth;
+        if (_myPV.isMine) return;
+        _objHealth = value;
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("BreakCol"))
         {
-            if (!_developMode) _myPV.RPC(nameof(SyncHealth), PhotonTargets.All, 0.0f);
+            if (!_developMode) _myPV.RPC(nameof(SyncHealth), PhotonTargets.All, 100.0f);
             else Destroy(this.gameObject);
         }
     }
