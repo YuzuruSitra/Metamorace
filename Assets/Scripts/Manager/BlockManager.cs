@@ -65,6 +65,7 @@ public class BlockManager : MonoBehaviour
 
     IEnumerator SetParamForTeam1(int cubeParentNum, Vector3 insPos, Quaternion rot)
     {
+        Debug.Log("aaa");
         while (true)
         {
             while (!_isGame) yield return null;
@@ -125,6 +126,7 @@ public class BlockManager : MonoBehaviour
             predictObjs[predictNum].SetActive(false);
             yield return new WaitForSeconds(0.2f);
         }
+
         if (PhotonNetwork.isMasterClient)
         {
             GameObject insObj = PhotonNetwork.Instantiate(_blockAmbras.name, insPos, insRot, 0);

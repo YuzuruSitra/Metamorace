@@ -32,7 +32,6 @@ public class PlayerItemHandler : MonoBehaviour
         if (!_myPV.isMine) return;
         if(!_playerDataReceiver.IsActiveGame) return;
         UseItem();
-        Debug.Log(_itemHandler._HasItemB);
     }
 
 

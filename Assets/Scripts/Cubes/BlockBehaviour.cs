@@ -35,7 +35,6 @@ public class BlockBehaviour : MonoBehaviour
     {
         _maxobjHealth = _objHealth;
         _cloudeffect.SetActive(false);
-        Debug.Log(_maxobjHealth);
     }
     void Update()
     {
@@ -59,7 +58,6 @@ public class BlockBehaviour : MonoBehaviour
 
         if (_objHealth <= 0)
         {
-            Debug.Log("aaaa");
             this.gameObject.SetActive(false);
             _cloudeffect.transform.position = transform.position;
             _cloudeffect.SetActive(true);
@@ -81,7 +79,7 @@ public class BlockBehaviour : MonoBehaviour
         // 同期処理
         _myPV.RPC(nameof(SyncHealth), PhotonTargets.Others, _objHealth);
         
-        if (_objHealth >= 0) return -1;
+        if (_objHealth > 0) return -1;
         
         return _objID;
     }
