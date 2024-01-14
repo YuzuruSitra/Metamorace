@@ -42,7 +42,7 @@ public class PlayerItemHandler : MonoBehaviour
         if (_itemHandler._HasItemA)
         {
             //さいやエフェクト再生
-            _playerEffectHangler.ChangeSaiya(true);
+            _myPV.RPC(nameof( _playerEffectHangler.ChangeSaiya), PhotonTargets.All, true);
             _itemHandler.ItemEffectA();
             _playerMover.ChangeMoveSpeed(_playerMover.InitialSpeed * 2);
             _playerObjectManipulator.ChangeDestroyPower(_playerObjectManipulator.InitialDestroyPower * 2);
@@ -75,7 +75,7 @@ public class PlayerItemHandler : MonoBehaviour
         yield return _waitTime;
         _playerMover.ChangeMoveSpeed(_playerMover.InitialSpeed);
         _playerObjectManipulator.ChangeDestroyPower(_playerObjectManipulator.InitialDestroyPower);
-        _playerEffectHangler.ChangeSaiya(false);
+        _myPV.RPC(nameof( _playerEffectHangler.ChangeSaiya), PhotonTargets.All, false);
     }
 
     public void UsedItem()

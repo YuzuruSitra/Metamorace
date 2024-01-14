@@ -7,6 +7,8 @@ public class PlayerDeathDetector : MonoBehaviour
     private PhotonView _myPV;
     [SerializeField]
     private PlayerDataReceiver _playerDataReceiver;
+    [SerializeField]
+    private PlayerEffectHangler _playerEffectHangler;
     [SerializeField] 
     private float _deathDecisionRayRange = 0.15f;
     [SerializeField] 
@@ -70,6 +72,7 @@ public class PlayerDeathDetector : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         _rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
         _col.isTrigger = true;
+        _myPV.RPC(nameof( _playerEffectHangler.ChangeDie), PhotonTargets.All, true);
     }
 
 }

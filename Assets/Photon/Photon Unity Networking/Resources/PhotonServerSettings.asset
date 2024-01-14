@@ -66,4 +66,7 @@ MonoBehaviour:
   - ShareAnimBool
   - CallInsBlock
   - SyncDestroy
+  - ChangeDie
+  - ChangeSaiya
+  - ChangeStan
   DisableAutoOpenWizard: 1

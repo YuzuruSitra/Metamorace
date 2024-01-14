@@ -258,7 +258,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator ShowResultUI(bool isDead, int team, int shareTeam1, int shareTeam2)
     {
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(2.5f);
         int winTeam;
         if (isDead) winTeam = 1 - team;
         else winTeam = CalcWinTeam(shareTeam1, shareTeam2);

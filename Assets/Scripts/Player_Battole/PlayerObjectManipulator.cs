@@ -183,7 +183,7 @@ public class PlayerObjectManipulator : MonoBehaviour
             case 1:
                 _playerMover.ChangeMoveSpeed(0.0f);
                 //スタンエフェクト再生
-                _playerEffectHangler.ChangeStan(true);
+                _myPV.RPC(nameof(_playerEffectHangler.ChangeStan), PhotonTargets.All, true);
                 Invoke("FinishItemC", _itemHandler._ItemCEffectTime);
                 break;
             case 2:
@@ -201,7 +201,7 @@ public class PlayerObjectManipulator : MonoBehaviour
     {
         _playerMover.ChangeMoveSpeed(_playerMover.InitialSpeed);
         //スタンエフェクト停止
-        _playerEffectHangler.ChangeStan(false);
+        _myPV.RPC(nameof(_playerEffectHangler.ChangeStan), PhotonTargets.All, false);
     }
 
     // 移動速度の変更
