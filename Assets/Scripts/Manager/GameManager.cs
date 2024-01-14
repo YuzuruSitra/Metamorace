@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     private UIHandler _uiHandler;
     [SerializeField] 
     private GameObject[] _playerPrefab = new GameObject[4];
+    [SerializeField]
+    private GameObject[] _npcPrefab = new GameObject[1];
     private int _teamID;
     private int _playerID;
     public const float TEAM1_POS_Z = -3.0f;

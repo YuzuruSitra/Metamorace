@@ -20,7 +20,16 @@ public class WaitUIHandler : MonoBehaviour
     [SerializeField]
     private GameObject _infoPanel;
     private bool _isOpenInfoPanel = false;
+    [SerializeField]
+    private Dropdown _dropdownNPC;
+    private bool _addNPC = false;
+    public bool _AddNPC => _addNPC;
 
+    void Update()
+    {
+         AddNPCDropList();
+        // Debug.Log(_addNPC);
+    }
     public void SetMemberText(string[] member)
     {
         if (member.Length > 4) return;
@@ -49,6 +58,21 @@ public class WaitUIHandler : MonoBehaviour
         _isOpenInfoPanel = !_isOpenInfoPanel;
         _isOpenPanel = _isOpenInfoPanel;
         _infoPanel.SetActive(_isOpenInfoPanel);
+    }
+
+    //WaitSceneManageに書いた方がいいかも
+    public void AddNPCDropList()
+    {
+        //NPCなし
+        if(_dropdownNPC.value == 0)
+        {
+            _addNPC = false;
+        }
+        //あり
+        else
+        {
+            _addNPC = true;
+        }
     }
 
 }

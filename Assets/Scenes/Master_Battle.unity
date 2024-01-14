@@ -657,6 +657,8 @@ MonoBehaviour:
   - {fileID: 4877800243297777295, guid: fecf3209729bb7744b16f6c41ed75227, type: 3}
   - {fileID: 4877800243297777295, guid: b78a380a31dcb1c469eec9b0548d0035, type: 3}
   - {fileID: 4877800243297777295, guid: 8df6929eaa436d443a474e597c1dea93, type: 3}
+  _npcPrefab:
+  - {fileID: 8533593787867244928, guid: 48e3520dddd83db4eb5362ee8f87e770, type: 3}
   DevelopeMode: 0
   DevelopeTeamID: 0
   _calcInterval: 2.5
@@ -1792,9 +1794,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0
+    y: 0.00019904971
     width: 1
-    height: 1
+    height: 0.9996019
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 45
