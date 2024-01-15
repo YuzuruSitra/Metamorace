@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private PhotonView _myPV;
     private PlayerDataReceiver _playerDataReceiver;
+    private NPCDataReceiver _npcDataReceiver;
     private PlayerDeathDetector _playerDeathDetector;
     [SerializeField] 
     private ColorManager _colorManager;
@@ -25,7 +26,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject[] _npcPrefab = new GameObject[1];
     private int _teamID;
-    private int _playerID;
+    private int _playerID,_npcID;
     public const float TEAM1_POS_Z = -3.0f;
     public const float TEAM2_POS_Z = 2f;
     public const float TEAM1_BIG_POS_Z = -2.0f;
@@ -71,11 +72,11 @@ public class GameManager : MonoBehaviour
             HandleProductionMode();
     }
 
-    public void SetInfo(int team, int id, int maxPlayer, string[] names, int[] teams)
+    public void SetInfo(int team, int id, int maxPlayer, string[] names, int[] teams,int npcnum)
     {
         _teamID = team;
         _playerID = id;
-        _currentPlayerCount = maxPlayer;
+        _currentPlayerCount = maxPlayer + npcnum;
         _memberNames = names;
         _memberTeamIDs = teams;
     }
@@ -85,6 +86,7 @@ public class GameManager : MonoBehaviour
     {
         _teamID = DevelopeTeamID;
         SetupPlayer(_teamID == 0 ? TEAM1_POS_Z : TEAM2_POS_Z);
+        SetupNPC(_teamID == 0 ? TEAM1_POS_Z : TEAM2_POS_Z);
         _coroutineCalc = StartCoroutine(CalcCubeShare());
     }
 
@@ -98,7 +100,7 @@ public class GameManager : MonoBehaviour
         }
 
         SetupPhotonPlayer(_teamID == 0 ? TEAM1_POS_Z : TEAM2_POS_Z);
-
+        SetupPhotonNPC(_teamID == 0 ? TEAM1_POS_Z : TEAM2_POS_Z);
         if (PhotonNetwork.isMasterClient) _coroutineCalc = StartCoroutine(CalcCubeShare());
     }
 
@@ -114,16 +116,16 @@ public class GameManager : MonoBehaviour
         _playerDataReceiver.SetInsCubeParent(_cubeParentTeam1, _cubeParentTeam2);
     }
      // ローカルNPCのセットアップ
-    // private void SetupNPC(float myPosZ)
-    // {
-    //     SetupBlockManager();
-    //     GameObject npc = Instantiate(_npcPrefab[_playerID], new Vector3(0f, 1.25f, myPosZ), Quaternion.identity);
-    //     //_camManager.SetPlayer(player, _teamID);
-    //     _playerDataReceiver = player.transform.GetChild(0).gameObject.GetComponent<PlayerDataReceiver>();
-    //     _playerDeathDetector = player.transform.GetChild(0).gameObject.GetComponent<PlayerDeathDetector>();
-    //     _playerDataReceiver.SetTeamID(_teamID);
-    //     _playerDataReceiver.SetInsCubeParent(_cubeParentTeam1, _cubeParentTeam2);
-    // }
+    private void SetupNPC(float myPosZ)
+    {
+        SetupBlockManager();
+        GameObject npc = Instantiate(_npcPrefab[_npcID], new Vector3(0f, 1.25f, myPosZ), Quaternion.identity);
+        //_camManager.SetPlayer(player, _teamID);
+        _npcDataReceiver = npc.transform.GetChild(0).gameObject.GetComponent<NPCDataReceiver>();
+        //_playerDeathDetector = player.transform.GetChild(0).gameObject.GetComponent<PlayerDeathDetector>();
+        _npcDataReceiver.SetTeamID(_teamID);
+        _npcDataReceiver.SetInsCubeParent(_cubeParentTeam1, _cubeParentTeam2);
+    }
 
     // ネットワークプレイヤーのセットアップ
     private void SetupPhotonPlayer(float myPosZ)
@@ -137,6 +139,20 @@ public class GameManager : MonoBehaviour
         _playerDeathDetector = player.transform.GetChild(0).gameObject.GetComponent<PlayerDeathDetector>();
         _playerDataReceiver.SetTeamID(_teamID);
         _playerDataReceiver.SetInsCubeParent(_cubeParentTeam1, _cubeParentTeam2);
+    }
+
+     // ネットワークNPCのセットアップ
+    private void SetupPhotonNPC(float myPosZ)
+    {
+        if (PhotonNetwork.isMasterClient) SetupPhotonBlockManager();
+
+        GameObject npc = PhotonNetwork.Instantiate(_npcPrefab[_npcID].name, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity, 0);
+        _myPV.RPC(nameof(JoinPlayer), PhotonTargets.All);
+       // _camManager.SetPlayer(player, _teamID);
+        _npcDataReceiver = npc.transform.GetChild(0).gameObject.GetComponent<NPCDataReceiver>();
+        //_playerDeathDetector = npc.transform.GetChild(0).gameObject.GetComponent<NPCDeathDetector>();
+        _npcDataReceiver.SetTeamID(_teamID);
+        _npcDataReceiver.SetInsCubeParent(_cubeParentTeam1, _cubeParentTeam2);
     }
 
     // プレイヤーの参加数

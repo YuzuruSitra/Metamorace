@@ -21,7 +21,7 @@ public class WaitUIHandler : MonoBehaviour
     private GameObject _infoPanel;
     private bool _isOpenInfoPanel = false;
     [SerializeField]
-    private Dropdown _dropdownNPC;
+    private Toggle _toggleNPC;
     private bool _addNPC = false;
     public bool _AddNPC => _addNPC;
 
@@ -64,16 +64,8 @@ public class WaitUIHandler : MonoBehaviour
     //WaitSceneManageに書いた方がいいかも
     public void AddNPCDropList()
     {
-        //NPCなし
-        if(_dropdownNPC.value == 0)
-        {
-            _addNPC = false;
-        }
-        //あり
-        else
-        {
-            _addNPC = true;
-        }
+        _addNPC = _toggleNPC.isOn ? true : false;
+        Debug.Log(_addNPC);
     }
 
 }

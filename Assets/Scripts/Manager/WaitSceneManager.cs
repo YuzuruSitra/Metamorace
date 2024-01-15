@@ -30,6 +30,7 @@ public class WaitSceneManager : MonoBehaviour
     private Slider _sliderBGM;
     [SerializeField]
     private Slider _sliderSE;
+     int _addNPCnum;
 
     // Start is called before the first frame update
     void Start()
@@ -95,6 +96,7 @@ public class WaitSceneManager : MonoBehaviour
             //NPC追加状態かつそれぞれのTeamの人数が違う場合、シーン遷移
             else if(_waitUIHandler._AddNPC && PhotonNetwork.playerList.Length >= 1 && team1 != team2 && team1 <= 2 && team2 <= 2) //&& team1 + team2 == PhotonNetwork.playerList.Length)
             {
+                 _addNPCnum =  Math.Abs(team1 - team2);
                 Debug.Log("AddNPC");
                 if(players.Length == 1 && team1 > team2) 
                 {
@@ -159,7 +161,7 @@ public class WaitSceneManager : MonoBehaviour
     {
         if(i_scene.name != "Master_Battle") return;
         PhotonNetwork.isMessageQueueRunning = true;
-        GameObject.FindWithTag("GameManager").GetComponent<GameManager>().SetInfo(_playerWait.SelectTeam, _playerWait.PlayerID, PhotonNetwork.playerList.Length, _memberNames, _memberTeamIDs);
+        GameObject.FindWithTag("GameManager").GetComponent<GameManager>().SetInfo(_playerWait.SelectTeam, _playerWait.PlayerID, PhotonNetwork.playerList.Length, _memberNames, _memberTeamIDs,_addNPCnum);
     }
 
     // 名前の取得
