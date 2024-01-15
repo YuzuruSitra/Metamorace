@@ -96,9 +96,42 @@ public class WaitSceneManager : MonoBehaviour
             else if(_waitUIHandler._AddNPC && PhotonNetwork.playerList.Length >= 1 && team1 != team2 && team1 <= 2 && team2 <= 2) //&& team1 + team2 == PhotonNetwork.playerList.Length)
             {
                 Debug.Log("AddNPC");
-                int _npcnum = Math.Abs(team1 - team2);
-                if(team1 > team2)
-                _myPV.RPC(nameof(SendSceneWithNPC), PhotonTargets.All, _memberNames[0], _memberTeamIDs[0], _memberNames[1], _memberTeamIDs[1], _memberNames[2], _memberTeamIDs[2], _memberNames[3], _memberTeamIDs[3]);
+                if(players.Length == 1 && team1 > team2) 
+                {
+                     _memberNames[1] = "NPC1";
+                    _memberTeamIDs[1] = 1;
+                }
+                else if(players.Length == 2 && team1 > team2)
+                {
+                     _memberTeamIDs[2] = 1;
+                     _memberNames[2] = "NPC1";
+                      _memberTeamIDs[3] = 1;
+                    _memberNames[3] = "NPC2";
+                }
+
+                else if(players.Length == 3 && team1 > team2)
+                {
+                     _memberTeamIDs[3] = 1;
+                     _memberNames[3] = "NPC1";
+                }
+                else if(players.Length == 1 && team1 < team2)
+                {
+                    _memberTeamIDs[1] = 0;
+                    _memberNames[1] = "NPC1";
+                }
+                else if(players.Length == 2 && team1 < team2)
+                {
+                     _memberTeamIDs[2] = 0;
+                     _memberNames[2] = "NPC1";
+                      _memberTeamIDs[3] = 0;
+                      _memberNames[3] = "NPC2";
+                }
+                else if(players.Length == 3 && team1 < team2)
+                {
+                      _memberTeamIDs[3] = 0;
+                      _memberNames[3] = "NPC1";
+                }
+                _myPV.RPC(nameof(SendScene), PhotonTargets.All, _memberNames[0], _memberTeamIDs[0], _memberNames[1], _memberTeamIDs[1], _memberNames[2], _memberTeamIDs[2], _memberNames[3], _memberTeamIDs[3]);
             }
     }
 
@@ -121,26 +154,7 @@ public class WaitSceneManager : MonoBehaviour
         }
         PhotonNetwork.LoadLevel("Master_Battle");
     }
-    //NPCがいるとき用
-    private IEnumerator SendSceneWithNPC(string namePlayer1, int idPlayer1,string namePlayer2, int idPlayer2,string namePlayer3, int idPlayer3,string namePlayer4, int idPlayer4)
-    {
-        yield return _waitTime;
-        if (PhotonNetwork.isMasterClient) PhotonNetwork.room.IsOpen = false;
-        PhotonNetwork.isMessageQueueRunning = false;
-        if (!PhotonNetwork.isMasterClient)
-        {
-            _memberNames[0] = namePlayer1;
-            _memberTeamIDs[0] = idPlayer1;
-            _memberNames[1] = namePlayer2;
-            _memberTeamIDs[1] = idPlayer2;
-            _memberNames[2] = namePlayer3;
-            _memberTeamIDs[2] = idPlayer3;
-            _memberNames[3] = namePlayer4;
-            _memberTeamIDs[3] = idPlayer4;
-        }
-        PhotonNetwork.LoadLevel("Master_Battle");
-    }
-
+   
     private void OnLoadedScene( Scene i_scene, LoadSceneMode i_mode )
     {
         if(i_scene.name != "Master_Battle") return;

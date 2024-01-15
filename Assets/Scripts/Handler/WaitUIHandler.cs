@@ -28,7 +28,8 @@ public class WaitUIHandler : MonoBehaviour
     void Update()
     {
          AddNPCDropList();
-        // Debug.Log(_addNPC);
+        //
+         //Debug.Log(_addNPC);
     }
     public void SetMemberText(string[] member)
     {

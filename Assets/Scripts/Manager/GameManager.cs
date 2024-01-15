@@ -113,6 +113,17 @@ public class GameManager : MonoBehaviour
         _playerDataReceiver.SetTeamID(_teamID);
         _playerDataReceiver.SetInsCubeParent(_cubeParentTeam1, _cubeParentTeam2);
     }
+     // ローカルNPCのセットアップ
+    // private void SetupNPC(float myPosZ)
+    // {
+    //     SetupBlockManager();
+    //     GameObject npc = Instantiate(_npcPrefab[_playerID], new Vector3(0f, 1.25f, myPosZ), Quaternion.identity);
+    //     //_camManager.SetPlayer(player, _teamID);
+    //     _playerDataReceiver = player.transform.GetChild(0).gameObject.GetComponent<PlayerDataReceiver>();
+    //     _playerDeathDetector = player.transform.GetChild(0).gameObject.GetComponent<PlayerDeathDetector>();
+    //     _playerDataReceiver.SetTeamID(_teamID);
+    //     _playerDataReceiver.SetInsCubeParent(_cubeParentTeam1, _cubeParentTeam2);
+    // }
 
     // ネットワークプレイヤーのセットアップ
     private void SetupPhotonPlayer(float myPosZ)
