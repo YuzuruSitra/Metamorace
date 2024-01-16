@@ -2073,6 +2073,7 @@ MonoBehaviour:
   _npcDataReceiver: {fileID: 3880984865308272444}
   _npcSoundHandler: {fileID: 3880984865308272453}
   _npcCheckAround: {fileID: 3880984865308272448}
+  _myPV: {fileID: 5613558335950998663}
   _rb: {fileID: 9193596152583151678}
   _initialSpeed: 15
   _frontRayRength: 0.51

@@ -10,8 +10,8 @@ public class NPCMover : MonoBehaviour
     private NPCSoundHandler _npcSoundHandler;
     [SerializeField]
     private NPCCheckAround _npcCheckAround;
-    // [SerializeField]
-    // private PhotonView _myPV;
+    [SerializeField]
+    private PhotonView _myPV;
     [SerializeField]
     private Rigidbody _rb;
     [SerializeField]
@@ -50,22 +50,22 @@ public class NPCMover : MonoBehaviour
 
     void Start()
     {
-        // if(!_myPV.isMine) 
-        // {
-        //     _rb.useGravity = false;
-        //     _rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
-        //     return;
-        // }
+        if(!_myPV.isMine) 
+        {
+            _rb.useGravity = false;
+            _rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+            return;
+        }
         _npcSpeed = _initialSpeed;
         _JumpPower = _initialjumpPower;
     }
 
     void Update()
     {
-        // if (!_myPV.isMine) return;
-        // if(!_npcDataReceiver.IsActiveGame) return;
-        //AvoidBlock();
-        //RayCheck();
+        if (!_myPV.isMine) return;
+        if(!_npcDataReceiver.IsActiveGame) return;
+        AvoidBlock();
+        
         float raypos = 0.45f;
         float rayheight = 0.1f;
         // Jump handling
@@ -77,8 +77,8 @@ public class NPCMover : MonoBehaviour
 
     void FixedUpdate()
     {
-        // if (!_myPV.isMine) return;
-        // if(!_npcDataReceiver.IsActiveGame) return;
+        if (!_myPV.isMine) return;
+        if(!_npcDataReceiver.IsActiveGame) return;
         //PlayerCtrl();
     }
 

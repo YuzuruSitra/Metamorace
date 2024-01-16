@@ -79,6 +79,7 @@ public class GameManager : MonoBehaviour
         _currentPlayerCount = maxPlayer + npcnum;
         _memberNames = names;
         _memberTeamIDs = teams;
+        Debug.Log($"{_memberTeamIDs[0]}、{_memberTeamIDs[1]}");
     }
 
     // 開発モードの初期化処理
@@ -98,7 +99,7 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("Launcher");
             return;
         }
-
+        
         SetupPhotonPlayer(_teamID == 0 ? TEAM1_POS_Z : TEAM2_POS_Z);
         SetupPhotonNPC(_teamID == 0 ? TEAM1_POS_Z : TEAM2_POS_Z);
         if (PhotonNetwork.isMasterClient) _coroutineCalc = StartCoroutine(CalcCubeShare());
@@ -259,6 +260,7 @@ public class GameManager : MonoBehaviour
         _soundHandler.PlaySE(gameStart);
         _isGame = true;
         _playerDataReceiver.SetGameState(_isGame);
+        _npcDataReceiver.SetGameState(_isGame);
         if (PhotonNetwork.isMasterClient) _blockManager.SetGameState(_isGame);
     }
 
@@ -279,6 +281,7 @@ public class GameManager : MonoBehaviour
     {
         _isGame = false;
         _playerDataReceiver.SetGameState(_isGame);
+        _npcDataReceiver.SetGameState(_isGame);
         // 死んだプレイヤーのチームを取得して勝敗を判定
         StartCoroutine(ShowResultUI(isDead, team, shareTeam1, shareTeam2));
     }
