@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
     {
         _teamID = DevelopeTeamID;
         SetupPlayer(_teamID == 0 ? TEAM1_POS_Z : TEAM2_POS_Z);
-        SetupNPC(_teamID == 0 ? TEAM1_POS_Z : TEAM2_POS_Z);
+        //SetupNPC(_teamID == 0 ? TEAM1_POS_Z : TEAM2_POS_Z);
         _coroutineCalc = StartCoroutine(CalcCubeShare());
     }
 
@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
         }
         
         SetupPhotonPlayer(_teamID == 0 ? TEAM1_POS_Z : TEAM2_POS_Z);
-        SetupPhotonNPC(_teamID == 0 ? TEAM1_POS_Z : TEAM2_POS_Z);
+        //SetupPhotonNPC(_teamID == 0 ? TEAM1_POS_Z : TEAM2_POS_Z);
         if (PhotonNetwork.isMasterClient) _coroutineCalc = StartCoroutine(CalcCubeShare());
     }
 
