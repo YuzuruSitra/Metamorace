@@ -89,10 +89,10 @@ public class WaitSceneManager : MonoBehaviour
 
         if (DebugMode)
             _myPV.RPC(nameof(SendScene), PhotonTargets.All, _memberNames[0], _memberTeamIDs[0], _memberNames[1], _memberTeamIDs[1], _memberNames[2], _memberTeamIDs[2], _memberNames[3], _memberTeamIDs[3]);
-        // else
-        //     // プレイヤーが2人以上で、Team1とTeam2に均等に割り振られ、全員が準備完了ならシーン遷移
-        //     if (PhotonNetwork.playerList.Length >= 2 && team1 == team2 && team1 + team2 == PhotonNetwork.playerList.Length) 
-        //         _myPV.RPC(nameof(SendScene), PhotonTargets.All, _memberNames[0], _memberTeamIDs[0], _memberNames[1], _memberTeamIDs[1], _memberNames[2], _memberTeamIDs[2], _memberNames[3], _memberTeamIDs[3]);
+        else
+            // プレイヤーが2人以上で、Team1とTeam2に均等に割り振られ、全員が準備完了ならシーン遷移
+            if (PhotonNetwork.playerList.Length >= 2 && team1 == team2 && team1 + team2 == PhotonNetwork.playerList.Length) 
+                _myPV.RPC(nameof(SendScene), PhotonTargets.All, _memberNames[0], _memberTeamIDs[0], _memberNames[1], _memberTeamIDs[1], _memberNames[2], _memberTeamIDs[2], _memberNames[3], _memberTeamIDs[3]);
         //     //NPC追加状態かつそれぞれのTeamの人数が違う場合、シーン遷移
         //     else if(_waitUIHandler._AddNPC && PhotonNetwork.playerList.Length >= 1 && team1 != team2 && team1 <= 2 && team2 <= 2) //&& team1 + team2 == PhotonNetwork.playerList.Length)
         //     {
