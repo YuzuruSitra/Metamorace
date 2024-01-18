@@ -1985,6 +1985,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9a88859513e41d4aadc7d4f3cd27482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _npcDataReceiver: {fileID: 3880984865308272444}
   _npcMover: {fileID: 3880984865308272456}
   _npcObjectManipulator: {fileID: 3880984865308272455}
   _npcCheckAround: {fileID: 3880984865308272448}

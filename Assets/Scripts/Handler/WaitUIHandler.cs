@@ -65,7 +65,6 @@ public class WaitUIHandler : MonoBehaviour
     public void AddNPCDropList()
     {
         _addNPC = _toggleNPC.isOn ? true : false;
-        Debug.Log(_addNPC);
     }
 
 }

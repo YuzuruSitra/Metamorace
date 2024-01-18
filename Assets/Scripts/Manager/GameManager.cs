@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     private PlayerDataReceiver _playerDataReceiver;
     private NPCDataReceiver _npcDataReceiver;
     private PlayerDeathDetector _playerDeathDetector;
+    private NPCDeathDetector _npcDeathDetector;
+    
     [SerializeField] 
     private ColorManager _colorManager;
     [SerializeField] 
@@ -57,8 +59,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] 
     private AudioClip countDown,gameStart,gameEnd,drumroll;
     private string[] _memberNames;
-    private int[] _memberTeamIDs;
-
+    private int[] _memberTeamIDs,_npcTeamIDs;
+    int _npcnum;
     void Start()
     {
         _soundHandler = SoundHandler.InstanceSoundHandler;
@@ -72,14 +74,17 @@ public class GameManager : MonoBehaviour
             HandleProductionMode();
     }
 
-    public void SetInfo(int team, int id, int maxPlayer, string[] names, int[] teams)//,int npcnum)
+
+    public void SetInfo(int team, int id, int maxPlayer, string[] names, int[] teams,int[]_npcs,int npcnum)
     {
         _teamID = team;
         _playerID = id;
-        _currentPlayerCount = maxPlayer; //+ npcnum;
+        _currentPlayerCount = maxPlayer;/// + npcnum;
         _memberNames = names;
         _memberTeamIDs = teams;
-        Debug.Log($"{_memberTeamIDs[0]}、{_memberTeamIDs[1]}");
+        //NPC
+        _npcTeamIDs = _npcs;
+        _npcnum = npcnum;
     }
 
     // 開発モードの初期化処理
@@ -87,7 +92,10 @@ public class GameManager : MonoBehaviour
     {
         _teamID = DevelopeTeamID;
         SetupPlayer(_teamID == 0 ? TEAM1_POS_Z : TEAM2_POS_Z);
-        //SetupNPC(_teamID == 0 ? TEAM1_POS_Z : TEAM2_POS_Z);
+        for(int i= 0; i < _npcnum; i++)
+        {
+            //SetupNPC(_npcTeamIDs[i] == 0 ? TEAM1_POS_Z : TEAM2_POS_Z);
+        }
         _coroutineCalc = StartCoroutine(CalcCubeShare());
     }
 
@@ -101,7 +109,10 @@ public class GameManager : MonoBehaviour
         }
         
         SetupPhotonPlayer(_teamID == 0 ? TEAM1_POS_Z : TEAM2_POS_Z);
-        //SetupPhotonNPC(_teamID == 0 ? TEAM1_POS_Z : TEAM2_POS_Z);
+        for(int i= 0; i < _npcnum; i++)
+        {
+            SetupPhotonNPC(_npcTeamIDs[i] == 0 ? TEAM1_POS_Z : TEAM2_POS_Z);
+        }
         if (PhotonNetwork.isMasterClient) _coroutineCalc = StartCoroutine(CalcCubeShare());
     }
 
@@ -151,7 +162,7 @@ public class GameManager : MonoBehaviour
         _myPV.RPC(nameof(JoinPlayer), PhotonTargets.All);
        // _camManager.SetPlayer(player, _teamID);
         _npcDataReceiver = npc.transform.GetChild(0).gameObject.GetComponent<NPCDataReceiver>();
-        //_playerDeathDetector = npc.transform.GetChild(0).gameObject.GetComponent<NPCDeathDetector>();
+        _npcDeathDetector = npc.transform.GetChild(0).gameObject.GetComponent<NPCDeathDetector>();
         _npcDataReceiver.SetTeamID(_teamID);
         _npcDataReceiver.SetInsCubeParent(_cubeParentTeam1, _cubeParentTeam2);
     }
@@ -181,7 +192,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-
+        //Debug.Log($"{_joinPlayerCount}、{_currentPlayerCount}");
         if(!_isGame)
         {
             if (!_oneTime) return;
@@ -215,6 +226,7 @@ public class GameManager : MonoBehaviour
                 if(!DevelopeMode) 
                 {            
                     _isGame = false;
+                    Debug.Log("isii");
                     _myPV.RPC(nameof(FinishMasterGame), PhotonTargets.MasterClient,  _playerDeathDetector.IsPlayerDeath, _teamID);
                 }
                 else
@@ -260,8 +272,13 @@ public class GameManager : MonoBehaviour
         _soundHandler.PlaySE(gameStart);
         _isGame = true;
         _playerDataReceiver.SetGameState(_isGame);
-        //_npcDataReceiver.SetGameState(_isGame);
-        if (PhotonNetwork.isMasterClient) _blockManager.SetGameState(_isGame);
+        _npcDataReceiver.SetGameState(_isGame);
+        if (PhotonNetwork.isMasterClient)
+        { 
+            Debug.Log("kawanisi");
+            _blockManager.SetGameState(_isGame);
+        }
+        
     }
 
     // ゲーム終了準備マスタークライアントのみの処理
@@ -281,7 +298,7 @@ public class GameManager : MonoBehaviour
     {
         _isGame = false;
         _playerDataReceiver.SetGameState(_isGame);
-        //_npcDataReceiver.SetGameState(_isGame);
+        _npcDataReceiver.SetGameState(_isGame);
         // 死んだプレイヤーのチームを取得して勝敗を判定
         StartCoroutine(ShowResultUI(isDead, team, shareTeam1, shareTeam2));
     }

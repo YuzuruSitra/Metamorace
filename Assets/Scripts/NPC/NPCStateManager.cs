@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class NPCStateManager : MonoBehaviour
 {
+     [SerializeField]
+    private NPCDataReceiver _npcDataReceiver;
     float _interval = 0;
     bool isNPCStateRunning = false;
     [SerializeField] NPCMover _npcMover;
@@ -29,6 +31,7 @@ public class NPCStateManager : MonoBehaviour
     }
     void Update()
     {
+         if(!_npcDataReceiver.IsActiveGame) return;
         NPCRoutine();
         switch (npcState)
         {

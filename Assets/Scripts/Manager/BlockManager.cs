@@ -68,6 +68,7 @@ public class BlockManager : MonoBehaviour
         Debug.Log("aaa");
         while (true)
         {
+             Debug.Log(_isGame);
             while (!_isGame) yield return null;
 
             yield return _waitTime;
@@ -89,10 +90,11 @@ public class BlockManager : MonoBehaviour
 
     IEnumerator SetParamForTeam2(int cubeParentNum, Vector3 insPos, Quaternion rot)
     {
+        Debug.Log("bbb");
         while (true)
         {
             while (!_isGame) yield return null;
-
+             Debug.Log("Masaki");
             yield return _waitTime;
             int insCount = Random.Range(1, MAX_GENERATE + 1);
 
@@ -126,7 +128,7 @@ public class BlockManager : MonoBehaviour
             predictObjs[predictNum].SetActive(false);
             yield return new WaitForSeconds(0.2f);
         }
-
+        
         if (PhotonNetwork.isMasterClient)
         {
             GameObject insObj = PhotonNetwork.Instantiate(_blockAmbras.name, insPos, insRot, 0);

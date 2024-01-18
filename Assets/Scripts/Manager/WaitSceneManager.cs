@@ -31,6 +31,7 @@ public class WaitSceneManager : MonoBehaviour
     [SerializeField]
     private Slider _sliderSE;
      int _addNPCnum;
+    int[] _npcs;//= new int[_addNPCnum];
 
     // Start is called before the first frame update
     void Start()
@@ -94,47 +95,51 @@ public class WaitSceneManager : MonoBehaviour
             if (PhotonNetwork.playerList.Length >= 2 && team1 == team2 && team1 + team2 == PhotonNetwork.playerList.Length) 
                 _myPV.RPC(nameof(SendScene), PhotonTargets.All, _memberNames[0], _memberTeamIDs[0], _memberNames[1], _memberTeamIDs[1], _memberNames[2], _memberTeamIDs[2], _memberNames[3], _memberTeamIDs[3]);
         //     //NPC追加状態かつそれぞれのTeamの人数が違う場合、シーン遷移
-        //     else if(_waitUIHandler._AddNPC && PhotonNetwork.playerList.Length >= 1 && team1 != team2 && team1 <= 2 && team2 <= 2) //&& team1 + team2 == PhotonNetwork.playerList.Length)
-        //     {
-        //          _addNPCnum =  Math.Abs(team1 - team2);
-        //         Debug.Log("AddNPC");
-        //         if(players.Length == 1 && team1 > team2) 
-        //         {
-        //              _memberNames[1] = "NPC1";
-        //             _memberTeamIDs[1] = 1;
-        //         }
-        //         else if(players.Length == 2 && team1 > team2)
-        //         {
-        //              _memberTeamIDs[2] = 1;
-        //              _memberNames[2] = "NPC1";
-        //               _memberTeamIDs[3] = 1;
-        //             _memberNames[3] = "NPC2";
-        //         }
+            else if(_waitUIHandler._AddNPC && PhotonNetwork.playerList.Length >= 1 && team1 != team2 && team1 <= 2 && team2 <= 2) //&& team1 + team2 == PhotonNetwork.playerList.Length)
+            {
 
-        //         else if(players.Length == 3 && team1 > team2)
-        //         {
-        //              _memberTeamIDs[3] = 1;
-        //              _memberNames[3] = "NPC1";
-        //         }
-        //         else if(players.Length == 1 && team1 < team2)
-        //         {
-        //             _memberTeamIDs[1] = 0;
-        //             _memberNames[1] = "NPC1";
-        //         }
-        //         else if(players.Length == 2 && team1 < team2)
-        //         {
-        //              _memberTeamIDs[2] = 0;
-        //              _memberNames[2] = "NPC1";
-        //               _memberTeamIDs[3] = 0;
-        //               _memberNames[3] = "NPC2";
-        //         }
-        //         else if(players.Length == 3 && team1 < team2)
-        //         {
-        //               _memberTeamIDs[3] = 0;
-        //               _memberNames[3] = "NPC1";
-        //         }
-        //         _myPV.RPC(nameof(SendScene), PhotonTargets.All, _memberNames[0], _memberTeamIDs[0], _memberNames[1], _memberTeamIDs[1], _memberNames[2], _memberTeamIDs[2], _memberNames[3], _memberTeamIDs[3]);
-        //     }
+                 _addNPCnum =  Math.Abs(team1 - team2);
+                 _npcs= new int[_addNPCnum];
+                Debug.Log("AddNPC");
+                if(players.Length == 1 && team1 > team2) 
+                {
+                     _memberNames[1] = "NPC1";
+                    _memberTeamIDs[1] = 1;
+                    _npcs[0] = 1;
+                }
+                else if(players.Length == 2 && team1 > team2)
+                {
+                     _memberTeamIDs[2] = 1;
+                     _memberNames[2] = "NPC1";
+                      _memberTeamIDs[3] = 1;
+                    _memberNames[3] = "NPC2";
+                }
+
+                else if(players.Length == 3 && team1 > team2)
+                {
+                     _memberTeamIDs[3] = 1;
+                     _memberNames[3] = "NPC1";
+                }
+                else if(players.Length == 1 && team1 < team2)
+                {
+                    _memberTeamIDs[1] = 0;
+                    _memberNames[1] = "NPC1";
+                     _npcs[0] = 0;
+                }
+                else if(players.Length == 2 && team1 < team2)
+                {
+                     _memberTeamIDs[2] = 0;
+                     _memberNames[2] = "NPC1";
+                      _memberTeamIDs[3] = 0;
+                      _memberNames[3] = "NPC2";
+                }
+                else if(players.Length == 3 && team1 < team2)
+                {
+                      _memberTeamIDs[3] = 0;
+                      _memberNames[3] = "NPC1";
+                }
+                _myPV.RPC(nameof(SendScene), PhotonTargets.All, _memberNames[0], _memberTeamIDs[0], _memberNames[1], _memberTeamIDs[1], _memberNames[2], _memberTeamIDs[2], _memberNames[3], _memberTeamIDs[3]);
+            }
     }
 
     [PunRPC]
@@ -161,7 +166,7 @@ public class WaitSceneManager : MonoBehaviour
     {
         if(i_scene.name != "Master_Battle") return;
         PhotonNetwork.isMessageQueueRunning = true;
-        GameObject.FindWithTag("GameManager").GetComponent<GameManager>().SetInfo(_playerWait.SelectTeam, _playerWait.PlayerID, PhotonNetwork.playerList.Length, _memberNames, _memberTeamIDs);//,_addNPCnum);
+        GameObject.FindWithTag("GameManager").GetComponent<GameManager>().SetInfo(_playerWait.SelectTeam, _playerWait.PlayerID, PhotonNetwork.playerList.Length, _memberNames, _memberTeamIDs,_npcs,_addNPCnum);
     }
 
     // 名前の取得

@@ -13,6 +13,10 @@ public class NPCDataReceiver : MonoBehaviour
     private Transform[] _insCubeParent = new Transform[2];
     public Transform[] InsCubeParent => _insCubeParent;
 
+    void Update()
+    {
+       // Debug.Log(_isActiveGame);
+    }
     public void SetTeamID(int thisTeam)
     {
         _mineTeamID = thisTeam;
