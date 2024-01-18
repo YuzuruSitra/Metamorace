@@ -5621,6 +5621,14 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5613558335950998663, guid: 48e3520dddd83db4eb5362ee8f87e770, type: 3}
+      propertyPath: viewIdField
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 5613558335950998663, guid: 48e3520dddd83db4eb5362ee8f87e770, type: 3}
+      propertyPath: instantiationId
+      value: 17
+      objectReference: {fileID: 0}
     - target: {fileID: 8533593787867244928, guid: 48e3520dddd83db4eb5362ee8f87e770, type: 3}
       propertyPath: m_Name
       value: NewNPCFoxRed

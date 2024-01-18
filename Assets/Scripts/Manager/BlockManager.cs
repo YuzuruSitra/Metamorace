@@ -46,13 +46,20 @@ public class BlockManager : MonoBehaviour
 
     void Start()
     {
+        StartCoroutine(StartPrepare());
+    }
+
+    IEnumerator StartPrepare()
+    {
+        while (!_isGame) yield return null;
+
         for (int i = 0; i < MAX_GENERATE * 2; i++)
         {
             predictObjs[i] = Instantiate(predictPrefab, Vector3.zero, Quaternion.identity);
         }
-        
-        if (!PhotonNetwork.isMasterClient) return;
-        
+
+        if (!PhotonNetwork.isMasterClient) yield break;
+
         _insPosTeam1.y = GameManager.INS_POS_Y;
         _insPosTeam2.y = GameManager.INS_POS_Y;
         _insPosTeam1.z = GameManager.TEAM1_POS_Z;
@@ -65,10 +72,8 @@ public class BlockManager : MonoBehaviour
 
     IEnumerator SetParamForTeam1(int cubeParentNum, Vector3 insPos, Quaternion rot)
     {
-        Debug.Log("aaa");
         while (true)
         {
-             Debug.Log(_isGame);
             while (!_isGame) yield return null;
 
             yield return _waitTime;
@@ -90,11 +95,9 @@ public class BlockManager : MonoBehaviour
 
     IEnumerator SetParamForTeam2(int cubeParentNum, Vector3 insPos, Quaternion rot)
     {
-        Debug.Log("bbb");
         while (true)
         {
             while (!_isGame) yield return null;
-             Debug.Log("Masaki");
             yield return _waitTime;
             int insCount = Random.Range(1, MAX_GENERATE + 1);
 

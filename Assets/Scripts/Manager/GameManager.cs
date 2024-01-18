@@ -156,11 +156,9 @@ public class GameManager : MonoBehaviour
      // ネットワークNPCのセットアップ
     private void SetupPhotonNPC(float myPosZ)
     {
-        if (PhotonNetwork.isMasterClient) SetupPhotonBlockManager();
-
         GameObject npc = PhotonNetwork.Instantiate(_npcPrefab[_npcID].name, new Vector3(0f, 1.25f, myPosZ), Quaternion.identity, 0);
         _myPV.RPC(nameof(JoinPlayer), PhotonTargets.All);
-       // _camManager.SetPlayer(player, _teamID);
+        // _camManager.SetPlayer(player, _teamID);
         _npcDataReceiver = npc.transform.GetChild(0).gameObject.GetComponent<NPCDataReceiver>();
         _npcDeathDetector = npc.transform.GetChild(0).gameObject.GetComponent<NPCDeathDetector>();
         _npcDataReceiver.SetTeamID(_teamID);
@@ -192,7 +190,6 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log($"{_joinPlayerCount}、{_currentPlayerCount}");
         if(!_isGame)
         {
             if (!_oneTime) return;
@@ -226,7 +223,6 @@ public class GameManager : MonoBehaviour
                 if(!DevelopeMode) 
                 {            
                     _isGame = false;
-                    Debug.Log("isii");
                     _myPV.RPC(nameof(FinishMasterGame), PhotonTargets.MasterClient,  _playerDeathDetector.IsPlayerDeath, _teamID);
                 }
                 else
@@ -275,7 +271,6 @@ public class GameManager : MonoBehaviour
         _npcDataReceiver.SetGameState(_isGame);
         if (PhotonNetwork.isMasterClient)
         { 
-            Debug.Log("kawanisi");
             _blockManager.SetGameState(_isGame);
         }
         
