@@ -29,7 +29,7 @@ public class PlayerEffectHangler : MonoBehaviour
     void Update()
     {
         // エフェクト移動
-        if(_stanEffect.activeSelf)
+        if (_stanEffect.activeSelf)
         {
             if (_playerDataReceiver.MineTeamID == 0) _stanEffect.transform.position = transform.position + staneOffSetTeam0;
             else _stanEffect.transform.position = transform.position + staneOffSetTeam1;
@@ -51,8 +51,15 @@ public class PlayerEffectHangler : MonoBehaviour
     [PunRPC]
     public void ChangeStan(bool state)
     {
+        _stanEffect.SetActive(state);
         _stanEffectAnim.SetBool("Stan", state);
         _animStan = state;
+    }
+
+    void ChangeStanAnimState(bool state)
+    {
+        _stanEffect.SetActive(state);
+        _stanEffectAnim.SetBool("Stan", state);
     }
 
     [PunRPC]
