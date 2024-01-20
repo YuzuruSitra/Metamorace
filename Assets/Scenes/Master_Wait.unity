@@ -2949,9 +2949,9 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: 0.00023844838
     y: 0
-    width: 1
+    width: 0.9995231
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -7112,7 +7112,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!224 &2007160014
 RectTransform:
   m_ObjectHideFlags: 0
