@@ -107,7 +107,7 @@ public class NPCObjectManipulator : MonoBehaviour
         {
             //_myPV.RPC(nameof(SyncCreateHeros), PhotonTargets.MasterClient, _insPos, _npcDataReceiver.MineTeamID, _npcDataReceiver.EnemyTeamID);
         }
-        _uiHandler.ResetBlockImage();
+        //_uiHandler.ResetBlockImage();
         
     }
 
@@ -159,7 +159,7 @@ public class NPCObjectManipulator : MonoBehaviour
         if (objID == UIHandler._ambrassID || objID == UIHandler._herosID)
         {
             //UIに保持しているブロックを表示する処理
-            _uiHandler.BlockImage(objID);
+            //_uiHandler.BlockImage(objID);
             if (hit.collider.CompareTag("ItemCBlock"))
             {
                 SetItemC(hit.collider);
@@ -171,7 +171,7 @@ public class NPCObjectManipulator : MonoBehaviour
             _hasBlock = true;
             if (!_itemHandler._HasItemA || !_itemHandler._HasItemB || !_itemHandler._HasItemC) 
             {
-                _itemHandler.StackBlock(objID);
+                //_itemHandler.StackBlock(objID);
                 _itemHandler.CreateItem();
             }
         }
