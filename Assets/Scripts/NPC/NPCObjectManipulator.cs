@@ -6,8 +6,8 @@ public class NPCObjectManipulator : MonoBehaviour
 {
      [SerializeField]
     private NPCMover _npcMover;
-    // [SerializeField]
-    // private PhotonView _myPV;
+    [SerializeField]
+    private PhotonView _myPV;
     [SerializeField]
     private NPCSoundHandler _npcSoundHandler;
     [SerializeField]
@@ -55,11 +55,11 @@ public class NPCObjectManipulator : MonoBehaviour
 
     void Update()
     {
-        // if (!_myPV.isMine) return;
-        // if(!_npcDataReceiver.IsActiveGame) return;
+        if (!_myPV.isMine) return;
+        if(!_npcDataReceiver.IsActiveGame) return;
       
-        // BreakBlock();
-        // CreateBlock();
+        BreakBlock();
+        CreateBlock();
         if (_hasBlock) 
         {
             _insPos = new Vector3((int)transform.position.x, (int)transform.position.y + 0.25f, -1.0f);
@@ -92,23 +92,21 @@ public class NPCObjectManipulator : MonoBehaviour
         if (_itemHandler._HasItemB && _npcItemHandler.UseItemState == 0)
         {
             //アイテムB微調整
-            //_myPV.RPC(nameof(SyncCreateBig), PhotonTargets.MasterClient, _insBigPos, _npcDataReceiver.MineTeamID, _npcDataReceiver.EnemyTeamID);
+            _myPV.RPC(nameof(SyncCreateBig), PhotonTargets.MasterClient, _insBigPos, _npcDataReceiver.MineTeamID, _npcDataReceiver.EnemyTeamID);
             _npcItemHandler.UsedItem();
             _itemHandler.ItemEffectB();
         }
         //ItemCBlock生成
         else if (_itemHandler._HasItemC && _npcItemHandler.UseItemState == 1)
         {
-           // _myPV.RPC(nameof(SyncCreateItemC), PhotonTargets.MasterClient, _insPos, _npcDataReceiver.MineTeamID, _npcDataReceiver.EnemyTeamID);
+            _myPV.RPC(nameof(SyncCreateItemC), PhotonTargets.MasterClient, _insPos, _npcDataReceiver.MineTeamID, _npcDataReceiver.EnemyTeamID);
             _npcItemHandler.UsedItem();
             _itemHandler.ItemEffectC();
         }
         else
         {
-            //_myPV.RPC(nameof(SyncCreateHeros), PhotonTargets.MasterClient, _insPos, _npcDataReceiver.MineTeamID, _npcDataReceiver.EnemyTeamID);
+            _myPV.RPC(nameof(SyncCreateHeros), PhotonTargets.MasterClient, _insPos, _npcDataReceiver.MineTeamID, _npcDataReceiver.EnemyTeamID);
         }
-        //_uiHandler.ResetBlockImage();
-        
     }
 
     // ネットワーク上のキューブ生成

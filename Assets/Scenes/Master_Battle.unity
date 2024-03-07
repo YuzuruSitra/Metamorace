@@ -508,6 +508,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c67e2e1544678f74099192c883313057, type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: c67e2e1544678f74099192c883313057, type: 3}
@@ -1794,9 +1798,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.00019904971
+    y: 0.00045621395
     width: 1
-    height: 0.9996019
+    height: 0.9990876
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 45

@@ -32,7 +32,6 @@ public class NPCAnimationHandler : MonoBehaviour
         int animCase = 0;
         if (_npcDeathDetector.VerticalDeath)
         {
-            Debug.Log("aaa");
             animCase = 0;
         }
         else if(_npcDeathDetector.HorizontalDeath)

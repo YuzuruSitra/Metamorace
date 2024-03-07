@@ -8,26 +8,26 @@ public class NPCDeathDetector : MonoBehaviour
     // private PhotonView _myPV;
     [SerializeField]
     private NPCDataReceiver _npcDataReceiver;
-    [SerializeField] 
+    [SerializeField]
     private float _deathDecisionRayRange = 0.15f;
-    [SerializeField] 
+    [SerializeField]
     private float _verticalRayOffset = 2.0f;
-    [SerializeField] 
+    [SerializeField]
     private float _horizontalRayOffset = 0.5f;
     [SerializeField]
     private NPCMover _npcMover;
-    
+
     private bool _verticalDeath = false;
     public bool VerticalDeath => _verticalDeath;
     private bool _horizontalDeath = false;
-    public bool HorizontalDeath => _horizontalDeath; 
+    public bool HorizontalDeath => _horizontalDeath;
     private bool _isNPCDeath = false;
     public bool IsNPCDeath => _isNPCDeath;
 
     private void Update()
     {
         //if (!_myPV.isMine) return;
-        if(!_npcDataReceiver.IsActiveGame) return;
+        if (!_npcDataReceiver.IsActiveGame) return;
         JudgeVerticalDeath();
         JudgeHorizontalDeath();
     }
@@ -38,10 +38,13 @@ public class NPCDeathDetector : MonoBehaviour
         Ray ray = new Ray(rayOrigin, Vector3.up);
         Debug.DrawRay(ray.origin, ray.direction * _deathDecisionRayRange, Color.green);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, _deathDecisionRayRange) && _npcMover.OnGround) 
+        if (Physics.Raycast(ray, out RaycastHit hit, _deathDecisionRayRange) && _npcMover.OnGround)
         {
             _verticalDeath = true;
             _isNPCDeath = true;
+            Debug.Log("DeathV");
+
+            StartCoroutine(ChangePhysics());
         }
     }
 
@@ -55,8 +58,18 @@ public class NPCDeathDetector : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, _deathDecisionRayRange))
         {
+            Debug.Log("DeathH");
             _horizontalDeath = true;
             _isNPCDeath = true;
+            StartCoroutine(ChangePhysics());
         }
+    }
+
+    private IEnumerator ChangePhysics()
+    {
+        yield return new WaitForSeconds(0.5f);
+        // _rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+        // _col.isTrigger = true;
+        // _myPV.RPC(nameof( _playerEffectHangler.ChangeDie), PhotonTargets.All, true);
     }
 }

@@ -2095,6 +2095,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _npcMover: {fileID: 3880984865308272456}
+  _myPV: {fileID: 5613558335950998663}
   _npcSoundHandler: {fileID: 3880984865308272453}
   _npcDataReceiver: {fileID: 3880984865308272444}
   _npcEffectHandler: {fileID: 3880984865308272458}

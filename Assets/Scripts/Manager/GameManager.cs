@@ -134,7 +134,7 @@ public class GameManager : MonoBehaviour
         GameObject npc = Instantiate(_npcPrefab[_npcID], new Vector3(0f, 1.25f, myPosZ), Quaternion.identity);
         //_camManager.SetPlayer(player, _teamID);
         _npcDataReceiver = npc.transform.GetChild(0).gameObject.GetComponent<NPCDataReceiver>();
-        //_playerDeathDetector = player.transform.GetChild(0).gameObject.GetComponent<PlayerDeathDetector>();
+        _npcDeathDetector = npc.transform.GetChild(0).gameObject.GetComponent<NPCDeathDetector>();
         _npcDataReceiver.SetTeamID(_teamID);
         _npcDataReceiver.SetInsCubeParent(_cubeParentTeam1, _cubeParentTeam2);
     }
@@ -217,7 +217,7 @@ public class GameManager : MonoBehaviour
             ReduceTimeLimit();
 
             // ゲーム終了処理
-            if (_timeLimit <= 0 || _playerDeathDetector.IsPlayerDeath)
+            if (_timeLimit <= 0 || _playerDeathDetector.IsPlayerDeath || _npcDeathDetector.IsNPCDeath)
             {
                 _soundHandler.PlaySE(gameEnd); 
                 if(!DevelopeMode) 
